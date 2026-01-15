@@ -14,8 +14,8 @@ const hash = require('./hash')
 
 function sign (message, privateKey) {
   const hashMessage = hash(message)
-  const hashPrivateKey = hash(privateKey)
-  const signature = secp.sign(hashMessage, hashPrivateKey)
+  const privateKeyBytes = Buffer.from(privateKeyHex, 'hex')
+  const signature = secp.sign(hashMessage, privateKeyBytes)
 
   return Buffer.from(signature).toString('base64url') // base64 returned
 }

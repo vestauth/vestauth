@@ -1,9 +1,11 @@
+const hash = require('./helpers/hash')
 const keypair = require('./helpers/keypair')
 const sign = require('./helpers/sign')
-const hash = require('./helpers/hash')
+const verify = require('./helpers/verify')
 
 module.exports = {
   hash,
   keypair,
-  sign
+  sign,
+  verify
 }
