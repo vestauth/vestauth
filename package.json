@@ -5,8 +5,13 @@
   "keywords": [
     "vestauth"
   ],
+  "homepage": "https://github.com/vestauth/vestauth",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vestauth/vestauth.git"
+  },
   "license": "BSD-3-Clause",
-  "author": "motdotla",
+  "author": "@motdotla",
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
