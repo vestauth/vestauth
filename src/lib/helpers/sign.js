@@ -6,10 +6,10 @@ secp.hashes.sha256 = sha256
 secp.hashes.hmacSha256 = (key, msg) => hmac(sha256, key, msg)
 const hash = require('./hash')
 
-function sign (message, privateKeyHex) {
-  const hashMessage = hash(message)
+function sign (challenge, privateKeyHex) {
+  const hashChallenge = hash(challenge)
   const privateKeyBytes = Buffer.from(privateKeyHex, 'hex')
-  const signature = secp.sign(hashMessage, privateKeyBytes)
+  const signature = secp.sign(hashChallenge, privateKeyBytes)
 
   return Buffer.from(signature).toString('base64url') // base64 returned
 }

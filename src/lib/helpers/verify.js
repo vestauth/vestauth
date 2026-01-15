@@ -1,12 +1,12 @@
 const secp = require('@noble/secp256k1')
 const hash = require('./hash')
 
-function verify (message, signatureBase64, publicKeyHex) {
-  const hashMessage = hash(message)
+function verify (challenge, signatureBase64, publicKeyHex) {
+  const hashChallenge = hash(challenge)
   const signature = Buffer.from(signatureBase64, 'base64url')
   const publicKeyBytes = Buffer.from(publicKeyHex, 'hex')
 
-  return secp.verify(signature, hashMessage, publicKeyBytes)
+  return secp.verify(signature, hashChallenge, publicKeyBytes)
 }
 
 module.exports = verify
