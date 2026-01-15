@@ -1,17 +1,12 @@
-// import { sign, verify, getPublicKey } from '@noble/secp256k1'
-// // publicKey (compressed): Uint8Array
-// const publicKey = getPublicKey(privateKey, true)
-//
-// // verifier side (server or client)
-// const ok = verify(signature, hash, publicKey)
+const secp = require('@noble/secp256k1')
+const hash = require('./hash')
 
-function verify () {
-  console.log('verify todo')
-  // const hashMessage = hash(message)
-  // const hashPrivateKey = hash(privateKey)
-  // const signature = secp.sign(hashMessage, hashPrivateKey)
+function verify (message, signatureBase64, publicKeyHex) {
+  const hashMessage = hash(message)
+  const signature = Buffer.from(signatureBase64, 'base64url')
+  const publicKeyBytes = Buffer.from(publicKeyHex, 'hex')
 
-  // return Buffer.from(signature).toString('base64url') // base64 returned
+  return secp.verify(signature, hashMessage, publicKeyBytes)
 }
 
 module.exports = verify

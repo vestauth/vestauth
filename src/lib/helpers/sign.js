@@ -6,12 +6,6 @@ secp.hashes.sha256 = sha256
 secp.hashes.hmacSha256 = (key, msg) => hmac(sha256, key, msg)
 const hash = require('./hash')
 
-// // publicKey (compressed): Uint8Array
-// const publicKey = getPublicKey(privateKey, true)
-//
-// // verifier side (server or client)
-// const ok = verify(signature, hash, publicKey)
-
 function sign (message, privateKeyHex) {
   const hashMessage = hash(message)
   const privateKeyBytes = Buffer.from(privateKeyHex, 'hex')
