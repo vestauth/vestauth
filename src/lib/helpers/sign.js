@@ -1,5 +1,5 @@
 // import { sign, verify, getPublicKey } from '@noble/secp256k1'
-const hashf = require('./hash')
+const secp = require('@noble/secp256k1')
 
 // // privateKey: 32-byte Uint8Array (or hex depending on your setup)
 // const signature = await sign(hash, privateKey, { der: false })
@@ -10,14 +10,8 @@ const hashf = require('./hash')
 // // verifier side (server or client)
 // const ok = verify(signature, hash, publicKey)
 
-function sign () {
-  const message = 'hello'
-  const hash = hashf(message)
-
-  return {
-    message,
-    hash
-  }
+function sign (message, privateKey) {
+  return secp.sign(message, privateKey)
 }
 
 module.exports = sign
