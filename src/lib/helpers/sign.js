@@ -4,7 +4,7 @@ const { sha256 } = require('@noble/hashes/sha2.js')
 const { hmac } = require('@noble/hashes/hmac.js')
 secp.hashes.sha256 = sha256
 secp.hashes.hmacSha256 = (key, msg) => hmac(sha256, key, msg)
-const hash = require('./helpers/hash')
+const hash = require('./hash')
 
 // // privateKey: 32-byte Uint8Array (or hex depending on your setup)
 // const signature = await sign(hash, privateKey, { der: false })
