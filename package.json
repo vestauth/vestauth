@@ -22,7 +22,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@noble/hashes": "^2.0.1",
+    "@noble/hashes": "^1.8.0",
     "@noble/secp256k1": "^3.0.0",
     "eciesjs": "^0.4.16"
   }
