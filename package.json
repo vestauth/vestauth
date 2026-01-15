@@ -10,11 +10,18 @@
     "type": "git",
     "url": "git+https://github.com/vestauth/vestauth.git"
   },
+  "files": [
+    "src/**/*",
+    "CHANGELOG.md"
+  ],
   "license": "BSD-3-Clause",
+  "main": "src/lib/main.js",
   "author": "@motdotla",
   "type": "commonjs",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "eciesjs": "^0.4.16"
   }
 }
