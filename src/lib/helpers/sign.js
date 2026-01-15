@@ -12,7 +12,7 @@ const hash = require('./hash')
 // // verifier side (server or client)
 // const ok = verify(signature, hash, publicKey)
 
-function sign (message, privateKey) {
+function sign (message, privateKeyHex) {
   const hashMessage = hash(message)
   const privateKeyBytes = Buffer.from(privateKeyHex, 'hex')
   const signature = secp.sign(hashMessage, privateKeyBytes)
