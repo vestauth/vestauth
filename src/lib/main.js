@@ -1,4 +1,4 @@
-const keypair = require('./lib/helpers/keypair')
+const keypair = require('./helpers/keypair')
 
 module.exports = {
   keypair
