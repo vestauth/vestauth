@@ -6,9 +6,6 @@ secp.hashes.sha256 = sha256
 secp.hashes.hmacSha256 = (key, msg) => hmac(sha256, key, msg)
 const hash = require('./hash')
 
-// // privateKey: 32-byte Uint8Array (or hex depending on your setup)
-// const signature = await sign(hash, privateKey, { der: false })
-//
 // // publicKey (compressed): Uint8Array
 // const publicKey = getPublicKey(privateKey, true)
 //
@@ -16,7 +13,11 @@ const hash = require('./hash')
 // const ok = verify(signature, hash, publicKey)
 
 function sign (message, privateKey) {
-  return secp.sign(hash(message), hash(privateKey))
+  const hashMessage = hash(message)
+  const hashPrivateKey = hash(privateKey)
+  const signature = secp.sign(hashMessage, hashPrivateKey)
+
+  return Buffer.from(signature).toString('base64url') // base64 returned
 }
 
 module.exports = sign
