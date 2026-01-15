@@ -1,0 +1,15 @@
+{
+  "name": "vestauth",
+  "version": "0.1.0",
+  "description": "vestauth",
+  "keywords": [
+    "vestauth"
+  ],
+  "license": "BSD-3-Clause",
+  "author": "motdotla",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
