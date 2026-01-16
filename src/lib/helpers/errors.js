@@ -5,7 +5,7 @@ class Errors {
 
   dangerousDependencyHoist () {
     const code = 'DANGEROUS_DEPENDENCY_HOIST'
-    const message = `[${code}] your environment has hoisted an incompatible version of a dotenvx dependency: ${this.message}`
+    const message = `[${code}] your environment has hoisted an incompatible version of a vestauth dependency: ${this.message}`
     const help = `[${code}] https://github.com/vestauth/vestauth`
 
     const e = new Error(message)
