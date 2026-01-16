@@ -1,0 +1,89 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+    tags: ['*']
+  pull_request:
+    branches: [main]
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 16.x
+      - run: npm install
+      - run: npm audit --omit=dev
+  standard:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 16.x
+      - run: npm install
+      - run: npm run standard
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 16.x
+      - name: install shellspec
+        run: curl -sfSL https://git.io/shellspec | sh -s 0.28.1 --yes
+      - run: which shellspec
+      - run: npm install
+      - run: |
+          npm run test 2>&1 | tee testResults.txt
+          test ${PIPESTATUS[0]} -eq 0
+  test-coverage:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+      - name: install shellspec
+        run: curl -sfSL https://git.io/shellspec | sh -s 0.28.1 --yes
+      - run: which shellspec
+      - run: npm install
+      - run: npm run test-coverage
+  test-pkg:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+      - run: npm install
+      - name: pkg
+        run: |
+          echo "pkg-ing"
+          node esbuild.js
+          cd ./build
+          ../node_modules/.bin/pkg . --public-packages "*" --public --target node20-linuxstatic-x86_64 --output ../bin/linux-x86_64/dotenvx
+      - name: verify version
+        run: |
+          cd bin/linux-x86_64/
+          RELEASED_VERSION=$(./dotenvx --version)
+          EXPECTED_VERSION=$(node -p "require('./../../package.json').version")
+          echo $RELEASED_VERSION
+          echo $EXPECTED_VERSION
+          if [ "$RELEASED_VERSION" != "$EXPECTED_VERSION" ]; then
+            echo "postrelease version mismatch: expected $EXPECTED_VERSION, got $RELEASED_VERSION"
+            exit 1
+          fi

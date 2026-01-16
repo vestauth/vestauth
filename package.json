@@ -16,6 +16,16 @@
   ],
   "license": "BSD-3-Clause",
   "main": "src/lib/main.js",
+  "exports": {
+    ".": {
+      "require": "./src/lib/main.js",
+      "default": "./src/lib/main.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "vestauth": "./src/cli/vestauth.js"
+  },
   "author": "@motdotla",
   "type": "commonjs",
   "scripts": {
@@ -23,8 +33,7 @@
     "standard:fix": "standard --fix",
     "test": "tap run --allow-empty-coverage --disable-coverage --timeout=60000",
     "test-coverage": "tap run --show-full-coverage --timeout=60000",
-    "testshell": "bash shellspec",
-    "prerelease": "npm test && npm run testshell",
+    "prerelease": "npm test",
     "release": "standard-version"
   },
   "dependencies": {
@@ -34,7 +43,13 @@
     "eciesjs": "^0.4.16"
   },
   "devDependencies": {
+    "@yao-pkg/pkg": "^5.14.2",
+    "capture-console": "^1.0.2",
+    "esbuild": "^0.25.8",
+    "proxyquire": "^2.1.3",
+    "sinon": "^14.0.1",
     "standard": "^17.1.0",
-    "standard-version": "^9.5.0"
+    "standard-version": "^9.5.0",
+    "tap": "^21.0.1"
   }
 }
