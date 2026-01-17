@@ -11,7 +11,16 @@ async function sign (challenge, privateKeyHex) {
 
   const signature = await main.sign(challenge, privateKeyHex)
 
-  console.log(signature)
+  const output = {
+    signature
+  }
+
+  let space = 0
+  if (options.prettyPrint) {
+    space = 2
+  }
+
+  console.log(JSON.stringify(output, null, space))
 }
 
 module.exports = sign

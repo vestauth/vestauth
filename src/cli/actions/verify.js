@@ -10,9 +10,19 @@ async function verify (challenge, signatureBase64, publicKeyHex) {
   const options = this.opts()
   logger.debug(`options: ${JSON.stringify(options)}`)
 
-  const isValid = main.verify(challenge, signatureBase64, publicKeyHex)
+  const success = main.verify(challenge, signatureBase64, publicKeyHex)
 
-  console.log(isValid)
+  const output = {
+    success,
+    public_key: publicKeyHex
+  }
+
+  let space = 0
+  if (options.prettyPrint) {
+    space = 2
+  }
+
+  console.log(JSON.stringify(output, null, space))
 }
 
 module.exports = verify

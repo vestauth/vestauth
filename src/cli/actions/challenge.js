@@ -8,7 +8,16 @@ function challenge () {
 
   const chal = main.challenge()
 
-  console.log(chal)
+  const output = {
+    callenge: chal
+  }
+
+  let space = 0
+  if (options.prettyPrint) {
+    space = 2
+  }
+
+  console.log(JSON.stringify(output, null, space))
 }
 
 module.exports = challenge

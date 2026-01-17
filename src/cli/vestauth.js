@@ -42,6 +42,7 @@ program
 const challengeAction = require('./actions/challenge')
 program.command('challenge')
   .description('generate challenge')
+  .option('-pp, --pretty-print', 'pretty print output')
   .action(challengeAction)
 
 // vestauth hash [message]
@@ -49,6 +50,7 @@ const hashAction = require('./actions/hash')
 program.command('hash')
   .description('hash message')
   .argument('<message>', 'message string')
+  .option('-pp, --pretty-print', 'pretty print output')
   .action(hashAction)
 
 // vestauth keypair
@@ -65,6 +67,7 @@ program.command('sign')
   .description('sign challenge')
   .argument('<challenge>', 'challenge (base64url)')
   .argument('<privateKey>', 'private key (hex)')
+  .option('-pp, --pretty-print', 'pretty print output')
   .action(signAction)
 
 // vestauth verify
@@ -74,6 +77,7 @@ program.command('verify')
   .argument('<challenge>', 'challenge (base64url)')
   .argument('<signature>', 'signature (base64url)')
   .argument('<publicKey>', 'public key (hex)')
+  .option('-pp, --pretty-print', 'pretty print output')
   .action(verifyAction)
 
 // vestauth help
