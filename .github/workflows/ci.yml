@@ -187,6 +187,7 @@ jobs:
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
+  # run after release
   npm:
     needs: release
     runs-on: ubuntu-latest
@@ -207,3 +208,52 @@ jobs:
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ env.NODE_AUTH_TOKEN }}
+
+  vestauth-darwin-amd64:
+    needs: release
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: commit binary to github
+        uses: ./.github/actions/commit-binary-to-github
+        with:
+          version: ${GITHUB_REF#refs/tags/}
+          platform: darwin-amd64
+        env:
+          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+  vestauth-darwin-arm64:
+    needs: release
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: commit binary to github
+        uses: ./.github/actions/commit-binary-to-github
+        with:
+          version: ${GITHUB_REF#refs/tags/}
+          platform: darwin-arm64
+        env:
+          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+  vestauth-darwin-x86_64:
+    needs: release
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: commit binary to github
+        uses: ./.github/actions/commit-binary-to-github
+        with:
+          version: ${GITHUB_REF#refs/tags/}
+          platform: darwin-x86_64
+        env:
+          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
