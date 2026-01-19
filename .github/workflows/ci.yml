@@ -337,6 +337,38 @@ jobs:
         env:
           PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
+  vestauth-windows-amd64:
+    needs: release
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: commit binary to github
+        uses: ./.github/actions/commit-binary-to-github
+        with:
+          version: ${GITHUB_REF#refs/tags/}
+          platform: windows-amd64
+        env:
+          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+  vestauth-windows-x86_64:
+    needs: release
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: commit binary to github
+        uses: ./.github/actions/commit-binary-to-github
+        with:
+          version: ${GITHUB_REF#refs/tags/}
+          platform: windows-x86_64
+        env:
+          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
   # aggregate publish-all job to wait for all previous jobs to complete
   publish-all:
     runs-on: ubuntu-latest
@@ -351,8 +383,8 @@ jobs:
       - vestauth-linux-arm64
       - vestauth-linux-x86_64
       - vestauth-linux-armv7l
-      # - vestauth-windows-amd64
-      # - vestauth-windows-x86_64
+      - vestauth-windows-amd64
+      - vestauth-windows-x86_64
     steps:
       - name: publish-all aggregate step
         run: echo "publish-all completed"
@@ -420,3 +452,80 @@ jobs:
           done
           echo "[DEPLOYMENT_FAILED]: VERSION did not update to ${{ env.CLEAN_VERSION }} within 5 minutes"
           exit 1
+
+  postrelease-npm:
+    needs: confirm-vestauth-sh
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 16.x
+      - name: sleep
+        run: sleep 60
+      - name: verify version
+        run: |
+          npm install @vestauth/vestauth --save
+          RELEASED_VERSION=$(npx @vestauth/vestauth --version)
+          EXPECTED_VERSION=$(node -p "require('./package.json').version")
+          echo $RELEASED_VERSION
+          echo $EXPECTED_VERSION
+          if [ "$RELEASED_VERSION" != "$EXPECTED_VERSION" ]; then
+            echo "postrelease version mismatch: expected $EXPECTED_VERSION, got $RELEASED_VERSION"
+            exit 1
+          fi
+
+  postrelease-ubuntu:
+    needs: confirm-vestauth-sh
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 16.x
+      - name: sleep
+        run: sleep 60
+      - name: install vestauth
+        run: curl -fsS https://vestauth.sh/ | sh
+      - name: verify version
+        run: |
+          RELEASED_VERSION=$(vestauth --version)
+          EXPECTED_VERSION=$(node -p "require('./package.json').version")
+          echo $RELEASED_VERSION
+          echo $EXPECTED_VERSION
+          if [ "$RELEASED_VERSION" != "$EXPECTED_VERSION" ]; then
+            echo "postrelease version mismatch: expected $EXPECTED_VERSION, got $RELEASED_VERSION"
+            exit 1
+          fi
+
+  postrelease-windows:
+    needs: confirm-vestauth-sh
+    runs-on: windows-latest
+    strategy:
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 16.x
+      - name: sleep
+        run: sleep 60
+      - name: install vestauth
+        run: |
+          curl -L -o vestauth-windows-x86_64.zip https://github.com/vestauth/releases/blob/main/latest/vestauth-windows-x86_64.zip?raw=true
+          Expand-Archive -Path vestauth-windows-x86_64.zip -DestinationPath .\vestauth
+      - name: verify version
+        run: |
+          $RELEASED_VERSION = .\vestauth\vestauth.exe --version
+          $EXPECTED_VERSION = node -p "require('./package.json').version"
+          Write-Output "released version: $RELEASED_VERSION"
+          Write-Output "expected version: $EXPECTED_VERSION"
+          if ($RELEASED_VERSION -ne $EXPECTED_VERSION) {
+            Write-Output "postrelease version mismatch: expected $EXPECTED_VERSION, got $RELEASED_VERSION"
+            exit 1
+          }
+        shell: pwsh
