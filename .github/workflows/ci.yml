@@ -257,7 +257,7 @@ jobs:
         env:
           PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
-  dotenvx-linux-armv7l:
+  vestauth-linux-armv7l:
     needs: release
     runs-on: ubuntu-latest
     strategy:
@@ -273,7 +273,7 @@ jobs:
         env:
           PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
-  dotenvx-linux-aarch64:
+  vestauth-linux-aarch64:
     needs: release
     runs-on: ubuntu-latest
     strategy:
@@ -289,7 +289,7 @@ jobs:
         env:
           PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
-  dotenvx-linux-amd64:
+  vestauth-linux-amd64:
     needs: release
     runs-on: ubuntu-latest
     strategy:
@@ -305,7 +305,7 @@ jobs:
         env:
           PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
-  dotenvx-linux-arm64:
+  vestauth-linux-arm64:
     needs: release
     runs-on: ubuntu-latest
     strategy:
@@ -321,7 +321,7 @@ jobs:
         env:
           PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
-  dotenvx-linux-x86_64:
+  vestauth-linux-x86_64:
     needs: release
     runs-on: ubuntu-latest
     strategy:
