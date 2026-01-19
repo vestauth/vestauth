@@ -9,7 +9,7 @@ function challenge () {
   const chal = main.challenge()
 
   const output = {
-    callenge: chal
+    challenge: chal
   }
 
   let space = 0
