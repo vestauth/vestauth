@@ -187,6 +187,28 @@ jobs:
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
+      - name: checkout vestauth/releases repo
+        uses: actions/checkout@v4
+        with:
+          repository: "vestauth/releases"
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          path: "releases"
+      - name: copy dist/* files to release repo
+        run: |
+          mkdir -p releases/latest
+          cp -r dist/* releases/latest
+          echo "${{ env.CLEAN_VERSION }}" > releases/VERSION
+          cp README.md releases/latest/README.md
+      - name: commit and push
+        run: |
+          cd releases
+          git config --global user.name 'motdotenv'
+          git config --global user.email 'mot@dotenv.org'
+          git add .
+          git commit -m "${{ env.VERSION }}"
+          git tag "${{ env.VERSION }}"
+          git push origin HEAD --tags
+
   # run after release
   npm:
     needs: release
@@ -467,8 +489,8 @@ jobs:
         run: sleep 60
       - name: verify version
         run: |
-          npm install @vestauth/vestauth --save
-          RELEASED_VERSION=$(npx @vestauth/vestauth --version)
+          npm install vestauth --save
+          RELEASED_VERSION=$(npx vestauth --version)
           EXPECTED_VERSION=$(node -p "require('./package.json').version")
           echo $RELEASED_VERSION
           echo $EXPECTED_VERSION
