@@ -261,7 +261,7 @@ jobs:
   publish-all:
     runs-on: ubuntu-latest
     needs: 
-      - homebrew
+      # - homebrew
       - npm
       - vestauth-darwin-amd64
       - vestauth-darwin-arm64
