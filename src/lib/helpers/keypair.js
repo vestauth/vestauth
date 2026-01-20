@@ -1,6 +1,6 @@
 const { PrivateKey } = require('eciesjs')
 
-function keypair (existingPrivateKey) {
+function keypair (existingPrivateKey, prefix = 'agent') {
   let kp
 
   if (existingPrivateKey) {
@@ -9,8 +9,18 @@ function keypair (existingPrivateKey) {
     kp = new PrivateKey()
   }
 
-  const publicKey = kp.publicKey.toHex()
-  const privateKey = kp.secret.toString('hex')
+  let publicKey = kp.publicKey.toHex()
+  let privateKey = kp.secret.toString('hex')
+
+  if (prefix === 'agent') {
+    publicKey = `agent_pub_${publicKey}`
+    privateKey = `agent_prv_${privateKey}`
+  }
+
+  if (prefix === 'provider') {
+    publicKey = `provider_pub_${publicKey}`
+    privateKey = `provider_prv_${privateKey}`
+  }
 
   return {
     publicKey,

@@ -58,6 +58,7 @@ const keypairAction = require('./actions/keypair')
 program.command('keypair')
   .description('generate public/private keypair')
   .argument('[private_key]', 'pre-existing private key')
+  .option('--prefix <type>', 'agent (default) | provider | none', 'agent')
   .option('-pp, --pretty-print', 'pretty print output')
   .action(keypairAction)
 

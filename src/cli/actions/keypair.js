@@ -6,7 +6,7 @@ function keypair (existingPrivateKey) {
   const options = this.opts()
   logger.debug(`options: ${JSON.stringify(options)}`)
 
-  const kp = main.keypair(existingPrivateKey)
+  const kp = main.keypair(existingPrivateKey, options.prefix)
 
   const output = {
     public_key: kp.publicKey,
