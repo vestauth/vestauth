@@ -2,16 +2,15 @@ const { logger } = require('./../../shared/logger')
 
 const main = require('./../../lib/main')
 
-async function verifyAgent (providerPrivateKey, providerChallenge, agentPublicKey, agentSignature) {
+async function verifyAgent (providerPrivateKey, providerChallenge, authorizationHeader) {
   logger.debug(`providerPrivateKey: ${providerPrivateKey}`)
   logger.debug(`providerChallenge: ${providerChallenge}`)
-  logger.debug(`agentPublicKey: ${agentPublicKey}`)
-  logger.debug(`agentSignature: ${agentSignature}`)
+  logger.debug(`authorizationHeader: ${authorizationHeader}`)
 
   const options = this.opts()
   logger.debug(`options: ${JSON.stringify(options)}`)
 
-  const json = await main.verifyAgent(providerPrivateKey, providerChallenge, agentPublicKey, agentSignature)
+  const json = await main.verifyAgent(providerPrivateKey, providerChallenge, authorizationHeader)
 
   let space = 0
   if (options.prettyPrint) {
