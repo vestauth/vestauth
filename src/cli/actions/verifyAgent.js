@@ -2,7 +2,7 @@ const { logger } = require('./../../shared/logger')
 
 const main = require('./../../lib/main')
 
-async function verifyAgent(providerPrivateKey, providerChallenge, agentPublicKey, agentSignature) {
+async function verifyAgent (providerPrivateKey, providerChallenge, agentPublicKey, agentSignature) {
   logger.debug(`providerPrivateKey: ${providerPrivateKey}`)
   logger.debug(`providerChallenge: ${providerChallenge}`)
   logger.debug(`agentPublicKey: ${agentPublicKey}`)
