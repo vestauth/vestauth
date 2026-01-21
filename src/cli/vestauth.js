@@ -81,6 +81,17 @@ program.command('verify')
   .option('-pp, --pretty-print', 'pretty print output')
   .action(verifyAction)
 
+// vestauth verifyAgent
+const verifyAgentAction = require('./actions/verifyAgent')
+program.command('verifyagent')
+  .description('verify agent')
+  .argument('<providerPrivateKey>', '')
+  .argument('<providerChallenge>', '')
+  .argument('<agentPublicKey>', '')
+  .argument('<agentSignature>', '')
+  .option('-pp, --pretty-print', 'pretty print output')
+  .action(verifyAgentAction)
+
 // vestauth help
 program.command('help [command]')
   .description('display help for command')

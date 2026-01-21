@@ -1,10 +1,13 @@
 const { PrivateKey } = require('eciesjs')
 
+const stripFormatting = require('./stripFormatting')
+
 function keypair (existingPrivateKey, prefix = 'agent') {
   let kp
 
   if (existingPrivateKey) {
-    kp = new PrivateKey(Buffer.from(existingPrivateKey, 'hex'))
+    const existingPrivateKeyStripped = stripFormatting(existingPrivateKey)
+    kp = new PrivateKey(Buffer.from(existingPrivateKeyStripped, 'hex'))
   } else {
     kp = new PrivateKey()
   }
