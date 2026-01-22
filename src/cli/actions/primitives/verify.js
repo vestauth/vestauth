@@ -1,6 +1,6 @@
 const { logger } = require('./../../../shared/logger')
 
-const main = require('./../../../lib/main')
+const primitives = require('./../../../lib/primitives')
 
 async function verify (challenge, signatureBase64, publicKeyHex) {
   logger.debug(`challenge: ${challenge}`)
@@ -10,7 +10,7 @@ async function verify (challenge, signatureBase64, publicKeyHex) {
   const options = this.opts()
   logger.debug(`options: ${JSON.stringify(options)}`)
 
-  const success = main.verify(challenge, signatureBase64, publicKeyHex)
+  const success = primitives.verify(challenge, signatureBase64, publicKeyHex)
 
   const output = {
     success,

@@ -1,12 +1,12 @@
 const { logger } = require('./../../../shared/logger')
 
-const main = require('./../../../lib/main')
+const primitives = require('./../../../lib/primitives')
 
 function challenge () {
   const options = this.opts()
   logger.debug(`options: ${JSON.stringify(options)}`)
 
-  const chal = main.challenge()
+  const chal = primitives.challenge()
 
   const output = {
     challenge: chal

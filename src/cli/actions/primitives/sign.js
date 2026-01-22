@@ -1,6 +1,6 @@
 const { logger } = require('./../../../shared/logger')
 
-const main = require('./../../../lib/main')
+const primitives = require('./../../../lib/primitives')
 
 async function sign (challenge, privateKeyHex) {
   logger.debug(`challenge: ${challenge}`)
@@ -9,7 +9,7 @@ async function sign (challenge, privateKeyHex) {
   const options = this.opts()
   logger.debug(`options: ${JSON.stringify(options)}`)
 
-  const signature = await main.sign(challenge, privateKeyHex)
+  const signature = await primitives.sign(challenge, privateKeyHex)
 
   const output = {
     signature
