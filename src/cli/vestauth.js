@@ -38,6 +38,9 @@ program
   .version(packageJson.version)
   .allowUnknownOption()
 
+// dotenvx agent
+program.addCommand(require('./commands/agent'))
+
 // vestauth verifyAgent
 const verifyAgentAction = require('./actions/verifyAgent')
 program.command('verifyagent')
