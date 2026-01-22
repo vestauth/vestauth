@@ -37,7 +37,7 @@
     "release": "standard-version"
   },
   "dependencies": {
-    "@dotenvx/dotenvx": "^1.51.4",
+    "@dotenvx/dotenvx": "^1.52.0",
     "@noble/hashes": "^1.8.0",
     "@noble/secp256k1": "^1.7.2",
     "commander": "^11.1.0",
