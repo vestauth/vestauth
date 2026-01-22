@@ -38,49 +38,6 @@ program
   .version(packageJson.version)
   .allowUnknownOption()
 
-// vestauth challenge
-const challengeAction = require('./actions/challenge')
-program.command('challenge')
-  .description('generate challenge')
-  .option('-pp, --pretty-print', 'pretty print output')
-  .action(challengeAction)
-
-// vestauth hash [message]
-const hashAction = require('./actions/hash')
-program.command('hash')
-  .description('hash message')
-  .argument('<message>', 'message string')
-  .option('-pp, --pretty-print', 'pretty print output')
-  .action(hashAction)
-
-// vestauth keypair
-const keypairAction = require('./actions/keypair')
-program.command('keypair')
-  .description('generate public/private keypair')
-  .argument('[private_key]', 'pre-existing private key')
-  .option('--prefix <type>', 'agent (default) | provider | none', 'agent')
-  .option('-pp, --pretty-print', 'pretty print output')
-  .action(keypairAction)
-
-// vestauth sign
-const signAction = require('./actions/sign')
-program.command('sign')
-  .description('sign challenge')
-  .argument('<challenge>', 'challenge (base64url)')
-  .argument('<privateKey>', 'private key (hex)')
-  .option('-pp, --pretty-print', 'pretty print output')
-  .action(signAction)
-
-// vestauth verify
-const verifyAction = require('./actions/verify')
-program.command('verify')
-  .description('verify signature')
-  .argument('<challenge>', 'challenge (base64url)')
-  .argument('<signature>', 'signature (base64url)')
-  .argument('<publicKey>', 'public key (hex)')
-  .option('-pp, --pretty-print', 'pretty print output')
-  .action(verifyAction)
-
 // vestauth verifyAgent
 const verifyAgentAction = require('./actions/verifyAgent')
 program.command('verifyagent')
@@ -90,6 +47,9 @@ program.command('verifyagent')
   .argument('<authorizationHeader>', '')
   .option('-pp, --pretty-print', 'pretty print output')
   .action(verifyAgentAction)
+
+// dotenvx primitive
+program.addCommand(require('./commands/primitives'))
 
 // vestauth help
 program.command('help [command]')
