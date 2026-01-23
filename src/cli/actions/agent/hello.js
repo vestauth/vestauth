@@ -6,7 +6,6 @@ function hello () {
   const options = this.opts()
   logger.debug(`options: ${JSON.stringify(options)}`)
 
-
   const output = {
     hello: agent.hello()
   }

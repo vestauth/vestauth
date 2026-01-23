@@ -1,5 +1,4 @@
 const { http } = require('./http')
-const buildApiError = require('./buildApiError')
 const sign = require('./sign')
 const dotenvx = require('@dotenvx/dotenvx')
 

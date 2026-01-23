@@ -21,7 +21,6 @@ agent.command('init')
   .option('-pp, --pretty-print', 'pretty print output')
   .action(initAction)
 
-
 // vestauth agent hello
 const helloAction = require('./../actions/agent/hello')
 agent.command('hello')
