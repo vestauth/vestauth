@@ -2,9 +2,6 @@ const dotenvx = require('@dotenvx/dotenvx')
 const keypair = require('./keypair')
 const touch = require('./touch')
 
-const PUBLIC_KEYNAME = 'AGENT_PUBLIC_KEY'
-const PRIVATE_KEYNAME = 'AGENT_PRIVATE_KEY'
-
 function agentInit () {
   const envPath = '.env'
 
