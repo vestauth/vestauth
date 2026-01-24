@@ -43,6 +43,7 @@ async function agentAuth (website) {
   }
 
   const json = await resp.body.json()
+  // ok and if a success what should i do here? should i store the challenge to the .env file?
   return json
 }
 
