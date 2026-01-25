@@ -40,6 +40,8 @@ program
 
 // dotenvx agent
 program.addCommand(require('./commands/agent'))
+// dotenvx provider
+program.addCommand(require('./commands/provider'))
 
 // vestauth verifyAgent
 const verifyAgentAction = require('./actions/verifyAgent')

@@ -1,4 +1,4 @@
-[![vestauth](https://vestauth.com/banner.png)](https://vestauth.com)
+[![vestauth](https://vestauth.com/better-banner.png)](https://vestauth.com)
 
 *auth for agents*–from the creator of [`dotenvx`](https://github.com/dotenvx/dotenvx).
 
