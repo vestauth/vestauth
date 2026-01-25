@@ -30,6 +30,13 @@ primitives.command('keypair')
   .option('-pp, --pretty-print', 'pretty print output')
   .action(keypairAction)
 
+// vestauth primitives keypair2
+const keypair2Action = require('./../actions/primitives/keypair2')
+primitives.command('keypair2')
+  .description('generate public/private keypair')
+  .option('-pp, --pretty-print', 'pretty print output')
+  .action(keypair2Action)
+
 // vestauth primitives sign
 const signAction = require('./../actions/primitives/sign')
 primitives.command('sign')
