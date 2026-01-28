@@ -2,14 +2,13 @@ const crypto = require('crypto')
 const { URL } = require('url')
 const edPrivateKeyObject = require('./edPrivateKeyObject')
 const thumbprint = require('./thumbprint')
+const signatureParams = require('./signatureParams')
 
 async function signature2 (privateKeyString, tag = 'vestauth') {
   const privateKey = JSON.parse(privateKeyString)
 
   const kid = thumbprint(privateKey)
   privateKey.kid = kid
-
-  console.log(`kid: ${kid}`)
 
   const url = 'https://example.com'
   const now = new Date()
@@ -20,21 +19,14 @@ async function signature2 (privateKeyString, tag = 'vestauth') {
   const request = new Request(url)
   const privateKeyObject = edPrivateKeyObject(privateKey)
 
-  const nonce = crypto.randomBytes(64).toString('base64')
   const u = new URL(request.url)
-  const signatureInput =
-    '("@authority");' +
-    `created=${Math.floor(created / 1000)};` +
-    `keyid="${privateKey.kid}";` +
-    'alg="ed25519";' +
-    `expires=${Math.floor(expires / 1000)};` +
-    `nonce="${nonce}";` +
-    `tag="${tag}"`
+
+  const _sigParams = signatureParams(privateKey.kid, tag)
 
   const base = [
     `"@method": ${request.method.toUpperCase()}`,
     `"@target-uri": ${u.toString()}`,
-    `"@signature-params": ${signatureInput}`
+    `"@signature-params": ${_sigParams}`
   ].join('\n')
 
   const signature = crypto.sign(
@@ -45,7 +37,7 @@ async function signature2 (privateKeyString, tag = 'vestauth') {
 
   const headers = {
     Signature: `sig1=:${signature}:`,
-    'Signature-Input': `sig1=${signatureInput}`
+    'Signature-Input': `sig1=${_sigParams}`
   }
 
   return {
