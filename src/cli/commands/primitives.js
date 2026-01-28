@@ -41,6 +41,8 @@ primitives.command('keypair2')
 const signature2Action = require('./../actions/primitives/signature2')
 primitives.command('signature2')
   .description('generate signature')
+  .argument('<privateKey>', 'private key (json string)')
+  .option('--tag <tag>', 'vestauth (default) | web-bot-auth', 'vestauth')
   .option('-pp, --pretty-print', 'pretty print output')
   .action(signature2Action)
 
