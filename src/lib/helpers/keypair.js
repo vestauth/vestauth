@@ -7,8 +7,6 @@ function keypair (existingPrivateKey, prefix = 'agent') {
   let privateJwk
 
   if (existingPrivateKey) {
-
-
     // example
     // {
     //   "crv": "Ed25519",
@@ -17,7 +15,7 @@ function keypair (existingPrivateKey, prefix = 'agent') {
     //   "kty": "OKP",
     //   "kid": "rBE7_zLOVYk4oYEdI-01qpXHWNMyZYD-4LEf6HiyZ9Q"
     // }
-    // (publicKey just removex 'd')
+    // (publicKey just remove 'd')
 
     privateJwk = JSON.parse(existingPrivateKey)
     publicJwk = {
