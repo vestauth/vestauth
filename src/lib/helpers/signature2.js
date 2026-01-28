@@ -11,10 +11,10 @@ async function signature2 () {
     kty: 'OKP',
     crv: 'Ed25519',
     d: 'n4Ni-HpISpVObnQMW0wOhCKROaIKqKtW_2ZYb2p9KcU',
-    x: 'JrQLj5P_89iXES9-vFgrIy29clF9CC_oPPsw3c5D0bs',
+    x: 'JrQLj5P_89iXES9-vFgrIy29clF9CC_oPPsw3c5D0bs'
   }
   const kid = thumbprint(RFC_9421_ED25519_TEST_KEY)
-  RFC_9421_ED25519_TEST_KEY['kid'] = kid
+  RFC_9421_ED25519_TEST_KEY.kid = kid
 
   console.log(`kid: ${kid}`)
 
@@ -33,18 +33,18 @@ async function signature2 () {
   const nonce = crypto.randomBytes(32).toString('base64url')
   const u = new URL(request.url)
   const signatureInput =
-    `("@authority");` +
+    '("@authority");' +
     `created=${Math.floor(created / 1000)};` +
     `keyid="${RFC_9421_ED25519_TEST_KEY.kid}";` +
-    `alg="ed25519";` +
+    'alg="ed25519";' +
     `expires=${Math.floor(expires / 1000)};` +
     `nonce="${nonce}";` +
-    `tag="vestauth"`
+    'tag="vestauth"'
 
   const base = [
     `"@method": ${request.method.toUpperCase()}`,
     `"@target-uri": ${u.toString()}`,
-    `"@signature-params": ${signatureInput}`,
+    `"@signature-params": ${signatureInput}`
   ].join('\n')
 
   const signature = crypto.sign(
@@ -54,13 +54,13 @@ async function signature2 () {
   ).toString('base64')
 
   const headers2 = {
-    'Signature': `sig1=:${signature}:`,
-    'Signature-Input': `sig1=${signatureInput}`,
+    Signature: `sig1=:${signature}:`,
+    'Signature-Input': `sig1=${signatureInput}`
   }
 
   return {
-    headers: headers,
-    headers2: headers2
+    headers,
+    headers2
   }
 }
 

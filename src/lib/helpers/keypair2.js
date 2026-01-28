@@ -12,8 +12,8 @@ function keypair2 () {
   const privateJwk = privateKey.export({ format: 'jwk' })
   const kid = thumbprint(publicJwk)
 
-  publicJwk['kid'] = kid
-  privateJwk['kid'] = kid
+  publicJwk.kid = kid
+  privateJwk.kid = kid
 
   // let kp
 
