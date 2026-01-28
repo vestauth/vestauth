@@ -37,14 +37,16 @@ primitives.command('keypair2')
   .option('-pp, --pretty-print', 'pretty print output')
   .action(keypair2Action)
 
-// vestauth primitives signature2
-const signature2Action = require('./../actions/primitives/signature2')
-primitives.command('signature2')
-  .description('generate signature')
+// vestauth primitives headers
+const headersAction = require('./../actions/primitives/headers')
+primitives.command('headers')
+  .description('generate signed headers')
+  .argument('<httpMethod>', 'GET (default)')
+  .argument('<uri>', '')
   .argument('<privateKey>', 'private key (json string)')
   .option('--tag <tag>', 'vestauth (default) | web-bot-auth', 'vestauth')
   .option('-pp, --pretty-print', 'pretty print output')
-  .action(signature2Action)
+  .action(headersAction)
 
 // vestauth primitives sign
 const signAction = require('./../actions/primitives/sign')

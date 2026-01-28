@@ -2,13 +2,15 @@ const { logger } = require('./../../../shared/logger')
 
 const primitives = require('./../../../lib/primitives')
 
-async function signature2 (privateKey) {
+async function headers (httpMethod, uri, privateKey) {
+  logger.debug(`httpMethod: ${httpMethod}`)
+  logger.debug(`uri: ${uri}`)
   logger.debug(`privateKey: ${privateKey}`)
 
   const options = this.opts()
   logger.debug(`options: ${JSON.stringify(options)}`)
 
-  const output = await primitives.signature2(privateKey, options.tag)
+  const output = await primitives.headers(httpMethod, uri, privateKey, options.tag)
 
   let space = 0
   if (options.prettyPrint) {
@@ -18,4 +20,4 @@ async function signature2 (privateKey) {
   console.log(JSON.stringify(output, null, space))
 }
 
-module.exports = signature2
+module.exports = headers
