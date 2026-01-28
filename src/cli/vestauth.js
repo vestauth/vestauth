@@ -38,10 +38,9 @@ program
   .version(packageJson.version)
   .allowUnknownOption()
 
-// dotenvx agent
 program.addCommand(require('./commands/agent'))
-// dotenvx provider
 program.addCommand(require('./commands/provider'))
+program.addCommand(require('./commands/primitives'))
 
 // vestauth verifyAgent
 const verifyAgentAction = require('./actions/verifyAgent')
@@ -52,9 +51,6 @@ program.command('verifyagent')
   .argument('<authorizationHeader>', '')
   .option('-pp, --pretty-print', 'pretty print output')
   .action(verifyAgentAction)
-
-// dotenvx primitive
-program.addCommand(require('./commands/primitives'))
 
 // vestauth help
 program.command('help [command]')

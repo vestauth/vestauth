@@ -14,8 +14,8 @@ function agentInit () {
   touch(envPath)
 
   // place in .env file
-  dotenvx.set('AGENT_PUBLIC_KEY', kp.publicKey, { path: envPath, plain: true, quiet: true })
-  dotenvx.set('AGENT_PRIVATE_KEY', kp.privateKey, { path: envPath, plain: true, quiet: true })
+  dotenvx.set('AGENT_PUBLIC_KEY', JSON.stringify(kp.publicKey), { path: envPath, plain: true, quiet: true })
+  dotenvx.set('AGENT_PRIVATE_KEY', JSON.stringify(kp.privateKey), { path: envPath, plain: true, quiet: true })
 
   return {
     AGENT_PUBLIC_KEY: kp.publicKey,
