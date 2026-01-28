@@ -20,8 +20,6 @@ async function curl () {
     ...commandArgs
   ]
 
-  console.log(injected)
-
   const child = execute.execa(injected[0], injected.slice(1), { stdio: 'inherit' })
 
   // Wait for the command process to finish
