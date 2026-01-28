@@ -19,12 +19,12 @@ function keypair (existingPrivateKey, prefix = 'agent') {
 
     privateJwk = JSON.parse(existingPrivateKey)
     publicJwk = {
-      crv: privateJwk['crv'],
-      x: privateJwk['x'],
-      kty: privateJwk['kty'],
-      kid: privateJwk['kid'],
+      crv: privateJwk.crv,
+      x: privateJwk.x,
+      kty: privateJwk.kty,
+      kid: privateJwk.kid
     }
-    kid = thumbprint(publicJwk)
+    const kid = thumbprint(publicJwk)
     publicJwk.kid = kid
     privateJwk.kid = kid
   } else {
@@ -36,7 +36,7 @@ function keypair (existingPrivateKey, prefix = 'agent') {
     publicJwk = publicKey.export({ format: 'jwk' })
     privateJwk = privateKey.export({ format: 'jwk' })
 
-    kid = thumbprint(publicJwk)
+    const kid = thumbprint(publicJwk)
     publicJwk.kid = kid
     privateJwk.kid = kid
   }

@@ -10,37 +10,6 @@ async function agentHeaders (httpMethod, uri, tag = 'vestauth', nonce = null) {
   if (!publicKey && !privateKey) throw new Error('missing AGENT_PUBLIC_KEY and AGENT_PRIVATE_KEY. Run [vestauth agent init]')
 
   return await headers(httpMethod, uri, privateKey, tag, nonce)
-
-  // let signature
-  // const url = `${website}/agent/auth`
-  // if (!signature) {
-  //   const resp = await http(url, {
-  //     method: 'POST',
-  //     headers: {
-  //       Authorization: `Agent ${publicKey}:${signature}`,
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify({})
-  //   })
-  //   const json = await resp.body.json()
-  //   const challenge = json.challenge // grab challenge
-  //   signature = await sign(challenge, privateKey)
-  // }
-  // const resp = await http(url, {
-  //   method: 'POST',
-  //   headers: {
-  //     Authorization: `Agent ${publicKey}:${signature}`,
-  //     'Content-Type': 'application/json'
-  //   },
-  //   body: JSON.stringify({})
-  // })
-  // if (resp.statusCode >= 400) {
-  //   const json = await resp.body.json()
-  //   return json
-  // }
-  // const json = await resp.body.json()
-  // ok and if a success what should i do here? should i store the challenge to the .env file?
-  // return json
 }
 
 module.exports = agentHeaders

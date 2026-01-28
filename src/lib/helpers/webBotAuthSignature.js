@@ -1,7 +1,7 @@
 const crypto = require('crypto')
 const edPrivateKeyObject = require('./edPrivateKeyObject')
 
-function webBotAuthSignature(method = 'GET', uri = '', signatureParams, privateKey) {
+function webBotAuthSignature (method = 'GET', uri = '', signatureParams, privateKey) {
   const message = [
     `"@method": ${method.toUpperCase()}`,
     `"@target-uri": ${uri}`,

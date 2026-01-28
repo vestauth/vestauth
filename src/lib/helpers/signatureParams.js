@@ -1,14 +1,11 @@
 const crypto = require('crypto')
 
-function signatureParams (kid, tag = 'vestauth', nonce = null) {
-  const now = new Date()
-  const now_plus = new Date(now.getTime() + 300_000) // now + 5 min
+const epoch = require('./epoch')
 
-  const created = Math.floor(now / 1000)
-  const expires = Math.floor(now_plus / 1000)
-  if (!nonce) {
-    nonce = crypto.randomBytes(64).toString('base64')
-  }
+function signatureParams (kid, tag = 'vestauth', nonce = null) {
+  const { created, expires } = epoch()
+
+  if (!nonce) nonce = crypto.randomBytes(64).toString('base64')
 
   return '("@authority");' +
     `created=${created};` +

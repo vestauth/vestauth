@@ -42,6 +42,7 @@
     "@noble/secp256k1": "^1.7.2",
     "commander": "^11.1.0",
     "eciesjs": "^0.4.16",
+    "execa": "^5.1.1",
     "undici": "7.11.0",
     "web-bot-auth": "^0.1.2"
   },
