@@ -1,5 +1,5 @@
 const dotenvx = require('@dotenvx/dotenvx')
-const keypair = require('./keypair')
+const keypairOld = require('./keypairOld')
 const touch = require('./touch')
 
 function agentInit () {
@@ -9,7 +9,7 @@ function agentInit () {
   let currentPrivateKey = null
   try { currentPrivateKey = dotenvx.get('AGENT_PRIVATE_KEY', { strict: true }) } catch (e) {}
 
-  const kp = keypair(currentPrivateKey, 'agent')
+  const kp = keypairOld(currentPrivateKey, 'agent')
 
   touch(envPath)
 

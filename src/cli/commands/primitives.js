@@ -25,17 +25,10 @@ primitives.command('hash')
 const keypairAction = require('./../actions/primitives/keypair')
 primitives.command('keypair')
   .description('generate public/private keypair')
-  .argument('[private_key]', 'pre-existing private key')
+  .argument('[privateKey]', 'pre-existing private key')
   .option('--prefix <type>', 'agent (default) | provider | none', 'agent')
   .option('-pp, --pretty-print', 'pretty print output')
   .action(keypairAction)
-
-// vestauth primitives keypair2
-const keypair2Action = require('./../actions/primitives/keypair2')
-primitives.command('keypair2')
-  .description('generate public/private keypair')
-  .option('-pp, --pretty-print', 'pretty print output')
-  .action(keypair2Action)
 
 // vestauth primitives headers
 const headersAction = require('./../actions/primitives/headers')

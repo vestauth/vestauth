@@ -1,33 +1,51 @@
-const { PrivateKey } = require('eciesjs')
+const crypto = require('crypto')
 
-const stripFormatting = require('./stripFormatting')
+const thumbprint = require('./thumbprint')
 
 function keypair (existingPrivateKey, prefix = 'agent') {
-  let kp
+  let publicJwk
+  let privateJwk
 
   if (existingPrivateKey) {
-    const existingPrivateKeyStripped = stripFormatting(existingPrivateKey)
-    kp = new PrivateKey(Buffer.from(existingPrivateKeyStripped, 'hex'))
+
+
+    // example
+    // {
+    //   "crv": "Ed25519",
+    //   "d": "eScKeQcawvvRiBuA_-gWaAP7PZ3UUGPqJv7jks5tFVI",
+    //   "x": "MYf21IkWEi6dXOtzUdbll3SMCaFiSFi4KgqktFZinCE",
+    //   "kty": "OKP",
+    //   "kid": "rBE7_zLOVYk4oYEdI-01qpXHWNMyZYD-4LEf6HiyZ9Q"
+    // }
+    // (publicKey just removex 'd')
+
+    privateJwk = JSON.parse(existingPrivateKey)
+    publicJwk = {
+      crv: privateJwk['crv'],
+      x: privateJwk['x'],
+      kty: privateJwk['kty'],
+      kid: privateJwk['kid'],
+    }
+    kid = thumbprint(publicJwk)
+    publicJwk.kid = kid
+    privateJwk.kid = kid
   } else {
-    kp = new PrivateKey()
-  }
+    const {
+      publicKey,
+      privateKey
+    } = crypto.generateKeyPairSync('ed25519')
 
-  let publicKey = kp.publicKey.toHex()
-  let privateKey = kp.secret.toString('hex')
+    publicJwk = publicKey.export({ format: 'jwk' })
+    privateJwk = privateKey.export({ format: 'jwk' })
 
-  if (prefix === 'agent') {
-    publicKey = `agent_pub_${publicKey}`
-    privateKey = `agent_prv_${privateKey}`
-  }
-
-  if (prefix === 'provider') {
-    publicKey = `provider_pub_${publicKey}`
-    privateKey = `provider_prv_${privateKey}`
+    kid = thumbprint(publicJwk)
+    publicJwk.kid = kid
+    privateJwk.kid = kid
   }
 
   return {
-    publicKey,
-    privateKey
+    publicKey: publicJwk,
+    privateKey: privateJwk
   }
 }
 

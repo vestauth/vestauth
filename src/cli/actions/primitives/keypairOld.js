@@ -2,11 +2,11 @@ const { logger } = require('./../../../shared/logger')
 
 const primitives = require('./../../../lib/primitives')
 
-function keypair2 () {
+function keypairOld (existingPrivateKey) {
   const options = this.opts()
   logger.debug(`options: ${JSON.stringify(options)}`)
 
-  const kp = primitives.keypair2()
+  const kp = primitives.keypairOld(existingPrivateKey, options.prefix)
 
   const output = {
     public_key: kp.publicKey,
@@ -21,4 +21,4 @@ function keypair2 () {
   console.log(JSON.stringify(output, null, space))
 }
 
-module.exports = keypair2
+module.exports = keypairOld
