@@ -1,16 +1,15 @@
 const { logger } = require('./../../../shared/logger')
 
-const primitives = require('./../../../lib/primitives')
+const agent = require('./../../../lib/agent')
 
-async function headers (httpMethod, uri, privateKey) {
+async function headers (httpMethod, uri) {
   logger.debug(`httpMethod: ${httpMethod}`)
   logger.debug(`uri: ${uri}`)
-  logger.debug(`privateKey: ${privateKey}`)
 
   const options = this.opts()
   logger.debug(`options: ${JSON.stringify(options)}`)
 
-  const output = await primitives.headers(httpMethod, uri, privateKey, options.tag, options.nonce)
+  const output = await agent.headers(httpMethod, uri, options.tag, options.nonce)
 
   let space = 0
   if (options.prettyPrint) {

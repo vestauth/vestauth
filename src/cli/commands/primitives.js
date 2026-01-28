@@ -38,6 +38,7 @@ primitives.command('headers')
   .argument('<uri>', '')
   .argument('<privateKey>', 'private key (json string)')
   .option('--tag <tag>', 'vestauth (default) | web-bot-auth', 'vestauth')
+  .option('--nonce <nonce>', 'null (default)')
   .option('-pp, --pretty-print', 'pretty print output')
   .action(headersAction)
 

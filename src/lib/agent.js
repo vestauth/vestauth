@@ -1,9 +1,9 @@
-const agentAuth = require('./helpers/agentAuth')
+const agentHeaders = require('./helpers/agentHeaders')
 const agentInit = require('./helpers/agentInit')
 const hello = require('./helpers/hello')
 
 module.exports = {
-  auth: agentAuth,
   init: agentInit,
+  headers: agentHeaders,
   hello
 }
