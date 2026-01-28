@@ -1,9 +1,9 @@
 const PostVerify = require('../api/postVerify')
-const keypair = require('./keypair')
+const keypairOld = require('./keypairOld')
 const sign = require('./sign')
 
 async function verifyAgent (providerPrivateKey, providerChallenge, authorizationHeader) {
-  const kp = keypair(providerPrivateKey, 'provider')
+  const kp = keypairOld(providerPrivateKey, 'provider')
   const providerSignature = await sign(providerChallenge, kp.privateKey)
 
   const raw = authorizationHeader.replace(/^Agent\s+/i, '').trim() // remove 'Agent ' prefix

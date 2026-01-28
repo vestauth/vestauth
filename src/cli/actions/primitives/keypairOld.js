@@ -1,13 +1,16 @@
 const { logger } = require('./../../../shared/logger')
 
-const agent = require('./../../../lib/agent')
+const primitives = require('./../../../lib/primitives')
 
-function hello () {
+function keypairOld (existingPrivateKey) {
   const options = this.opts()
   logger.debug(`options: ${JSON.stringify(options)}`)
 
+  const kp = primitives.keypairOld(existingPrivateKey, options.prefix)
+
   const output = {
-    hello: agent.hello()
+    public_key: kp.publicKey,
+    private_key: kp.privateKey
   }
 
   let space = 0
@@ -18,4 +21,4 @@ function hello () {
   console.log(JSON.stringify(output, null, space))
 }
 
-module.exports = hello
+module.exports = keypairOld

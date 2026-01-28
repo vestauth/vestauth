@@ -2,18 +2,15 @@ const { logger } = require('./../../../shared/logger')
 
 const primitives = require('./../../../lib/primitives')
 
-function keypair (existingPrivateKey) {
-  logger.debug(`existingPrivateKey: ${existingPrivateKey}`)
+async function headers (httpMethod, uri, privateKey) {
+  logger.debug(`httpMethod: ${httpMethod}`)
+  logger.debug(`uri: ${uri}`)
+  logger.debug(`privateKey: ${privateKey}`)
 
   const options = this.opts()
   logger.debug(`options: ${JSON.stringify(options)}`)
 
-  const kp = primitives.keypair(existingPrivateKey, options.prefix)
-
-  const output = {
-    public_key: kp.publicKey,
-    private_key: kp.privateKey
-  }
+  const output = await primitives.headers(httpMethod, uri, privateKey, options.tag, options.nonce)
 
   let space = 0
   if (options.prettyPrint) {
@@ -23,4 +20,4 @@ function keypair (existingPrivateKey) {
   console.log(JSON.stringify(output, null, space))
 }
 
-module.exports = keypair
+module.exports = headers
