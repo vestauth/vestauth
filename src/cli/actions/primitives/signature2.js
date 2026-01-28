@@ -2,16 +2,11 @@ const { logger } = require('./../../../shared/logger')
 
 const primitives = require('./../../../lib/primitives')
 
-function keypair2 () {
+async function signature2 () {
   const options = this.opts()
   logger.debug(`options: ${JSON.stringify(options)}`)
 
-  const kp = primitives.keypair2()
-
-  const output = {
-    public_key: kp.publicKey,
-    private_key: kp.privateKey
-  }
+  const output = await primitives.signature2()
 
   let space = 0
   if (options.prettyPrint) {
@@ -21,4 +16,4 @@ function keypair2 () {
   console.log(JSON.stringify(output, null, space))
 }
 
-module.exports = keypair2
+module.exports = signature2
