@@ -4,7 +4,7 @@ const keypair = require('./helpers/keypair')
 const keypairOld = require('./helpers/keypairOld')
 const headers = require('./helpers/headers')
 const sign = require('./helpers/sign')
-const verify = require('./helpers/verify')
+const verifyOld = require('./helpers/verifyOld')
 
 module.exports = {
   challenge,
@@ -13,5 +13,5 @@ module.exports = {
   keypairOld,
   headers,
   sign,
-  verify
+  verifyOld
 }
