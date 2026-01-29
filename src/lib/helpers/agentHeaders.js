@@ -11,15 +11,7 @@ async function agentHeaders (httpMethod, uri, tag = 'vestauth', nonce = null) {
 
   if (!publicKey && !privateKey) throw new Error('missing AGENT_PUBLIC_KEY and AGENT_PRIVATE_KEY. Run [vestauth agent init]')
 
-  const _headers = await headers(httpMethod, uri, privateKey, tag, nonce)
-
-  // verification (temp testing)
-  const verifier = await verifierFromJWK(JSON.parse(publicKey))
-  const signedRequest = new Request(uri, { headers: _headers })
-  const r = await verify(signedRequest, verifier)
-  console.log(r)
-
-  return _headers
+  return await headers(httpMethod, uri, privateKey, tag, nonce)
 }
 
 module.exports = agentHeaders
