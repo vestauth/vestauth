@@ -25,36 +25,34 @@ async function _verify (httpMethod, uri, signatureHeader, signatureInputHeader, 
   //
   const { key, values, components } = parseSignatureInputHeader(signatureInputHeader)
   const signatureParams = stripDictionaryKey(signatureInputHeader)
+  const signature = stripDictionaryKey(signatureHeader)
 
-  console.log(key, values, components, signatureParams)
   const message = authorityMessage(uri, signatureParams)
-  console.log(message)
-
   const publicKeyObject = edPublicKeyObject(JSON.parse(publicKey))
-  const isValid = crypto.verify(
+  const success = crypto.verify(
     null,
     Buffer.from(message, 'utf8'),
     publicKeyObject,
-    Buffer.from(signatureParams)
+    Buffer.from(signature, 'base64')
   )
-  console.log('isValid', isValid)
 
-  // verifier(message, signatureHeader, parameters)
-
-  //
-  // web-bot-auth verifier
-  //
-  const verifier = await verifierFromJWK(JSON.parse(publicKey))
-  const headers = {
-    Signature: signatureHeader,
-    'Signature-Input': signatureInputHeader
-  }
-  const signedRequest = new Request(uri, { headers: headers })
-  const r = await verify(signedRequest, verifier)
-  console.log(r)
+  // //
+  // // web-bot-auth verifier
+  // //
+  // const verifier = await verifierFromJWK(JSON.parse(publicKey))
+  // const headers = {
+  //   Signature: signatureHeader,
+  //   'Signature-Input': signatureInputHeader
+  // }
+  // const signedRequest = new Request(uri, { headers: headers })
+  // let success = false
+  // try {
+  //   await verify(signedRequest, verifier)
+  //   success = true
+  // } catch (e) { success = false }
 
   const output = {
-    implement: 'todo'
+    success
   }
 
   let space = 0
