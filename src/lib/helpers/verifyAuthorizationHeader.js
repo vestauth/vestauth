@@ -1,4 +1,4 @@
-const verify = require('./verify')
+const verify = require('./verifyOld')
 
 function verifyAuthorizationHeader (challenge, authorizationHeader) {
   const raw = authorizationHeader.replace(/^Agent\s+/i, '').trim() // remove 'Agent ' prefix
