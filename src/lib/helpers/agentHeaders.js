@@ -1,5 +1,7 @@
 const headers = require('./headers')
 const dotenvx = require('@dotenvx/dotenvx')
+// const { verify } = require('web-bot-auth')
+// const { verifierFromJWK } = require('web-bot-auth/crypto')
 
 async function agentHeaders (httpMethod, uri, tag = 'vestauth', nonce = null) {
   let publicKey = null
@@ -9,7 +11,15 @@ async function agentHeaders (httpMethod, uri, tag = 'vestauth', nonce = null) {
 
   if (!publicKey && !privateKey) throw new Error('missing AGENT_PUBLIC_KEY and AGENT_PRIVATE_KEY. Run [vestauth agent init]')
 
-  return await headers(httpMethod, uri, privateKey, tag, nonce)
+  const _headers = await headers(httpMethod, uri, privateKey, tag, nonce)
+
+  // verification (temp testing)
+  // const verifier = await verifierFromJWK(JSON.parse(publicKey))
+  // const signedRequest = new Request(uri, { headers: _headers })
+  // const r = await verify(signedRequest, verifier)
+  // console.log(r)
+
+  return _headers
 }
 
 module.exports = agentHeaders
