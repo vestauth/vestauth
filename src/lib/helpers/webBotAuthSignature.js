@@ -1,14 +1,9 @@
 const crypto = require('crypto')
 const edPrivateKeyObject = require('./edPrivateKeyObject')
+const authorityMessage = require('./authorityMessage')
 
 function webBotAuthSignature (method = 'GET', uri = '', signatureParams, privateKey) {
-  const u = new URL(uri)
-  const authority = u.host // includes port if present
-
-  const message = [
-    `"@authority": ${authority}`,
-    `"@signature-params": ${signatureParams}`
-  ].join('\n')
+  const message = authorityMessage(uri, signatureParams)
 
   // const message = [
   //   `"@method": ${method.toUpperCase()}`,
