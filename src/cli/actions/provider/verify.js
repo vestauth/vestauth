@@ -1,5 +1,3 @@
-const crypto = require('crypto')
-
 const { logger } = require('./../../../shared/logger')
 
 const provider = require('./../../../lib/provider')
