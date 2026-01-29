@@ -6,13 +6,6 @@ primitives
   .description('🔩 primitives')
   .allowUnknownOption()
 
-// vestauth primitives challenge
-const challengeAction = require('./../actions/primitives/challenge')
-primitives.command('challenge')
-  .description('generate challenge')
-  .option('-pp, --pretty-print', 'pretty print output')
-  .action(challengeAction)
-
 // vestauth primitives hash [message]
 const hashAction = require('./../actions/primitives/hash')
 primitives.command('hash')
