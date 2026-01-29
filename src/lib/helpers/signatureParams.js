@@ -5,7 +5,7 @@ const epoch = require('./epoch')
 function signatureParams (kid, tag = 'vestauth', nonce = null) {
   const { created, expires } = epoch()
 
-  if (!nonce) nonce = crypto.randomBytes(64).toString('base64')
+  if (!nonce) nonce = crypto.randomBytes(64).toString('base64url')
 
   return '("@authority");' +
     `created=${created};` +
