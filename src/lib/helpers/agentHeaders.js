@@ -1,7 +1,5 @@
 const headers = require('./headers')
 const dotenvx = require('@dotenvx/dotenvx')
-const { verify } = require('web-bot-auth')
-const { verifierFromJWK } = require('web-bot-auth/crypto')
 
 async function agentHeaders (httpMethod, uri, tag = 'vestauth', nonce = null) {
   let publicKey = null
