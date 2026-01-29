@@ -1,5 +1,7 @@
-const providerChallenge = require('./helpers/providerChallenge')
+const providerVerify = require('./helpers/providerVerify')
+const providerVerifyWebBotAuth = require('./helpers/providerVerifyWebBotAuth')
 
 module.exports = {
-  challenge: providerChallenge
+  verify: providerVerify,
+  verifyWebBotAuth: providerVerifyWebBotAuth
 }
