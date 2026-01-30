@@ -3,5 +3,5 @@ const agentHeaders = require('./helpers/agentHeaders')
 
 module.exports = {
   init: agentInit,
-  headers: agentHeaders,
+  headers: agentHeaders
 }
