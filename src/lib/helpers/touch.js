@@ -1,7 +1,9 @@
 const fs = require('fs')
 
 function touch (filepath) {
-  fs.closeSync(fs.openSync(filepath, 'a'))
+  if (!fs.existsSync(filepath)) {
+    fs.writeFileSync(filepath, '# vestauth. auth for agents–from the creator of `dotenvx`\n')
+  }
 }
 
 module.exports = touch
