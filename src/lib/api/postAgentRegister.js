@@ -9,7 +9,7 @@ class PostAgentRegister {
   }
 
   async run () {
-    const url = `${this.hostname}/api/agent/register`
+    const url = `${this.hostname}/register`
     const publicJwk = this.publicJwk
 
     const httpMethod = 'POST'
