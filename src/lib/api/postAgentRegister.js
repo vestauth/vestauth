@@ -1,5 +1,6 @@
 const { http } = require('../helpers/http')
 const buildApiError = require('../helpers/buildApiError')
+const agentHeaders = require('../helpers/agentHeaders')
 
 class PostAgentRegister {
   constructor (hostname, publicJwk) {
@@ -11,11 +12,13 @@ class PostAgentRegister {
     const url = `${this.hostname}/api/agent/register`
     const publicJwk = this.publicJwk
 
+    const httpMethod = 'POST'
+    const headers = await agentHeaders(httpMethod, url)
+    headers['Content-Type'] = 'application/json'
+
     const resp = await http(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      method: httpMethod,
+      headers,
       body: JSON.stringify({
         public_jwk: publicJwk
       })

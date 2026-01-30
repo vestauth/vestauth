@@ -18,8 +18,7 @@ async function agentInit () {
   dotenvx.set('AGENT_PRIVATE_KEY', JSON.stringify(kp.privateKey), { path: envPath, plain: true, quiet: true })
 
   // register agent with api
-  const postAgentRegister = new PostAgentRegister(null, kp.publicKey)
-  await postAgentRegister.run()
+  await new PostAgentRegister(null, kp.publicKey).run()
 
   return {
     AGENT_PUBLIC_KEY: kp.publicKey,
