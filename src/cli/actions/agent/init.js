@@ -2,11 +2,11 @@ const { logger } = require('./../../../shared/logger')
 
 const agent = require('./../../../lib/agent')
 
-function init () {
+async function init () {
   const options = this.opts()
   logger.debug(`options: ${JSON.stringify(options)}`)
 
-  const output = agent.init()
+  const output = await agent.init()
 
   let space = 0
   if (options.prettyPrint) {
