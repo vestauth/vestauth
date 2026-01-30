@@ -4,7 +4,6 @@ const parseSignatureInputHeader = require('./parseSignatureInputHeader')
 const stripDictionaryKey = require('./stripDictionaryKey')
 const authorityMessage = require('./authorityMessage')
 const edPublicKeyObject = require('./edPublicKeyObject')
-const epoch = require('./epoch')
 
 function providerVerify (httpMetod, uri, signatureHeader, signatureInputHeader, publicKey) {
   const { values } = parseSignatureInputHeader(signatureInputHeader)
