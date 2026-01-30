@@ -32,6 +32,7 @@ agent.command('headers')
   .argument('<uri>', '')
   .option('--tag <tag>', 'vestauth (default) | web-bot-auth', 'vestauth')
   .option('--nonce <nonce>', 'null (default)')
+  .option('--privateKey <privateKey>', 'AGENT_PUBLIC_KEY (default)')
   .option('-pp, --pretty-print', 'pretty print output')
   .action(headersAction)
 
