@@ -6,14 +6,6 @@ primitives
   .description('🔩 primitives')
   .allowUnknownOption()
 
-// vestauth primitives hash [message]
-const hashAction = require('./../actions/primitives/hash')
-primitives.command('hash')
-  .description('hash message')
-  .argument('<message>', 'message string')
-  .option('-pp, --pretty-print', 'pretty print output')
-  .action(hashAction)
-
 // vestauth primitives keypair
 const keypairAction = require('./../actions/primitives/keypair')
 primitives.command('keypair')
@@ -34,24 +26,5 @@ primitives.command('headers')
   .option('--nonce <nonce>', 'null (default)')
   .option('-pp, --pretty-print', 'pretty print output')
   .action(headersAction)
-
-// vestauth primitives sign
-const signAction = require('./../actions/primitives/sign')
-primitives.command('sign')
-  .description('sign challenge')
-  .argument('<challenge>', 'challenge (base64url)')
-  .argument('<privateKey>', 'private key (hex)')
-  .option('-pp, --pretty-print', 'pretty print output')
-  .action(signAction)
-
-// vestauth primitives verify
-const verifyAction = require('./../actions/primitives/verify')
-primitives.command('verify')
-  .description('verify signature')
-  .argument('<challenge>', 'challenge (base64url)')
-  .argument('<signature>', 'signature (base64url)')
-  .argument('<publicKey>', 'public key (hex)')
-  .option('-pp, --pretty-print', 'pretty print output')
-  .action(verifyAction)
 
 module.exports = primitives

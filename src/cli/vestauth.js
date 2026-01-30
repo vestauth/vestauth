@@ -42,16 +42,6 @@ program.addCommand(require('./commands/agent'))
 program.addCommand(require('./commands/provider'))
 program.addCommand(require('./commands/primitives'))
 
-// vestauth verifyAgent
-const verifyAgentAction = require('./actions/verifyAgent')
-program.command('verifyagent')
-  .description('verify agent')
-  .argument('<providerPrivateKey>', '')
-  .argument('<providerChallenge>', '')
-  .argument('<authorizationHeader>', '')
-  .option('-pp, --pretty-print', 'pretty print output')
-  .action(verifyAgentAction)
-
 // vestauth help
 program.command('help [command]')
   .description('display help for command')
