@@ -1,13 +1,8 @@
 const headers = require('./headers')
-const dotenvx = require('@dotenvx/dotenvx')
+const identity = require('./identity')
 
 async function agentHeaders (httpMethod, uri, tag = 'vestauth', nonce = null) {
-  let publicKey = null
-  let privateKey = null
-  try { publicKey = dotenvx.get('AGENT_PUBLIC_KEY', { strict: true }) } catch (_e) {}
-  try { privateKey = dotenvx.get('AGENT_PRIVATE_KEY', { strict: true }) } catch (_e) {}
-
-  if (!publicKey && !privateKey) throw new Error('missing AGENT_PUBLIC_KEY and AGENT_PRIVATE_KEY. Run [vestauth agent init]')
+  const { publicKey, privateKey } = identity()
 
   return await headers(httpMethod, uri, privateKey, tag, nonce)
 }
