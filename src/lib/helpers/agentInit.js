@@ -1,4 +1,5 @@
 const dotenvx = require('@dotenvx/dotenvx')
+const identity = require('./identity')
 const keypair = require('./keypair')
 const touch = require('./touch')
 const PostAgentRegister = require('../api/postAgentRegister')
@@ -7,9 +8,7 @@ async function agentInit () {
   const envPath = '.env'
 
   // keypair
-  let currentPrivateKey = null
-  try { currentPrivateKey = dotenvx.get('AGENT_PRIVATE_KEY', { strict: true }) } catch (e) {}
-
+  let currentPrivateKey = identity(false).privateKey
   const kp = keypair(currentPrivateKey, 'agent')
 
   touch(envPath)
