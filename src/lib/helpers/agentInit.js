@@ -8,7 +8,7 @@ async function agentInit () {
   const envPath = '.env'
 
   // keypair
-  let currentPrivateKey = identity(false).privateKey
+  const currentPrivateKey = identity(false).privateKey
   const kp = keypair(currentPrivateKey, 'agent')
 
   touch(envPath)
