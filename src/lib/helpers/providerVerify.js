@@ -8,9 +8,10 @@ const epoch = require('./epoch')
 
 function providerVerify (httpMetod, uri, signatureHeader, signatureInputHeader, publicKey) {
   const { values } = parseSignatureInputHeader(signatureInputHeader)
+  const { expires } = values
 
   // return early false, since expired
-  if (values.expires && values.expires < epoch(new Date())) {
+  if (expires && expires < (Math.floor(Date.now() / 1000))) {
     return {
       success: false
     }
