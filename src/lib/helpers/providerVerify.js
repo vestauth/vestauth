@@ -5,7 +5,7 @@ const stripDictionaryKey = require('./stripDictionaryKey')
 const authorityMessage = require('./authorityMessage')
 const edPublicKeyObject = require('./edPublicKeyObject')
 
-function providerVerify (httpMetod, uri, signatureHeader, signatureInputHeader, publicKey) {
+function providerVerify (httpMethod, uri, signatureHeader, signatureInputHeader, publicKey) {
   const { values } = parseSignatureInputHeader(signatureInputHeader)
   const { expires } = values
 
