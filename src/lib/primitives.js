@@ -3,5 +3,5 @@ const headers = require('./helpers/headers')
 
 module.exports = {
   keypair,
-  headers,
+  headers
 }
