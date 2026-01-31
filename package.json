@@ -1,6 +1,6 @@
 {
   "name": "vestauth",
-  "version": "0.4.8",
+  "version": "0.4.9",
   "description": "auth for agents–from the creator of dotenvx",
   "keywords": [
     "vestauth"
