@@ -2,7 +2,7 @@ const dotenvx = require('@dotenvx/dotenvx')
 const identity = require('./identity')
 const keypair = require('./keypair')
 const touch = require('./touch')
-const PostAgentRegister = require('../api/postAgentRegister')
+const PostRegister = require('../api/postRegister')
 
 async function agentInit () {
   const envPath = '.env'
@@ -18,7 +18,7 @@ async function agentInit () {
   dotenvx.set('AGENT_PRIVATE_KEY', JSON.stringify(kp.privateKey), { path: envPath, plain: true, quiet: true })
 
   // register agent with api
-  await new PostAgentRegister(null, kp.publicKey).run()
+  await new PostRegister(null, kp.publicKey).run()
 
   return {
     AGENT_PUBLIC_KEY: kp.publicKey,

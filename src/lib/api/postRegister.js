@@ -2,7 +2,7 @@ const { http } = require('../helpers/http')
 const buildApiError = require('../helpers/buildApiError')
 const agentHeaders = require('../helpers/agentHeaders')
 
-class PostAgentRegister {
+class PostRegister {
   constructor (hostname, publicJwk) {
     this.hostname = hostname || 'https://api.vestauth.com'
     this.publicJwk = publicJwk
@@ -34,4 +34,4 @@ class PostAgentRegister {
   }
 }
 
-module.exports = PostAgentRegister
+module.exports = PostRegister
