@@ -13,16 +13,16 @@ async function agentInit () {
 
   touch(envPath)
 
-  // place in .env file
   dotenvx.set('AGENT_PUBLIC_KEY', JSON.stringify(kp.publicKey), { path: envPath, plain: true, quiet: true })
   dotenvx.set('AGENT_PRIVATE_KEY', JSON.stringify(kp.privateKey), { path: envPath, plain: true, quiet: true })
 
-  // register agent with api
-  await new PostRegister(null, kp.publicKey).run()
+  // register agent
+  const agent = await new PostRegister(null, kp.publicKey).run()
+  dotenvx.set('AGENT_ID', agent.uid, { path: envPath, plain: true, quiet: true })
 
   return {
     AGENT_PUBLIC_KEY: kp.publicKey,
-    AGENT_PRIVATE_KEY: kp.privateKey,
+    AGENT_ID: agent.uid,
     path: envPath
   }
 }
