@@ -27,4 +27,16 @@ primitives.command('headers')
   .option('-pp, --pretty-print', 'pretty print output')
   .action(headersAction)
 
+// vestauth primitives verify
+const verifyAction = require('./../actions/primitives/verify')
+primitives.command('verify')
+  .description('verify signed headers')
+  .argument('<httpMethod>', 'GET (default)')
+  .argument('<uri>', '')
+  .argument('<signature>', '')
+  .argument('<signatureInput>', '')
+  .argument('<publicKey>', 'public key (json string)')
+  .option('-pp, --pretty-print', 'pretty print output')
+  .action(verifyAction)
+
 module.exports = primitives
