@@ -4,7 +4,7 @@ const agent = new Command('agent')
 
 agent
   .usage('run -- yourcommand')
-  .description('🤖 agent')
+  .description('▶️  agent')
   .allowUnknownOption()
 
 // vestauth agent init
