@@ -2,10 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-[Unreleased](https://github.com/vestauth/vestauth/compare/v0.1.0...main)
+[Unreleased](https://github.com/vestauth/vestauth/compare/v0.5.0...main)
 
-## [0.1.3](https://github.com/vestauth/vestauth/compare/v0.1.0...v0.1.1) (2026-01-17)
+## [0.5.0](https://github.com/vestauth/vestauth/compare/v0.4.9...v0.5.0) (2026-02-02)
 
-### Changed
+### Added
 
-* TBD
+* Initial release. `vestauth agent` commands largely functional.
