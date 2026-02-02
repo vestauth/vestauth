@@ -2,7 +2,8 @@
 
 *auth for agents*–from the creator of [`dotenvx`](https://github.com/dotenvx/dotenvx).
 
-* auth
+* identity
+* authentication
 * messaging (coming soon)
 
 &nbsp;
