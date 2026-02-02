@@ -20,15 +20,19 @@ async function curl () {
     ...commandArgs
   ]
 
-  const child = execute.execa(injected[0], injected.slice(1), { stdio: 'inherit' })
-
-  // Wait for the command process to finish
-  const { exitCode } = await child
+  const { stdout, exitCode } = await execute.execa(injected[0], injected.slice(1), {})
 
   if (exitCode !== 0) {
     logger.debug(`received exitCode ${exitCode}`)
     throw new Error(`Command exited with exit code ${exitCode}`)
   }
+
+  let space = 0
+  if (options.prettyPrint) {
+    space = 2
+  }
+
+  console.log(JSON.stringify(JSON.parse(stdout), null, space))
 }
 
 module.exports = curl
