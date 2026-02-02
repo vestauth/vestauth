@@ -3,7 +3,16 @@ const signatureParams = require('./signatureParams')
 const webBotAuthSignature = require('./webBotAuthSignature')
 
 async function headers (httpMethod, uri, privateKeyString, tag = 'vestauth', nonce = null) {
-  const privateKey = JSON.parse(privateKeyString)
+  if (!privateKeyString) throw new Error('missing privateKey')
+
+  let privateKey
+  try {
+    privateKey = JSON.parse(privateKeyString)
+  } catch (err) {
+    throw new Error('invalid privateKey')
+  }
+  if (!privateKey || typeof privateKey !== 'object') throw new Error('invalid privateKey')
+
   const kid = thumbprint(privateKey)
   privateKey.kid = kid
 
