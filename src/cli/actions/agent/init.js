@@ -8,12 +8,13 @@ async function init () {
 
   const output = await agent.init()
 
-  let space = 0
-  if (options.prettyPrint) {
-    space = 2
+  if (output.isNew) {
+    logger.success(`✔ agent created (${output.path}/AGENT_ID=${output.AGENT_ID})`)
+  } else {
+    logger.info(`agent exists (${output.path}/AGENT_ID=${output.AGENT_ID})`)
   }
 
-  console.log(JSON.stringify(output, null, space))
+  logger.help('⮕  next run: [vestauth agent curl https://api.vestauth.com/whoami]')
 }
 
 module.exports = init

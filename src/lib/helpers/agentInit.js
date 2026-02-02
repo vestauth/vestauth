@@ -13,6 +13,7 @@ async function agentInit () {
 
   touch(envPath)
 
+  // must come before registration so that registration can send headers
   dotenvx.set('AGENT_PUBLIC_KEY', JSON.stringify(kp.publicKey), { path: envPath, plain: true, quiet: true })
   dotenvx.set('AGENT_PRIVATE_KEY', JSON.stringify(kp.privateKey), { path: envPath, plain: true, quiet: true })
 
@@ -23,7 +24,8 @@ async function agentInit () {
   return {
     AGENT_PUBLIC_KEY: kp.publicKey,
     AGENT_ID: agent.uid,
-    path: envPath
+    path: envPath,
+    isNew: agent.is_new
   }
 }
 
