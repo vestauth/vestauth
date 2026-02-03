@@ -11,7 +11,7 @@ agent
 const initAction = require('./../actions/agent/init')
 agent.command('init')
   .description('create agent')
-  .option('-pp, --pretty-print', 'pretty print output')
+  .option('--pp, --pretty-print', 'pretty print output')
   .action(initAction)
 
 // vestauth agent curl
@@ -21,7 +21,7 @@ agent.command('curl')
   .allowUnknownOption()
   .option('--tag <tag>', 'web-bot-auth (default) | web-bot-auth', 'vestauth')
   .option('--nonce <nonce>', 'null (default)')
-  .option('-pp, --pretty-print', 'pretty print output')
+  .option('--pp, --pretty-print', 'pretty print output')
   .action(curlAction)
 
 // vestauth agent headers
@@ -33,7 +33,7 @@ agent.command('headers')
   .option('--tag <tag>', 'web-bot-auth (default) | web-bot-auth', 'vestauth')
   .option('--nonce <nonce>', 'null (default)')
   .option('--privateKey <privateKey>', 'AGENT_PUBLIC_KEY (default)')
-  .option('-pp, --pretty-print', 'pretty print output')
+  .option('--pp, --pretty-print', 'pretty print output')
   .action(headersAction)
 
 module.exports = agent

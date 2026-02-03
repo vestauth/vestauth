@@ -2,7 +2,7 @@ const crypto = require('crypto')
 
 const epoch = require('./epoch')
 
-function signatureParams (kid, tag = 'vestauth', nonce = null) {
+function signatureParams (kid, tag = 'web-bot-auth', nonce = null) {
   const { created, expires } = epoch()
 
   if (!nonce) nonce = crypto.randomBytes(64).toString('base64url')
