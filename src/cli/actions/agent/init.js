@@ -11,10 +11,10 @@ async function init () {
   if (output.isNew) {
     logger.success(`✔ agent created (${output.path}/AGENT_ID=${output.AGENT_ID})`)
   } else {
-    logger.info(`agent exists (${output.path}/AGENT_ID=${output.AGENT_ID})`)
+    logger.info(`• agent exists (${output.path}/AGENT_ID=${output.AGENT_ID})`)
   }
 
-  logger.help('⮕  next run: [vestauth agent curl https://api.vestauth.com/whoami]')
+  logger.help('⮕ next run: [vestauth agent curl https://api.vestauth.com/whoami]')
 }
 
 module.exports = init
