@@ -38,7 +38,7 @@ npm install vestauth --save
 
 ```sh
 $ vestauth agent init
-$ vestauth agent curl https://ping.dotenvx.com/ping
+$ vestauth agent curl https://ping.vestauth.com/ping
 ```
 
 More examples
@@ -50,7 +50,7 @@ More examples
 > As a provider of agentic tools, authenticate agents through cryptographic verification.
 
 ```sh
-$ vestauth provider verify GET https://ping.dotenvx.com/ping
+$ vestauth provider verify GET https://ping.vestauth.com/ping
 ```
 
 More examples
