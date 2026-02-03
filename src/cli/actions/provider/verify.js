@@ -2,16 +2,20 @@ const { logger } = require('./../../../shared/logger')
 
 const provider = require('./../../../lib/provider')
 
-async function verify (httpMethod, uri, signatureHeader, signatureInputHeader) {
+async function verify (httpMethod, uri) {
   logger.debug(`httpMethod: ${httpMethod}`)
   logger.debug(`uri: ${uri}`)
-  logger.debug(`signatureHeader: ${signatureHeader}`)
-  logger.debug(`signatureInputHeader: ${signatureInputHeader}`)
 
   const options = this.opts()
   logger.debug(`options: ${JSON.stringify(options)}`)
 
-  const output = await provider.verify(httpMethod, uri, signatureHeader, signatureInputHeader)
+  const headers = {
+    Signature: options.signature,
+    'Signature-Input': options.signatureInput,
+    'Signature-Agent': options.signatureAgent
+  }
+
+  const output = await provider.verify(httpMethod, uri, headers)
 
   let space = 0
   if (options.prettyPrint) {
