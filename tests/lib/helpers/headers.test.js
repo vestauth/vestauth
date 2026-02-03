@@ -16,7 +16,7 @@ t.test('#headers - deterministic signature input and format', async t => {
   t.equal(Object.keys(result).length, 3)
   t.ok(result.Signature, 'Signature header exists')
   t.ok(result['Signature-Input'], 'Signature-Input header exists')
-  t.equal(result['Signature-Agent'], 'imlement')
+  t.equal(result['Signature-Agent'], 'sig1=https://agent-123.agents.vestauth.com')
   t.match(result.Signature, /^sig1=:[A-Za-z0-9+/=]+:$/)
   t.equal(
     result['Signature-Input'],
