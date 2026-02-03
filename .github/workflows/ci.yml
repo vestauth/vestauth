@@ -16,7 +16,7 @@ jobs:
   #     - uses: actions/checkout@v4
   #     - uses: actions/setup-node@v4
   #       with:
-  #         node-version: 16.x
+  #         node-version: 20.x
   #     - run: npm install
   #     - run: npm audit --omit=dev
   standard:
@@ -27,7 +27,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 16.x
+          node-version: 20.x
       - run: npm install
       - run: npm run standard
   test:
@@ -38,7 +38,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 16.x
+          node-version: 20.x
       - name: install shellspec
         run: curl -sfSL https://git.io/shellspec | sh -s 0.28.1 --yes
       - run: which shellspec
@@ -220,10 +220,8 @@ jobs:
       # Setup .npmrc file to publish to npm
       - uses: actions/setup-node@v4
         with:
-          node-version: '16.x'
+          node-version: '20.x'
           registry-url: 'https://registry.npmjs.org'
-      # update npm to v9 (last 16.x supported version) for npm provenance to work
-      - run: npm install -g npm@9
       - run: |
           curl -sfS https://dotenvx.sh/ops | sh
           echo "NODE_AUTH_TOKEN=$(dotenvx-ops get dotenvx://rot_71321cf34570a5db681b07d1e4078d93 --token '${{ secrets.DOTENVX_OPS_TOKEN }}')" >> $GITHUB_ENV
@@ -484,7 +482,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 16.x
+          node-version: 20.x
       - name: sleep
         run: sleep 60
       - name: verify version
@@ -508,7 +506,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 16.x
+          node-version: 20.x
       - name: sleep
         run: sleep 60
       - name: install vestauth
@@ -533,7 +531,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 16.x
+          node-version: 20.x
       - name: sleep
         run: sleep 60
       - name: install vestauth
