@@ -32,11 +32,12 @@ async function headers (httpMethod, uri, privateKeyString, uid, tag = 'vestauth'
   // ours
   const signatureInput = signatureParams(privateKey.kid, tag, nonce)
   const signature = webBotAuthSignature(httpMethod, uri, signatureInput, privateKey)
+  const signatureAgent = `https://${uid}.agents.vestauth.com` // https://agent-2028e360a7f4ec28bc3cb7e6.agents.vestauth.com/.well-known/http-message-signatures-directory
 
   return {
     Signature: `sig1=:${signature}:`,
     'Signature-Input': `sig1=${signatureInput}`,
-    'Signature-Agent': `sig1=https://${uid}.agents.vestauth.com` // https://agent-2028e360a7f4ec28bc3cb7e6.agents.vestauth.com/.well-known/http-message-signatures-directory
+    'Signature-Agent': `sig1=${signatureAgent}`
   }
 }
 

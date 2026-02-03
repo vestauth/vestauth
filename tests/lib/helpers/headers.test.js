@@ -10,12 +10,13 @@ t.test('#headers - deterministic signature input and format', async t => {
   const { privateKey } = keypair()
   const privateKeyString = JSON.stringify(privateKey)
 
-  const result = await headers('GET', 'https://example.com/resource', privateKeyString, 'vestauth', 'nonce-123')
+  const result = await headers('GET', 'https://example.com/resource', privateKeyString, 'agent-123', 'vestauth', 'nonce-123')
 
   t.type(result, 'object')
-  t.equal(Object.keys(result).length, 2)
+  t.equal(Object.keys(result).length, 3)
   t.ok(result.Signature, 'Signature header exists')
   t.ok(result['Signature-Input'], 'Signature-Input header exists')
+  t.equal(result['Signature-Agent'], 'imlement')
   t.match(result.Signature, /^sig1=:[A-Za-z0-9+/=]+:$/)
   t.equal(
     result['Signature-Input'],
