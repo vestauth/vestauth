@@ -10,7 +10,7 @@ t.test('#headers - deterministic signature input and format', async t => {
   const { privateKey } = keypair()
   const privateKeyString = JSON.stringify(privateKey)
 
-  const result = await headers('GET', 'https://example.com/resource', privateKeyString, 'agent-123', 'vestauth', 'nonce-123')
+  const result = await headers('GET', 'https://example.com/resource', 'agent-123', privateKeyString, 'vestauth', 'nonce-123')
 
   t.type(result, 'object')
   t.equal(Object.keys(result).length, 3)
@@ -34,14 +34,14 @@ t.test('#headers - deterministic signature input and format', async t => {
 
 t.test('#headers - null privateKey string', async t => {
   await t.rejects(
-    headers('GET', 'https://example.com/resource', null),
+    headers('GET', 'https://example.com/resource', 'agent-123', null),
     new Error('missing privateKey')
   )
 })
 
 t.test('#headers - empty privateKey string', async t => {
   await t.rejects(
-    headers('GET', 'https://example.com/resource', ''),
+    headers('GET', 'https://example.com/resource', 'agent-123', ''),
     new Error('missing privateKey')
   )
 })

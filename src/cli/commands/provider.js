@@ -14,7 +14,7 @@ provider.command('verify')
   .argument('<uri>', '')
   .argument('<signature>', '')
   .argument('<signatureInput>', '')
-  .option('-pp, --pretty-print', 'pretty print output')
+  .option('--pp, --pretty-print', 'pretty print output')
   .action(verifyAction)
 
 module.exports = provider

@@ -1,7 +1,7 @@
 const { verify } = require('web-bot-auth')
 const { verifierFromJWK } = require('web-bot-auth/crypto')
 
-async function verifyWebBotAuth (httpMetod, uri, signatureHeader, signatureInputHeader, publicKey) {
+async function verifyWebBotAuth (httpMethod, uri, signatureHeader, signatureInputHeader, publicKey) {
   let success = false
 
   const verifier = await verifierFromJWK(publicKey)
