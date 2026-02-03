@@ -4,7 +4,6 @@
 
 * identity
 * authentication
-* messaging (coming soon)
 
 &nbsp;
 
@@ -12,6 +11,9 @@
 
 ```sh
 curl -sfS https://vestauth.sh | sh
+```
+
+```sh
 vestauth agent init
 vestauth agent curl https://api.vestauth.com/whoami
 ```
@@ -30,7 +32,23 @@ npm install vestauth --save
 
 </details>
 
-## Technical
+## Identity
+
+```sh
+$ vestauth agent init
+✔  agent created (.env/AGENT_ID=agent-8eb8c03412069a1de525fc9b)
+⮕  next run: [vestauth agent curl https://api.vestauth.com/whoami]
+```
+
+## Authentication
+
+```sh
+$ vestauth provider verify GET https://api.vestauth.com/whoami
+TODO
+```
+
+## More Details
 
 * `vestauth` implements [RFC 9421 HTTP Message Signatures](https://datatracker.ietf.org/doc/rfc9421/)
 * `vestauth` implements [Web-Bot-Auth](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture)
+
