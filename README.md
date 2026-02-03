@@ -37,7 +37,7 @@ npm install vestauth --save
 ```sh
 $ vestauth agent init
 ✔  agent created (.env/AGENT_ID=agent-8eb8c03412069a1de525fc9b)
-⮕  next run: [vestauth agent curl https://api.vestauth.com/whoami]
+⮕ next run: [vestauth agent curl https://api.vestauth.com/whoami]
 ```
 
 ## Authentication
