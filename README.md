@@ -29,3 +29,8 @@ npm install vestauth --save
 &nbsp;
 
 </details>
+
+## Technical
+
+* `vestauth` implements [RFC 9421 HTTP Message Signatures](https://datatracker.ietf.org/doc/rfc9421/)
+* `vestauth` implements [Web-Bot-Auth](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture)
