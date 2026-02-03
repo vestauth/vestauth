@@ -32,22 +32,43 @@ npm install vestauth --save
 
 </details>
 
-## Identity
+## Agent
+
+> Initialize your agent and make authenticated curl calls to vestauth providers.
 
 ```sh
 $ vestauth agent init
-✔  agent created (.env/AGENT_ID=agent-8eb8c03412069a1de525fc9b)
-⮕ next run: [vestauth agent curl https://api.vestauth.com/whoami]
+$ vestauth agent curl https://ping.dotenvx.com/ping
 ```
 
-## Authentication
+More examples
+
+*coming soon*
+
+## Provider
+
+> As a provider of agentic tools, authenticate agents through cryptographic verification.
 
 ```sh
-$ vestauth provider verify GET https://api.vestauth.com/whoami
-TODO
+$ vestauth provider verify GET https://ping.dotenvx.com/ping
 ```
 
-## More Details
+More examples
+
+* Express.js
+* Next.js
+* Rails
+* ...
+
+### List of current providers
+
+* `dotenvx as2` – agentic secret storage
+
+## Advanced
+
+> Become a `vestauth` power user.
+
+## Methodology
 
 * `vestauth` implements [RFC 9421 HTTP Message Signatures](https://datatracker.ietf.org/doc/rfc9421/)
 * `vestauth` implements [Web-Bot-Auth](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture)
