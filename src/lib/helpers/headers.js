@@ -2,8 +2,9 @@ const thumbprint = require('./thumbprint')
 const signatureParams = require('./signatureParams')
 const webBotAuthSignature = require('./webBotAuthSignature')
 
-async function headers (httpMethod, uri, privateKeyString, tag = 'vestauth', nonce = null) {
+async function headers (httpMethod, uri, privateKeyString, uid, tag = 'vestauth', nonce = null) {
   if (!privateKeyString) throw new Error('missing privateKey')
+  if (!uid) throw new Error('missing uid')
 
   let privateKey
   try {
@@ -34,7 +35,8 @@ async function headers (httpMethod, uri, privateKeyString, tag = 'vestauth', non
 
   return {
     Signature: `sig1=:${signature}:`,
-    'Signature-Input': `sig1=${signatureInput}`
+    'Signature-Input': `sig1=${signatureInput}`,
+    'Signature-Agent': `sig1=https://${uid}.agents.vestauth.com` // https://agent-2028e360a7f4ec28bc3cb7e6.agents.vestauth.com/.well-known/http-message-signatures-directory
   }
 }
 
