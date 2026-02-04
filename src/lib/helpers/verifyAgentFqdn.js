@@ -1,4 +1,5 @@
 const DEFAULT_PROVIDER_FQDN_REGEX = /^[A-Za-z0-9-]+\.agents\.vestauth\.com$/
+const Errors = require('./errors')
 
 function getProviderFqdnRegex () {
   const override = process.env.PROVIDER_FQDN_REGEX
@@ -13,12 +14,12 @@ function getProviderFqdnRegex () {
 
 function verifyAgentFqdn (fqdn) {
   if (!fqdn || typeof fqdn !== 'string') {
-    throw new Error('Invalid agent fqdn')
+    throw new Errors().invalidSignatureAgent()
   }
 
   const pattern = getProviderFqdnRegex()
   if (!pattern.test(fqdn)) {
-    throw new Error('Invalid agent fqdn')
+    throw new Errors().invalidSignatureAgent()
   }
 
   return true
