@@ -43,6 +43,7 @@ class Errors {
 
     const e = new Error(message)
     e.code = code
+    e.help = help
     return e
   }
 
