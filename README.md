@@ -4,6 +4,7 @@
 
 * identity
 * authentication
+* verification
 
 &nbsp;
 
