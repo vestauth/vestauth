@@ -38,7 +38,7 @@ primitives.command('verify')
   .requiredOption('--signature <signature>', '')
   .requiredOption('--signature-input <signatureInput>', '')
   .option('--signature-agent <signatureAgent>', '')
-  .option('--public-key <publicKey>', 'public key (json string)', env('AGENT_PUBLIC_KEY'))
+  .option('--public-jwk <publicJwk>', 'public JWK (json string)', env('AGENT_PUBLIC_JWK'))
   .option('--pp, --pretty-print', 'pretty print output')
   .action(verifyAction)
 

@@ -9,8 +9,8 @@ function keypair () {
   const kp = primitives.keypair(options.privateKey, options.prefix)
 
   const output = {
-    public_key: kp.publicKey,
-    private_key: kp.privateKey
+    public_jwk: kp.publicJwk,
+    private_key: kp.privateJwk
   }
 
   let space = 0

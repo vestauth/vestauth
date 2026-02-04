@@ -15,7 +15,7 @@ function keypair (existingPrivateKey, prefix = 'agent') {
     //   "kty": "OKP",
     //   "kid": "rBE7_zLOVYk4oYEdI-01qpXHWNMyZYD-4LEf6HiyZ9Q"
     // }
-    // (publicKey just remove 'd')
+    // (publicJwk just remove 'd')
 
     privateJwk = JSON.parse(existingPrivateKey)
     publicJwk = {
@@ -42,8 +42,8 @@ function keypair (existingPrivateKey, prefix = 'agent') {
   }
 
   return {
-    publicKey: publicJwk,
-    privateKey: privateJwk
+    publicJwk,
+    privateJwk
   }
 }
 
