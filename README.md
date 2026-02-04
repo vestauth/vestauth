@@ -66,16 +66,17 @@ Download [the windows executable](https://github.com/vestauth/vestauth/releases)
 
 ## Identity
 
-> Give your agent its own cryptographic identity. (avoid juggling usernames, emails, passwords, api keys, oauth tokens, and other bearer tokens for your agents)
+> Give your agent its own cryptographic identity. 
 
 ```sh
+$ mkdir your-agent
+$ cd your-agent
 $ vestauth agent init
-$ vestauth agent curl https://ping.vestauth.com/ping
+✔ agent created (.env/AGENT_ID=agent-4b94ccd425e939fac5016b6b)
+⮕ next run: [vestauth agent curl https://api.vestauth.com/whoami]
 ```
 
-More examples
-
-*coming soon*
+Usernames, emails, passwords, api keys, oauth tokens, and more are for humans. Cryptographic identity is for agents.
 
 ## Provider
 
