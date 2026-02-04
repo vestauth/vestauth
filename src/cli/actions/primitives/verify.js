@@ -17,10 +17,10 @@ async function verify (httpMethod, uri) {
       'Signature-Agent': options.signatureAgent
     }
 
-    const publicJwk = JSON.parse(options.publicKey || {})
+    const publicJwk = JSON.parse(options.publicJwk || {})
 
     const output = await primitives.verify(httpMethod, uri, headers, publicJwk)
-    // const output = await primitive.verifyWebBotAuth(httpMethod, uri, signature, signatureInput, JSON.parse(publicKey))
+    // const output = await primitive.verifyWebBotAuth(httpMethod, uri, signature, signatureInput, JSON.parse(publicJwk))
 
     let space = 0
     if (options.prettyPrint) {
