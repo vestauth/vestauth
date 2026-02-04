@@ -5,7 +5,7 @@ const verifyAgentFqdn = require('./verifyAgentFqdn')
 const verify = require('./verify')
 
 async function providerVerify (httpMethod, uri, headers = {}) {
-  const signatureAgent = headers['Signature-Agent']
+  const signatureAgent = headers['Signature-Agent'] || headers['signature-agent'] // support either case (expressjs lowers headers)
   const { value } = parseSignatureAgentHeader(signatureAgent) // sig1=agent-1234.agents.vestauth.com
   const fqdn = value
   verifyAgentFqdn(fqdn)
