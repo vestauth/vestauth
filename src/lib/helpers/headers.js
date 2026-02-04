@@ -5,20 +5,19 @@ const webBotAuthSignature = require('./webBotAuthSignature')
 
 async function headers (httpMethod, uri, id, privateJwk, tag = 'web-bot-auth', nonce = null) {
   if (!id) throw new Errors().missingId()
-  if (!privateJwk) throw new Errors().missingPrivateKey()
+  if (!privateJwk) throw new Errors().missingPrivateJwk()
 
-  let parsedPrivateJwk
   try {
-    parsedPrivateJwk = JSON.parse(privateJwk)
+    privateJwk = JSON.parse(privateJwk)
   } catch {
-    throw new Errors().invalidPrivateKey()
+    throw new Errors().invalidPrivateJwk()
   }
-  if (!parsedPrivateJwk || typeof parsedPrivateJwk !== 'object') {
-    throw new Errors().invalidPrivateKey()
+  if (!privateJwk || typeof privateJwk !== 'object') {
+    throw new Errors().invalidPrivateJwk()
   }
 
-  const kid = thumbprint(parsedPrivateJwk)
-  parsedPrivateJwk.kid = kid
+  const kid = thumbprint(privateJwk)
+  privateJwk.kid = kid
 
   // // theirs
   // const request = new Request(uri)
@@ -32,8 +31,8 @@ async function headers (httpMethod, uri, id, privateJwk, tag = 'web-bot-auth', n
   //   }
   // )
 
-  const signatureInput = signatureParams(parsedPrivateJwk.kid, tag, nonce)
-  const signature = webBotAuthSignature(httpMethod, uri, signatureInput, parsedPrivateJwk)
+  const signatureInput = signatureParams(privateJwk.kid, tag, nonce)
+  const signature = webBotAuthSignature(httpMethod, uri, signatureInput, privateJwk)
   const signatureAgent = `https://${id}.agents.vestauth.com` // https://agent-1234.agents.vestauth.com/.well-known/http-message-signatures-directory
 
   return {

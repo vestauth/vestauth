@@ -36,13 +36,13 @@ t.test('#headers - deterministic signature input and format', async t => {
 t.test('#headers - null privateJwk string', async t => {
   await t.rejects(
     headers('GET', 'https://example.com/resource', 'agent-123', null),
-    new Errors().missingPrivateKey()
+    new Errors().missingPrivateJwk()
   )
 })
 
 t.test('#headers - empty privateJwk string', async t => {
   await t.rejects(
     headers('GET', 'https://example.com/resource', 'agent-123', ''),
-    new Errors().missingPrivateKey()
+    new Errors().missingPrivateJwk()
   )
 })
