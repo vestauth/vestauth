@@ -91,8 +91,6 @@ AGENT_ID="agent-4b94ccd425e939fac5016b6b"
 * The `AGENT_PRIVATE_KEY` must NOT be shared and is used to sign requests according to [RFC 9421](https://datatracker.ietf.org/doc/rfc9421/).
 * The `AGENT_ID` contributes to building the [FQDN for the `Signature-Agent` header](https://datatracker.ietf.org/doc/html/draft-meunier-http-message-signatures-directory-01#name-request-with-http-signature).
 
-By combining these three mechanisms an agent can be identified (and authenticated) by any third-party provider or tool – cryptographically.
-
 </details>
 
 &nbsp;
