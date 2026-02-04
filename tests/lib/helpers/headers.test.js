@@ -1,5 +1,6 @@
 const t = require('tap')
 
+const Errors = require('../../../src/lib/helpers/errors')
 const headers = require('../../../src/lib/helpers/headers')
 const keypair = require('../../../src/lib/helpers/keypair')
 
@@ -10,7 +11,7 @@ t.test('#headers - deterministic signature input and format', async t => {
   const { privateKey } = keypair()
   const privateKeyString = JSON.stringify(privateKey)
 
-  const result = await headers('GET', 'https://example.com/resource', 'agent-123', privateKeyString, 'vestauth', 'nonce-123')
+  const result = await headers('GET', 'https://example.com/resource', 'agent-123', privateKeyString, undefined, 'nonce-123')
 
   t.type(result, 'object')
   t.equal(Object.keys(result).length, 3)
@@ -26,7 +27,7 @@ t.test('#headers - deterministic signature input and format', async t => {
       'alg="ed25519";' +
       'expires=1700000300;' +
       'nonce="nonce-123";' +
-      'tag="vestauth"'
+      'tag="web-bot-auth"'
   )
 
   Date.now = originalNow
@@ -35,13 +36,13 @@ t.test('#headers - deterministic signature input and format', async t => {
 t.test('#headers - null privateKey string', async t => {
   await t.rejects(
     headers('GET', 'https://example.com/resource', 'agent-123', null),
-    new Error('missing privateKey')
+    new Errors().missingPrivateKey()
   )
 })
 
 t.test('#headers - empty privateKey string', async t => {
   await t.rejects(
     headers('GET', 'https://example.com/resource', 'agent-123', ''),
-    new Error('missing privateKey')
+    new Errors().missingPrivateKey()
   )
 })
