@@ -1,13 +1,18 @@
 const { http } = require('./http')
 const buildApiError = require('./buildApiError')
 const parseSignatureAgentHeader = require('./parseSignatureAgentHeader')
+const verifyAgentFqdn = require('./verifyAgentFqdn')
 const verify = require('./verify')
 
 async function providerVerify (httpMethod, uri, headers = {}) {
   const signatureAgent = headers['Signature-Agent']
-  const { value } = parseSignatureAgentHeader(signatureAgent) // sig1=https://agent-9aa52a556ca85ee195866c0b.agents.vestauth.com
+  const { value } = parseSignatureAgentHeader(signatureAgent) // sig1=agent-1234.agents.vestauth.com
+  const fqdn = value
+  verifyAgentFqdn(fqdn)
+  const origin = `https://${fqdn}` // https://agent-1234.agents.vestauth.com
 
-  const url = `${value}/.well-known/http-message-signatures-directory` // risk of SSRF ?
+  // get jwks from .well-known
+  const url = `${origin}/.well-known/http-message-signatures-directory` // risk of SSRF ?
   const resp = await http(url, { method: 'GET', headers: { 'Content-Type': 'application/json' } })
   if (resp.statusCode >= 400) {
     const json = await resp.body.json()
@@ -26,6 +31,8 @@ async function providerVerify (httpMethod, uri, headers = {}) {
   //     }
   //   ]
   // }
+
+  // use publicJwk to verify
   const publicJwk = json.keys[0]
   const output = await verify(httpMethod, uri, headers, publicJwk)
 
