@@ -2,7 +2,7 @@
 
 *auth for agents*–from the creator of [`dotenvx`](https://github.com/dotenvx/dotenvx).
 
-* identity
+* identity (cryptographic)
 * authentication
 * verification
 
@@ -11,29 +11,60 @@
 ### Quickstart [![npm version](https://img.shields.io/npm/v/vestauth.svg)](https://www.npmjs.com/package/vestauth) [![downloads](https://img.shields.io/npm/dw/vestauth)](https://www.npmjs.com/package/vestauth)
 
 ```sh
-curl -sfS https://vestauth.sh | sh
+npm i -g vestauth
 ```
 
 ```sh
 vestauth agent init
-vestauth agent curl https://api.vestauth.com/whoami
 ```
 
 &nbsp;
 
-or install as npm - *unlocks vestauth inside code!*
+or install globally - *unlocks vestauth for any language, framework, or agentic platform!*
 
-<details><summary>with npm 📦</summary><br>
+<details><summary>with curl 🌐 </summary><br>
 
 ```sh
-npm install vestauth --save
+curl -sfS https://vestauth.sh | sh
+vestauth help
 ```
+
+[![curl installs](https://img.shields.io/endpoint?url=https://vestauth.sh/stats/curl&label=curl%20installs)](https://github.com/vestauth/vestauth.sh/blob/main/install.sh)
 
 &nbsp;
 
 </details>
 
-## Agent
+<details><summary>with github releases 🐙</summary><br>
+
+```sh
+curl -L -o vestauth.tar.gz "https://github.com/vestauth/vestauth/releases/latest/download/vestauth-$(uname -s)-$(uname -m).tar.gz"
+tar -xzf vestauth.tar.gz
+./vestauth help
+```
+
+[![github releases](https://img.shields.io/github/downloads/vestauth/vestauth/total)](https://github.com/vestauth/vestauth/releases)
+
+&nbsp;
+
+</details>
+
+<details><summary>or windows 🪟</summary><br>
+
+Download [the windows executable](https://github.com/vestauth/vestauth/releases) directly from the [releases page](https://github.com/vestauth/vestauth/releases).
+
+> * [vestauth-windows-amd64.zip
+](https://github.com/vestauth/releases/raw/main/latest/vestauth-windows-amd64.zip)
+> * [vestauth-windows-x86_64.zip
+](https://github.com/vestauth/releases/raw/main/latest/vestauth-windows-x86_64.zip)
+
+(unzip to extract `vestauth.exe`)
+
+</details>
+
+&nbsp;
+
+## Identity
 
 > Initialize your agent and make authenticated curl calls to vestauth providers.
 
