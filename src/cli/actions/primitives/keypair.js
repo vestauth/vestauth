@@ -6,11 +6,11 @@ function keypair () {
   const options = this.opts()
   logger.debug(`options: ${JSON.stringify(options)}`)
 
-  const kp = primitives.keypair(options.privateKey, options.prefix)
+  const kp = primitives.keypair(options.privateJwk, options.prefix)
 
   const output = {
     public_jwk: kp.publicJwk,
-    private_key: kp.privateJwk
+    private_jwk: kp.privateJwk
   }
 
   let space = 0

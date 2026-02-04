@@ -8,14 +8,14 @@ async function agentInit () {
   const envPath = '.env'
 
   // keypair
-  const currentPrivateKey = identity(false).privateKey
-  const kp = keypair(currentPrivateKey, 'agent')
+  const currentPrivateJwk = identity(false).privateJwk
+  const kp = keypair(currentPrivateJwk, 'agent')
 
   touch(envPath)
 
   // must come before registration so that registration can send headers
   dotenvx.set('AGENT_PUBLIC_JWK', JSON.stringify(kp.publicJwk), { path: envPath, plain: true, quiet: true })
-  dotenvx.set('AGENT_PRIVATE_KEY', JSON.stringify(kp.privateJwk), { path: envPath, plain: true, quiet: true })
+  dotenvx.set('AGENT_PRIVATE_JWK', JSON.stringify(kp.privateJwk), { path: envPath, plain: true, quiet: true })
 
   // register agent
   const agent = await new PostRegister(null, kp.publicJwk).run()
