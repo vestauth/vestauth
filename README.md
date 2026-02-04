@@ -134,15 +134,6 @@ $ vestauth primitives headers GET https://api.vestauth.com/whoami --pp
 
 ```
 
-More examples
-
-* Express.js
-* Next.js
-* Rails
-* ...
-
-## Verification
-
 ## Advanced
 
 > Become a `vestauth` power user.
