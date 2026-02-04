@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-[Unreleased](https://github.com/vestauth/vestauth/compare/v0.7.0...main)
+[Unreleased](https://github.com/vestauth/vestauth/compare/v0.7.1...main)
+
+## [0.7.1](https://github.com/vestauth/vestauth/compare/v0.7.0...v0.7.1) (2026-02-04)
+
+### Changed
+
+* Raise an error if a bad `Signature-Agent` header ([#11](https://github.com/vestauth/vestauth/pull/11))
 
 ## [0.7.0](https://github.com/vestauth/vestauth/compare/v0.6.0...v0.7.0) (2026-02-03)
 
