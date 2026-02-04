@@ -2,11 +2,11 @@ const crypto = require('crypto')
 
 const thumbprint = require('./thumbprint')
 
-function keypair (existingPrivateKey, prefix = 'agent') {
+function keypair (existingPrivateJwk, prefix = 'agent') {
   let publicJwk
   let privateJwk
 
-  if (existingPrivateKey) {
+  if (existingPrivateJwk) {
     // example
     // {
     //   "crv": "Ed25519",
@@ -17,7 +17,7 @@ function keypair (existingPrivateKey, prefix = 'agent') {
     // }
     // (publicJwk just remove 'd')
 
-    privateJwk = JSON.parse(existingPrivateKey)
+    privateJwk = JSON.parse(existingPrivateJwk)
     publicJwk = {
       crv: privateJwk.crv,
       x: privateJwk.x,
