@@ -8,10 +8,10 @@ t.test('#headers - deterministic signature input and format', async t => {
   const originalNow = Date.now
   Date.now = () => 1700000000000
 
-  const { privateKey } = keypair()
-  const privateKeyString = JSON.stringify(privateKey)
+  const { privateJwk } = keypair()
+  const privateJwkString = JSON.stringify(privateJwk)
 
-  const result = await headers('GET', 'https://example.com/resource', 'agent-123', privateKeyString, undefined, 'nonce-123')
+  const result = await headers('GET', 'https://example.com/resource', 'agent-123', privateJwkString, undefined, 'nonce-123')
 
   t.type(result, 'object')
   t.equal(Object.keys(result).length, 3)
@@ -23,7 +23,7 @@ t.test('#headers - deterministic signature input and format', async t => {
     result['Signature-Input'],
     'sig1=("@authority");' +
       'created=1700000000;' +
-      `keyid="${privateKey.kid}";` +
+      `keyid="${privateJwk.kid}";` +
       'alg="ed25519";' +
       'expires=1700000300;' +
       'nonce="nonce-123";' +
@@ -33,14 +33,14 @@ t.test('#headers - deterministic signature input and format', async t => {
   Date.now = originalNow
 })
 
-t.test('#headers - null privateKey string', async t => {
+t.test('#headers - null privateJwk string', async t => {
   await t.rejects(
     headers('GET', 'https://example.com/resource', 'agent-123', null),
     new Errors().missingPrivateKey()
   )
 })
 
-t.test('#headers - empty privateKey string', async t => {
+t.test('#headers - empty privateJwk string', async t => {
   await t.rejects(
     headers('GET', 'https://example.com/resource', 'agent-123', ''),
     new Errors().missingPrivateKey()
