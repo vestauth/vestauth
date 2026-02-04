@@ -3,7 +3,7 @@ const crypto = require('crypto')
 const parseSignatureInputHeader = require('./parseSignatureInputHeader')
 const stripDictionaryKey = require('./stripDictionaryKey')
 const authorityMessage = require('./authorityMessage')
-const publicKeyObject = require('./publicKeyObject')
+const publicJwkObject = require('./publicJwkObject')
 
 function verify (httpMethod, uri, headers = {}, publicJwk) {
   const signature = headers.Signature
@@ -26,7 +26,7 @@ function verify (httpMethod, uri, headers = {}, publicJwk) {
   const success = crypto.verify(
     null,
     Buffer.from(message, 'utf8'),
-    publicKeyObject(publicJwk),
+    publicJwkObject(publicJwk),
     Buffer.from(sig, 'base64')
   )
 
