@@ -111,9 +111,7 @@ $ vestauth agent curl https://api.vestauth.com/whoami
 
 <details><summary>learn more</summary><br>
 
-Vestauth autosigns each curl request – injecting valid signed headers according to the [web-bot-auth draft](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture).
-
-You can view these with the built-in `headers` primitive.
+Vestauth autosigns each curl request – injecting valid signed headers according to the [web-bot-auth draft](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture). View these with the built-in `headers` primitive.
 
 ```
 $ vestauth primitives headers GET https://api.vestauth.com/whoami --pp
