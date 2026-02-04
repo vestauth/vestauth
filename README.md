@@ -20,7 +20,7 @@ vestauth agent init
 
 &nbsp;
 
-or install globally - *unlocks vestauth for any agent, agent too, or agent framework!*
+or install globally - *unlocks vestauth for any agent, agent tool, or agent framework!*
 
 <details><summary>with curl 🌐 </summary><br>
 
