@@ -1,8 +1,7 @@
 const { Command } = require('commander')
+const env = require('./../../lib/helpers/env')
 
 const primitives = new Command('primitives')
-
-const env = require('./../../lib/helpers/env')
 
 primitives
   .description('🔩 primitives')

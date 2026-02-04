@@ -1,4 +1,5 @@
 const { Command } = require('commander')
+const env = require('./../../lib/helpers/env')
 
 const agent = new Command('agent')
 
@@ -30,9 +31,10 @@ agent.command('headers')
   .description('generate headers as agent')
   .argument('<httpMethod>', 'GET (default)')
   .argument('<uri>', '')
+  .option('--id <id>', 'id (string)', env('AGENT_ID'))
+  .option('--privateKey <privateKey>', 'AGENT_PUBLIC_KEY (default)', env('AGENT_PRIVATE_KEY'))
   .option('--tag <tag>', 'web-bot-auth (default) | web-bot-auth', 'vestauth')
   .option('--nonce <nonce>', 'null (default)')
-  .option('--privateKey <privateKey>', 'AGENT_PUBLIC_KEY (default)')
   .option('--pp, --pretty-print', 'pretty print output')
   .action(headersAction)
 
