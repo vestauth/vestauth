@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file. See [standa
 
 [Unreleased](https://github.com/vestauth/vestauth/compare/v0.5.3...main)
 
+## [0.6.0](https://github.com/vestauth/vestauth/compare/v0.5.3...v0.6.0) (2026-02-03)
+
+### Added
+
+* Add `provider verify` command ([#8](https://github.com/vestauth/vestauth/pull/8))
+
 ## [0.5.3](https://github.com/vestauth/vestauth/compare/v0.5.2...v0.5.3) (2026-02-03)
 
 ### Changed
