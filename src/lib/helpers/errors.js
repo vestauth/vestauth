@@ -36,6 +36,16 @@ class Errors {
     return e
   }
 
+  invalidSignatureAgent () {
+    const code = 'INVALID_SIGNATURE_AGENT'
+    const message = `[${code}] invalid --signature-agent`
+    const help = `[${code}] https://github.com/vestauth/vestauth/issues/11`
+
+    const e = new Error(message)
+    e.code = code
+    return e
+  }
+
   econnrefused () {
     const code = 'ECONNREFUSED'
     const message = `[${code}] connection refused`
