@@ -19,6 +19,7 @@ async function curl () {
       'curl',
       '-H', `Signature: ${headers.Signature}`,
       '-H', `Signature-Input: ${headers['Signature-Input']}`,
+      '-H', `Signature-Agent: ${headers['Signature-Agent']}`,
       ...commandArgs
     ]
 

@@ -6,8 +6,8 @@ const authorityMessage = require('./authorityMessage')
 const publicJwkObject = require('./publicJwkObject')
 
 function verify (httpMethod, uri, headers = {}, publicJwk) {
-  const signature = headers.Signature
-  const signatureInput = headers['Signature-Input']
+  const signature = headers.Signature || headers['signature']
+  const signatureInput = headers['Signature-Input'] || headers['signature-input']
 
   const { values } = parseSignatureInputHeader(signatureInput)
   const { expires } = values
