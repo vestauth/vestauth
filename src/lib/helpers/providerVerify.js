@@ -3,11 +3,11 @@ const buildApiError = require('./buildApiError')
 const parseSignatureAgentHeader = require('./parseSignatureAgentHeader')
 const verify = require('./verify')
 
-async function providerVerify (httpMethod = 'GET', uri = 'https://api.vestauth.com/whoami', headers = {}) {
+async function providerVerify (httpMethod, uri, headers = {}) {
   const signatureAgent = headers['Signature-Agent']
   const { value } = parseSignatureAgentHeader(signatureAgent) // sig1=https://agent-9aa52a556ca85ee195866c0b.agents.vestauth.com
 
-  const url = `${value}/.well-known/http-message-signatures-directory`
+  const url = `${value}/.well-known/http-message-signatures-directory` // risk of SSRF ?
   const resp = await http(url, { method: 'GET', headers: { 'Content-Type': 'application/json' } })
   if (resp.statusCode >= 400) {
     const json = await resp.body.json()
