@@ -33,7 +33,7 @@ async function headers (httpMethod, uri, id, privateJwk, tag = 'web-bot-auth', n
 
   const signatureInput = signatureParams(privateJwk.kid, tag, nonce)
   const signature = webBotAuthSignature(httpMethod, uri, signatureInput, privateJwk)
-  const signatureAgent = `https://${id}.agents.vestauth.com` // https://agent-1234.agents.vestauth.com/.well-known/http-message-signatures-directory
+  const signatureAgent = `${id}.agents.vestauth.com` // agent-1234.agents.vestauth.com/.well-known/http-message-signatures-directory
 
   return {
     Signature: `sig1=:${signature}:`,
