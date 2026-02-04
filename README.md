@@ -76,11 +76,11 @@ $ vestauth agent init
 ✔ agent created (.env/AGENT_ID=agent-4b94ccd425e939fac5016b6b)
 ```
 
-<details><summary>more details</summary><br>
+<details><summary>learn more</summary><br>
 
 This populates a `.env` file with an `AGENT_PUBLIC_JWK`, `AGENT_PRIVATE_JWK`, and `AGENT_ID`.
 
-```
+```ini
 # example
 AGENT_PUBLIC_JWK="{"crv":"Ed25519","x":"py2xNaAfjKZiau-jtmJls6h_3n8xJ1Ur0ie-n9b8zWg","kty":"OKP","kid":"B0u80Gw28W9U2Jl5t_EBiWeBajO2104kOYZ9Ikucl5I"}"
 AGENT_PRIVATE_JWK="{"crv":"Ed25519","d":"Z9vbwN-3eiFMVv_TPWXOxqSMJAT21kZvejWi72yiAaQ","x":"py2xNaAfjKZiau-jtmJls6h_3n8xJ1Ur0ie-n9b8zWg","kty":"OKP","kid":"B0u80Gw28W9U2Jl5t_EBiWeBajO2104kOYZ9Ikucl5I"}"
@@ -97,10 +97,43 @@ AGENT_ID="agent-4b94ccd425e939fac5016b6b"
 
 ## Authentication
 
+> Turn any curl request into a signed, authenticated request.
+
+```sh
+> without vestauth
+$ curl https://api.vestauth.com/whoami
+{"error":{"status":400,"code":null,"message":"bad_request","help":null,"meta":null}}
+
+> with vestauth
+$ vestauth agent curl https://api.vestauth.com/whoami
+{"uid":"agent-4b94ccd425e939fac5016b6b",...}
+```
+
+<details><summary>learn more</summary><br>
+
+Vestauth autosigns each curl request – injecting valid signed headers according to the [web-bot-auth draft](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture).
+
+You can view these with the built-in `headers` primitive.
+
+```
+$ vestauth primitives headers GET https://api.vestauth.com/whoami --pp
+{
+  "Signature": "sig1=:d4Id5SXhUExsf1XyruD8eBmlDtWzt/vezoCS+SKf0M8CxSkhKBtdHH7KkYyMN6E0hmxmNHsYus11u32nhvpWBQ==:",
+  "Signature-Input": "sig1=(\"@authority\");created=1770247189;keyid=\"B0u80Gw28W9U2Jl5t_EBiWeBajO2104kOYZ9Ikucl5I\";alg=\"ed25519\";expires=1770247489;nonce=\"NURxn28X7zyKJ9k5bHxuOyO5qdvF9L5s2qHmhTrGUzbwGSIoUCHmwSlwiiCRgTDGuum83yyWMHJU4jmrVI_XPg\";tag=\"web-bot-auth\"",
+  "Signature-Agent": "sig1=agent-4b94ccd425e939fac5016b6b.agents.vestauth.com"
+}
+```
+
+</details>
+
+&nbsp;
+
+## Verification 
+
 > As a provider of agentic tools, authenticate agents through cryptographic verification.
 
 ```sh
-$ vestauth provider verify GET https://ping.vestauth.com/ping
+
 ```
 
 More examples
