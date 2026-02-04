@@ -14,7 +14,7 @@ provider.command('verify')
   .argument('<uri>', '')
   .requiredOption('--signature <signature>', '')
   .requiredOption('--signature-input <signatureInput>', '')
-  .option('--signature-agent <signatureAgent>', '')
+  .requiredOption('--signature-agent <signatureAgent>', '')
   .option('--pp, --pretty-print', 'pretty print output')
   .action(verifyAction)
 
