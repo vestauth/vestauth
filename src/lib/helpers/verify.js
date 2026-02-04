@@ -8,9 +8,6 @@ const publicKeyObject = require('./publicKeyObject')
 function verify (httpMethod, uri, headers = {}, publicJwk) {
   const signature = headers.Signature
   const signatureInput = headers['Signature-Input']
-  const signatureAgent = headers['Signature-Agent']
-
-  console.log(signature, signatureInput)
 
   const { values } = parseSignatureInputHeader(signatureInput)
   const { expires } = values
