@@ -71,14 +71,27 @@ Download [the windows executable](https://github.com/vestauth/vestauth/releases)
 ```sh
 $ mkdir your-agent
 $ cd your-agent
+
 $ vestauth agent init
 ✔ agent created (.env/AGENT_ID=agent-4b94ccd425e939fac5016b6b)
-⮕ next run: [vestauth agent curl https://api.vestauth.com/whoami]
 ```
 
-Usernames, emails, passwords, api keys, oauth tokens, and more are for humans. Cryptographic identity is for agents.
+This populates a `.env` file with an `AGENT_PUBLIC_JWK`, `AGENT_PRIVATE_JWK`, and `AGENT_ID`.
 
-## Provider
+```
+# example
+AGENT_PUBLIC_JWK="{"crv":"Ed25519","x":"py2xNaAfjKZiau-jtmJls6h_3n8xJ1Ur0ie-n9b8zWg","kty":"OKP","kid":"B0u80Gw28W9U2Jl5t_EBiWeBajO2104kOYZ9Ikucl5I"}"
+AGENT_PRIVATE_JWK="{"crv":"Ed25519","d":"Z9vbwN-3eiFMVv_TPWXOxqSMJAT21kZvejWi72yiAaQ","x":"py2xNaAfjKZiau-jtmJls6h_3n8xJ1Ur0ie-n9b8zWg","kty":"OKP","kid":"B0u80Gw28W9U2Jl5t_EBiWeBajO2104kOYZ9Ikucl5I"}"
+AGENT_ID="agent-4b94ccd425e939fac5016b6b"
+```
+
+* The `AGENT_PUBLIC_KEY` is auto-hosted to its own [`/.well-known/http-message-signatures-directory`](https://datatracker.ietf.org/doc/html/draft-meunier-http-message-signatures-directory-04#appendix-A) for discovery purposes.
+* The `AGENT_PRIVATE_KEY` must NOT be shared and is used to sign requests according to [RFC 9421](https://datatracker.ietf.org/doc/rfc9421/).
+* The `AGENT_ID` contributes to building the [FQDN for the `Signature-Agent` header](https://datatracker.ietf.org/doc/html/draft-meunier-http-message-signatures-directory-01#name-request-with-http-signature).
+
+By combining these three mechanisms an agent can be identified and authenticated by any third party provider or tool – cryptographically.
+
+## Authentication
 
 > As a provider of agentic tools, authenticate agents through cryptographic verification.
 
@@ -93,9 +106,7 @@ More examples
 * Rails
 * ...
 
-### List of current providers
-
-* `dotenvx as2` – agentic secret storage
+## Verification
 
 ## Advanced
 
