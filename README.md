@@ -66,7 +66,7 @@ Download [the windows executable](https://github.com/vestauth/vestauth/releases)
 
 ## Identity
 
-> Initialize your agent and make authenticated curl calls to vestauth providers.
+> Give your agent its own cryptographic identity. (avoid juggling usernames, emails, passwords, api keys, oauth tokens, and other bearer tokens for your agents)
 
 ```sh
 $ vestauth agent init
