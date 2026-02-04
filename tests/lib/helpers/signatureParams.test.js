@@ -19,7 +19,7 @@ t.test('#signatureParams - deterministic values', t => {
       'alg="ed25519";' +
       'expires=1700000300;' +
       'nonce="nonce-123";' +
-      'tag="vestauth"'
+      'tag="web-bot-auth"'
   )
 
   Date.now = originalNow

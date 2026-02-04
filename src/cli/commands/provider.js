@@ -12,9 +12,10 @@ provider.command('verify')
   .description('verify agent')
   .argument('<httpMethod>', 'GET (default)')
   .argument('<uri>', '')
-  .argument('<signature>', '')
-  .argument('<signatureInput>', '')
-  .option('-pp, --pretty-print', 'pretty print output')
+  .requiredOption('--signature <signature>', '')
+  .requiredOption('--signature-input <signatureInput>', '')
+  .requiredOption('--signature-agent <signatureAgent>', '')
+  .option('--pp, --pretty-print', 'pretty print output')
   .action(verifyAction)
 
 module.exports = provider

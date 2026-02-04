@@ -1,16 +1,16 @@
 const headers = require('./headers')
 const identity = require('./identity')
 
-async function agentHeaders (httpMethod, uri, tag = 'vestauth', nonce = null, privateKey = null, uid = null) {
+async function agentHeaders (httpMethod, uri, id = null, privateKey = null, tag = 'web-bot-auth', nonce = null) {
   if (!privateKey) {
     privateKey = identity().privateKey
   }
 
-  if (!uid) {
-    uid = identity().uid
+  if (!id) {
+    id = identity().id
   }
 
-  return await headers(httpMethod, uri, privateKey, uid, tag, nonce)
+  return await headers(httpMethod, uri, id, privateKey, tag, nonce)
 }
 
 module.exports = agentHeaders
