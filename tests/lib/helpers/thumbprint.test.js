@@ -31,7 +31,7 @@ t.test('#thumbprint - different x yields different value', t => {
   t.end()
 })
 
-t.test('#thumbprint - null publicKey', t => {
+t.test('#thumbprint - null publicJwk', t => {
   const result = thumbprint(null)
 
   t.equal(result, 'OkI_FFkdwHoj0WRjTTr_VHKxqbfmfVIHvLe85dQGFOk')
@@ -39,7 +39,7 @@ t.test('#thumbprint - null publicKey', t => {
   t.end()
 })
 
-t.test('#thumbprint - empty string publicKey', t => {
+t.test('#thumbprint - empty string publicJwk', t => {
   const result = thumbprint('')
 
   t.equal(result, 'OkI_FFkdwHoj0WRjTTr_VHKxqbfmfVIHvLe85dQGFOk')

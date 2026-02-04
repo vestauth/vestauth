@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-[Unreleased](https://github.com/vestauth/vestauth/compare/v0.5.3...main)
+[Unreleased](https://github.com/vestauth/vestauth/compare/v0.7.0...main)
+
+## [0.7.0](https://github.com/vestauth/vestauth/compare/v0.6.0...v0.7.0) (2026-02-03)
+
+### Changed
+
+* Change `key` terms to `jwk` for clarity ([#9](https://github.com/vestauth/vestauth/pull/9))
 
 ## [0.6.0](https://github.com/vestauth/vestauth/compare/v0.5.3...v0.6.0) (2026-02-03)
 

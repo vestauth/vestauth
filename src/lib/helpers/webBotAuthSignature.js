@@ -1,8 +1,8 @@
 const crypto = require('crypto')
-const edPrivateKeyObject = require('./edPrivateKeyObject')
+const privateJwkObject = require('./privateJwkObject')
 const authorityMessage = require('./authorityMessage')
 
-function webBotAuthSignature (method = 'GET', uri = '', signatureParams, privateKey) {
+function webBotAuthSignature (method = 'GET', uri = '', signatureParams, privateJwk) {
   const message = authorityMessage(uri, signatureParams)
 
   // const message = [
@@ -11,12 +11,10 @@ function webBotAuthSignature (method = 'GET', uri = '', signatureParams, private
   //   `"@signature-params": ${signatureParams}`
   // ].join('\n')
 
-  const privateKeyObject = edPrivateKeyObject(privateKey)
-
   return crypto.sign(
     null,
     Buffer.from(message, 'utf8'),
-    privateKeyObject
+    privateJwkObject(privateJwk)
   ).toString('base64')
 }
 
