@@ -9,28 +9,28 @@ t.test('#verifyAgentFqdn - valid fqdn', async t => {
 t.test('#verifyAgentFqdn - scheme not allowed', async t => {
   t.throws(
     () => verifyAgentFqdn('http://agent-123.agents.vestauth.com'),
-    new Error('Invalid agent fqdn')
+    new Error('[INVALID_SIGNATURE_AGENT] invalid --signature-agent')
   )
 })
 
 t.test('#verifyAgentFqdn - path not allowed', async t => {
   t.throws(
     () => verifyAgentFqdn('agent-123.agents.vestauth.com/.well-known'),
-    new Error('Invalid agent fqdn')
+    new Error('[INVALID_SIGNATURE_AGENT] invalid --signature-agent')
   )
 })
 
 t.test('#verifyAgentFqdn - wrong domain', async t => {
   t.throws(
     () => verifyAgentFqdn('agent-123.example.com'),
-    new Error('Invalid agent fqdn')
+    new Error('[INVALID_SIGNATURE_AGENT] invalid --signature-agent')
   )
 })
 
 t.test('#verifyAgentFqdn - non-string', async t => {
   t.throws(
     () => verifyAgentFqdn(null),
-    new Error('Invalid agent fqdn')
+    new Error('[INVALID_SIGNATURE_AGENT] invalid --signature-agent')
   )
 })
 
@@ -41,7 +41,7 @@ t.test('#verifyAgentFqdn - env override', async t => {
   t.equal(verifyAgentFqdn('custom-abc.agents.vestauth.com'), true)
   t.throws(
     () => verifyAgentFqdn('agent-123.agents.vestauth.com'),
-    new Error('Invalid agent fqdn')
+    new Error('[INVALID_SIGNATURE_AGENT] invalid --signature-agent')
   )
 
   if (original === undefined) {
