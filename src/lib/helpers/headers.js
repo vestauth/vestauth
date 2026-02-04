@@ -3,18 +3,17 @@ const thumbprint = require('./thumbprint')
 const signatureParams = require('./signatureParams')
 const webBotAuthSignature = require('./webBotAuthSignature')
 
-async function headers (httpMethod, uri, id, privateKey, tag = 'web-bot-auth', nonce = null) {
+async function headers (httpMethod, uri, id, privateJwk, tag = 'web-bot-auth', nonce = null) {
   if (!id) throw new Errors().missingId()
-  if (!privateKey) throw new Errors().missingPrivateKey()
+  if (!privateJwk) throw new Errors().missingPrivateJwk()
 
-  let privateJwk
   try {
-    privateJwk = JSON.parse(privateKey)
+    privateJwk = JSON.parse(privateJwk)
   } catch {
-    throw new Errors().invalidPrivateKey()
+    throw new Errors().invalidPrivateJwk()
   }
   if (!privateJwk || typeof privateJwk !== 'object') {
-    throw new Errors().invalidPrivateKey()
+    throw new Errors().invalidPrivateJwk()
   }
 
   const kid = thumbprint(privateJwk)
@@ -25,7 +24,7 @@ async function headers (httpMethod, uri, id, privateKey, tag = 'web-bot-auth', n
   // const now = new Date()
   // return await signatureHeaders(
   //   request,
-  //   await signerFromJWK(JSON.parse(privateKey)),
+  //   await signerFromJWK(JSON.parse(privateJwk)),
   //   {
   //     created: now,
   //     expires: new Date(now.getTime() + 300_000), // now + 5 min

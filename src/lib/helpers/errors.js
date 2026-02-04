@@ -14,9 +14,9 @@ class Errors {
     return e
   }
 
-  missingPrivateKey () {
-    const code = 'MISSING_PRIVATE_KEY'
-    const message = `[${code}] missing --private-key (AGENT_PRIVATE_KEY)`
+  missingPrivateJwk () {
+    const code = 'MISSING_PRIVATE_JWK'
+    const message = `[${code}] missing --private-jwk (AGENT_PRIVATE_JWK)`
     const help = `[${code}] https://github.com/vestauth/vestauth/issues/5`
 
     const e = new Error(message)
@@ -25,9 +25,9 @@ class Errors {
     return e
   }
 
-  invalidPrivateKey () {
-    const code = 'INVALID_PRIVATE_KEY'
-    const message = `[${code}] invalid --private-key (AGENT_PRIVATE_KEY)`
+  invalidPrivateJwk () {
+    const code = 'INVALID_PRIVATE_JWK'
+    const message = `[${code}] invalid --private-jwk (AGENT_PRIVATE_JWK)`
     const help = `[${code}] https://github.com/vestauth/vestauth/issues/7`
 
     const e = new Error(message)
