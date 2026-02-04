@@ -66,7 +66,7 @@ Download [the windows executable](https://github.com/vestauth/vestauth/releases)
 
 ## Identity
 
-> Give your agent its own cryptographic identity. 
+> Give your agent its cryptographic identity. 
 
 ```sh
 $ mkdir your-agent
