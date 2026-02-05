@@ -25,7 +25,7 @@ async function verify (httpMethod, uri) {
       'Signature-Agent': options.signatureAgent
     }
 
-    const publicJwk = JSON.parse(options.publicJwk || {})
+    const publicJwk = options.publicJwk ? JSON.parse(options.publicJwk) : undefined
 
     const output = await primitives.verify(httpMethod, uri, headers, publicJwk)
     // const output = await primitive.verifyWebBotAuth(httpMethod, uri, signature, signatureInput, JSON.parse(publicJwk))

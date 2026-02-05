@@ -10,9 +10,10 @@ t.test('#verify - valid signature', async t => {
   const uri = 'https://example.com/resource'
   const signedHeaders = await headers('GET', uri, 'agent-123', JSON.stringify(privateJwk))
 
-  const output = verify('GET', uri, signedHeaders, publicJwk)
+  const output = await verify('GET', uri, signedHeaders, publicJwk)
 
-  t.equal(output.success, true)
+  t.same(output.public_jwk, publicJwk)
+  t.equal(output.kid, publicJwk.kid)
 })
 
 t.test('#verify - invalid signature', async t => {
@@ -24,8 +25,8 @@ t.test('#verify - invalid signature', async t => {
   const sig = match ? match[1] : ''
   const tampered = (sig[0] === 'A' ? 'B' : 'A') + sig.slice(1)
 
-  t.throws(
-    () => verify('GET', uri, {
+  await t.rejects(
+    verify('GET', uri, {
       ...signedHeaders,
       Signature: `sig1=:${tampered}:`
     }, publicJwk),
@@ -39,8 +40,8 @@ t.test('#verify - expired signature', async t => {
   const signatureInput = '("@authority");created=1;keyid="' + publicJwk.kid + '";alg="ed25519";expires=2;nonce="n";tag="web-bot-auth"'
   const signature = webBotAuthSignature('GET', uri, signatureInput, privateJwk)
 
-  t.throws(
-    () => verify('GET', uri, {
+  await t.rejects(
+    verify('GET', uri, {
       Signature: `sig1=:${signature}:`,
       'Signature-Input': `sig1=${signatureInput}`
     }, publicJwk),
