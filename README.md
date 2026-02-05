@@ -223,11 +223,11 @@ $ vestauth primitives verify GET https://example.com --signature "sig1=:K7z3Nozc
 
 <details><summary>What problem does Vestauth solve?</summary><br>
 
-Vestauth gives agents a cryptographic identity and a simple way to authenticate HTTP requests.
-
-Most agent systems rely on API keys, bearer tokens, or username/passwords. These approaches are difficult to rotate, easy to leak, and hard to attribute to a specific agent.
-
-Vestauth replaces shared secrets with public/private key cryptography. Agents sign requests using a private key, and providers verify those requests using the agent’s public key.
+> Vestauth gives agents a cryptographic identity and a simple way to authenticate HTTP requests.
+> 
+> Most agent systems rely on API keys, bearer tokens, or username/passwords. These approaches are difficult to rotate, easy to leak, and hard to attribute to a specific agent.
+> 
+> Vestauth replaces shared secrets with public/private key cryptography. Agents sign requests using a private key, and providers verify those requests using the agent’s public key.
 
 &nbsp;
 
