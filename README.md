@@ -161,6 +161,10 @@ $ vestauth agent curl http://localhost:3000/whoami
 
 <details><summary>learn more</summary><br>
 
+```sh
+Agent → Signs Request → Provider → Discovers Keys → Verifies Signature → Trusted Agent
+```
+
 Vestauth verifies requests using public key discovery and HTTP Message Signature validation.
 
 When a signed request is received, Vestauth:
