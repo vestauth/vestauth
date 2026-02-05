@@ -72,7 +72,7 @@ $ vestauth agent init
 ✔ agent created (.env/AGENT_ID=agent-4b94ccd425e939fac5016b6b)
 ```
 
-> …and sign their curl requests with cryptographic authentication.
+> …and sign their `curl` requests with cryptographic authentication.
 
 ```sh
 > SIGNED - 200
@@ -86,7 +86,7 @@ $ curl https://api.vestauth.com/whoami
 
 <details><summary>learn more</summary><br>
 
-`vestauth agent init` populates a `.env` file with an `AGENT_PUBLIC_JWK`, `AGENT_PRIVATE_JWK`, and `AGENT_ID`.
+First `vestauth agent init` populates a `.env` file with an `AGENT_PUBLIC_JWK`, `AGENT_PRIVATE_JWK`, and `AGENT_ID`.
 
 ```ini
 # .env
@@ -101,9 +101,7 @@ AGENT_ID="agent-4b94ccd425e939fac5016b6b"
 | `AGENT_PRIVATE_JWK` | Signing | Used locally to sign HTTP requests |
 | `AGENT_ID` | Identity | Builds discovery FQDN and identifies the agent |
 
-</details>
-
-`vestauth agent curl` autosigns curl requests – injecting valid signed headers according to the [web-bot-auth draft](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture). You can peek these with the built-in `headers` primitive.
+Then `vestauth agent curl` autosigns `curl` requests – injecting valid signed headers according to the [web-bot-auth draft](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture). You can peek these with the built-in `headers` primitive.
 
 ```sh
 $ vestauth primitives headers GET https://api.vestauth.com/whoami --pp
@@ -113,6 +111,8 @@ $ vestauth primitives headers GET https://api.vestauth.com/whoami --pp
   "Signature-Agent": "sig1=agent-4b94ccd425e939fac5016b6b.agents.vestauth.com"
 }
 ```
+
+Vestauth turns `curl` into a powerful primitive for provider-side agent identity, verification, and authentication. See the next section.
 
 </details>
 
