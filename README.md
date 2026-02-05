@@ -23,31 +23,42 @@ vestauth agent init
 or install globally - *unlocks vestauth for any agent, agent tool, or agent framework!*
 
 <details><summary>with curl 🌐 </summary><br>
-> ```sh
-> curl -sfS https://vestauth.sh | sh
-> vestauth help
-> ```
->
-> [![curl installs](https://img.shields.io/endpoint?url=https://vestauth.sh/stats/curl&label=curl%20installs)](https://github.com/vestauth/vestauth.sh/blob/main/install.sh)
+
+```sh
+curl -sfS https://vestauth.sh | sh
+vestauth help
+```
+
+[![curl installs](https://img.shields.io/endpoint?url=https://vestauth.sh/stats/curl&label=curl%20installs)](https://github.com/vestauth/vestauth.sh/blob/main/install.sh)
 
 &nbsp;
 
 </details>
 
 <details><summary>with github releases 🐙</summary><br>
-> ```sh
-> curl -L -o vestauth.tar.gz "https://github.com/vestauth/vestauth/releases/latest/download/vestauth-$(uname -s)-$(uname -m).tar.gz"
-> tar -xzf vestauth.tar.gz
-> ./vestauth help
-> ```
->
-> [![github releases](https://img.shields.io/github/downloads/vestauth/vestauth/total)](https://github.com/vestauth/vestauth/releases)
+
+```sh
+curl -L -o vestauth.tar.gz "https://github.com/vestauth/vestauth/releases/latest/download/vestauth-$(uname -s)-$(uname -m).tar.gz"
+tar -xzf vestauth.tar.gz
+./vestauth help
+```
+
+[![github releases](https://img.shields.io/github/downloads/vestauth/vestauth/total)](https://github.com/vestauth/vestauth/releases)
 
 &nbsp;
 
 </details>
 
 <details><summary>or windows 🪟</summary><br>
+
+Download [the windows executable](https://github.com/vestauth/vestauth/releases) directly from the [releases page](https://github.com/vestauth/vestauth/releases).
+
+> * [vestauth-windows-amd64.zip
+](https://github.com/vestauth/releases/raw/main/latest/vestauth-windows-amd64.zip)
+> * [vestauth-windows-x86_64.zip
+](https://github.com/vestauth/releases/raw/main/latest/vestauth-windows-x86_64.zip)
+
+(unzip to extract `vestauth.exe`)
 
 </details>
 
@@ -66,6 +77,19 @@ $ vestauth agent init
 ```
 
 <details><summary>learn more</summary><br>
+
+This populates a `.env` file with an `AGENT_PUBLIC_JWK`, `AGENT_PRIVATE_JWK`, and `AGENT_ID`.
+
+```ini
+# example
+AGENT_PUBLIC_JWK="{"crv":"Ed25519","x":"py2xNaAfjKZiau-jtmJls6h_3n8xJ1Ur0ie-n9b8zWg","kty":"OKP","kid":"B0u80Gw28W9U2Jl5t_EBiWeBajO2104kOYZ9Ikucl5I"}"
+AGENT_PRIVATE_JWK="{"crv":"Ed25519","d":"Z9vbwN-3eiFMVv_TPWXOxqSMJAT21kZvejWi72yiAaQ","x":"py2xNaAfjKZiau-jtmJls6h_3n8xJ1Ur0ie-n9b8zWg","kty":"OKP","kid":"B0u80Gw28W9U2Jl5t_EBiWeBajO2104kOYZ9Ikucl5I"}"
+AGENT_ID="agent-4b94ccd425e939fac5016b6b"
+```
+
+* The `AGENT_PUBLIC_KEY` is auto-hosted to its own [`/.well-known/http-message-signatures-directory`](https://datatracker.ietf.org/doc/html/draft-meunier-http-message-signatures-directory-04#appendix-A) for discovery purposes.
+* The `AGENT_PRIVATE_KEY` must NOT be shared and is used to sign requests according to [RFC 9421](https://datatracker.ietf.org/doc/rfc9421/).
+* The `AGENT_ID` contributes to building the [FQDN for the `Signature-Agent` header](https://datatracker.ietf.org/doc/html/draft-meunier-http-message-signatures-directory-01#name-request-with-http-signature).
 
 </details>
 
@@ -86,6 +110,17 @@ $ vestauth agent curl https://api.vestauth.com/whoami
 ```
 
 <details><summary>learn more</summary><br>
+
+Vestauth autosigns each curl request – injecting valid signed headers according to the [web-bot-auth draft](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture). View these with the built-in `headers` primitive.
+
+```
+$ vestauth primitives headers GET https://api.vestauth.com/whoami --pp
+{
+  "Signature": "sig1=:d4Id5SXhUExsf1XyruD8eBmlDtWzt/vezoCS+SKf0M8CxSkhKBtdHH7KkYyMN6E0hmxmNHsYus11u32nhvpWBQ==:",
+  "Signature-Input": "sig1=(\"@authority\");created=1770247189;keyid=\"B0u80Gw28W9U2Jl5t_EBiWeBajO2104kOYZ9Ikucl5I\";alg=\"ed25519\";expires=1770247489;nonce=\"NURxn28X7zyKJ9k5bHxuOyO5qdvF9L5s2qHmhTrGUzbwGSIoUCHmwSlwiiCRgTDGuum83yyWMHJU4jmrVI_XPg\";tag=\"web-bot-auth\"",
+  "Signature-Agent": "sig1=agent-4b94ccd425e939fac5016b6b.agents.vestauth.com"
+}
+```
 
 </details>
 
@@ -137,17 +172,57 @@ Advanced CLI commands.
 
 <details><summary>`primitives keypair`</summary><br>
 
+Generate public/private keypair.
+
+```sh
+$ vestauth primitives keypair --pp
+{
+  "public_jwk": {
+    "crv": "Ed25519",
+    "x": "QjutZ3_tt2jRD_XSOq4EFCDivnwEzKIrQB2yReddsNo",
+    "kty": "OKP",
+    "kid": "ZCa5pijSUCw7QKgBs6nkvBBzbEjTMKYSt6iwCDQdIYc"
+  },
+  "private_jwk": {
+    "crv": "Ed25519",
+    "d": "RTyREuKAEfIMMs2ejwaKtFefZxt14HmsRR0rFj4U5iM",
+    "x": "QjutZ3_tt2jRD_XSOq4EFCDivnwEzKIrQB2yReddsNo",
+    "kty": "OKP",
+    "kid": "ZCa5pijSUCw7QKgBs6nkvBBzbEjTMKYSt6iwCDQdIYc"
+  }
+}
+```
+
 </details>
 <details><summary>`primitives headers`</summary><br>
 
+Generate signed headers.
+
+```sh
+$ vestauth primitives headers GET http://example.com --pp
+{
+  "Signature": "sig1=:K7z3Nozcq1z5zfJhrd540DWYbjyQ1kR/S7ZDcMXE5gVhxezvG6Rn9BxEvfteiAnBuQhOkvbpGtF83WpQQerGBw==:",
+  "Signature-Input": "sig1=(\"@authority\");created=1770263541;keyid=\"_4GFBGmXKinLBoh3-GJZCiLBt-84GP9Fb0iBzmYncUg\";alg=\"ed25519\";expires=1770263841;nonce=\"0eu7hVMVFm61lQvIryKNmZXIbzkkgpVocoKvN0de5QO8Eu5slTxklJAcVLQs0L_UTVtx4f8qJcqYZ21JTeOQww\";tag=\"web-bot-auth\"",
+  "Signature-Agent": "sig1=agent-35e4a794a904d227ee2373b6.agents.vestauth.com"
+}
+```
+
 </details>
 <details><summary>`primitives verify`</summary><br>
+
+Verify signed headers.
+
+```sh
+$ vestauth primitives verify GET https://example.com --signature "sig1=:K7z3Nozcq1z5zfJhrd540DWYbjyQ1kR/S7ZDcMXE5gVhxezvG6Rn9BxEvfteiAnBuQhOkvbpGtF83WpQQerGBw==:" --signature-input "sig1=(\"@authority\");created=1770263541;keyid=\"_4GFBGmXKinLBoh3-GJZCiLBt-84GP9Fb0iBzmYncUg\";alg=\"ed25519\";expires=1770263841;nonce=\"0eu7hVMVFm61lQvIryKNmZXIbzkkgpVocoKvN0de5QO8Eu5slTxklJAcVLQs0L_UTVtx4f8qJcqYZ21JTeOQww\";tag=\"web-bot-auth\""
+{"success":true}
+```
 
 </details>
 
 ## FAQ
 
 <details><summary>What problem does Vestauth solve?</summary><br>
+
 > Vestauth gives agents a cryptographic identity and a simple way to authenticate HTTP requests.
 >
 > Most agent systems rely on API keys, bearer tokens, or username/passwords. These approaches are difficult to rotate, easy to leak, and hard to attribute to a specific agent.
@@ -159,6 +234,7 @@ Advanced CLI commands.
 </details>
 
 <details><summary>How does Vestauth authentication work?</summary><br>
+
 > Vestauth uses HTTP Message Signatures ([RFC 9421](https://datatracker.ietf.org/doc/rfc9421/)). Each request is signed using the agent's private key. The request includes signed headers such as:
 >
 > * Signature
@@ -174,6 +250,7 @@ Advanced CLI commands.
 </details>
 
 <details><summary>Do I need to run a Vestauth server?</summary><br>
+
 > No.
 >
 > Vestauth is primarily a client-side and verification library. Agents generate keys locally and sign requests directly. Providers verify requests using public keys exposed via .well-known discovery endpoints.
@@ -185,6 +262,7 @@ Advanced CLI commands.
 </details>
 
 <details><summary>Is Vestauth replacing OAuth or API keys?</summary><br>
+
 > Vestauth is complementary.
 >
 > OAuth and API keys authenticate applications or users. Vestauth authenticates agents and tools at the cryptographic level.
@@ -196,6 +274,7 @@ Advanced CLI commands.
 </details>
 
 <details><summary>Where are agent keys stored?</summary><br>
+
 > Agent keys are generated locally and stored in the agent's environment configuration.
 >
 > * `AGENT_PRIVATE_JWK` is used to sign requests and must never be shared.
@@ -208,6 +287,7 @@ Advanced CLI commands.
 </details>
 
 <details><summary>Can someone impersonate my agent?</summary><br>
+
 > No, unless they obtain your private key.
 >
 > Vestauth relies on asymmetric cryptography. Only the holder of the private key can generate valid signatures. Providers verify those signatures using the corresponding public key.
@@ -219,6 +299,7 @@ Advanced CLI commands.
 </details>
 
 <details><summary>Why does Vestauth use public key discovery?</summary><br>
+
 > Public key discovery allows providers to verify agent signatures without manual key exchange. Each agent hosts its public keys in a standardized .well-known directory.
 >
 > This enables dynamic agent onboarding while preserving cryptographic verification.
@@ -228,6 +309,7 @@ Advanced CLI commands.
 </details>
 
 <details><summary>Does Vestauth send secrets over the network?</summary><br>
+
 > No.
 >
 > Vestauth signs requests using private keys locally. Only public keys are shared for verification.
@@ -237,6 +319,7 @@ Advanced CLI commands.
 </details>
 
 <details><summary>Is Vestauth production ready?</summary><br>
+
 > Vestauth is built on established cryptographic and HTTP standards:
 >
 > * RFC 9421 HTTP Message Signatures
@@ -250,6 +333,7 @@ Advanced CLI commands.
 </details>
 
 <details><summary>Why does Vestauth use Ed25519 keys?</summary><br>
+
 > Ed25519 provides:
 >
 > * Strong modern cryptographic security
@@ -262,6 +346,7 @@ Advanced CLI commands.
 </details>
 
 <details><summary>Can Vestauth work without curl?</summary><br>
+
 > Yes.
 >
 > Vestauth provides libraries and primitives that can be integrated into any HTTP client or framework. The CLI simply makes it easy to adopt and demonstrate.
@@ -271,6 +356,7 @@ Advanced CLI commands.
 </details>
 
 <details><summary>Is Vestauth only for AI agents?</summary><br>
+
 > No.
 >
 > Vestauth can authenticate any automated system including:
@@ -286,6 +372,7 @@ Advanced CLI commands.
 </details>
 
 <details><summary>Why not just use API keys?</summary><br>
+
 > API keys are shared secrets. Anyone who obtains the key can impersonate the client, and keys are difficult to rotate safely.
 >
 > Vestauth uses cryptographic signing instead of shared secrets. This allows providers to verify identity without storing or distributing sensitive credentials.
@@ -295,6 +382,7 @@ Advanced CLI commands.
 </details>
 
 <details><summary>How does Vestauth prevent replay attacks?</summary><br>
+
 > Vestauth prevents replay attacks using multiple mechanisms built into HTTP Message Signatures.
 >
 > Each signed request includes:
@@ -318,6 +406,7 @@ Advanced CLI commands.
 </details>
 
 <details><summary>How does Vestauth avoid SSRF during public key discovery?</summary><br>
+
 > Vestauth prevents Server-Side Request Forgery (SSRF) by restricting public key discovery to trusted domains.
 >
 > By default, Vestauth only resolves agent discovery endpoints inside the controlled namespace:
@@ -368,6 +457,7 @@ Advanced CLI commands.
 </details>
 
 <details><summary>Why does Vestauth use .well-known discovery instead of embedding public keys directly?</summary><br>
+
 > Vestauth uses .well-known discovery to keep requests small, enable key rotation, and support long-term identity management.
 >
 > Embedding public keys directly in every request would increase header size, reduce caching opportunities, and make key rotation difficult. By publishing keys through a discovery endpoint, Vestauth allows providers to fetch and cache keys independently from individual requests.
