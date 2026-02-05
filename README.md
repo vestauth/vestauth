@@ -16,6 +16,7 @@ npm i -g vestauth
 
 ```sh
 vestauth agent init
+vestauth agent curl https://PROVIDER.com/TOOL
 ```
 
 <details><summary>with curl 🌐 </summary><br>
