@@ -3,6 +3,7 @@ const buildApiError = require('./buildApiError')
 const parseSignatureAgentHeader = require('./parseSignatureAgentHeader')
 const verifyAgentFqdn = require('./verifyAgentFqdn')
 const verify = require('./verify')
+const Errors = require('./errors')
 
 async function providerVerify (httpMethod, uri, headers = {}) {
   if (!httpMethod) {

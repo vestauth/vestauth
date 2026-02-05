@@ -1,6 +1,5 @@
 const { logger } = require('./../../../shared/logger')
 const catchAndLog = require('./../../../lib/helpers/catchAndLog')
-const Errors = require('./../../../lib/helpers/errors')
 
 const provider = require('./../../../lib/provider')
 
