@@ -63,6 +63,17 @@ class Errors {
     return e
   }
 
+  missingPublicJwk () {
+    const code = 'MISSING_PUBLIC_JWK'
+    const message = `[${code}] missing --public-jwk (AGENT_PUBLIC_JWK) or --signature-agent`
+    const help = `[${code}] provide a public JWK or a signature agent for lookup`
+
+    const e = new Error(message)
+    e.code = code
+    e.help = help
+    return e
+  }
+
   invalidSignatureAgent () {
     const code = 'INVALID_SIGNATURE_AGENT'
     const message = `[${code}] invalid --signature-agent`
