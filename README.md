@@ -161,6 +161,8 @@ $ vestauth agent curl http://localhost:3000/whoami
 {"success":true}
 ```
 
+&nbsp;
+
 ## Advanced
 
 > Become a `vestauth` power user.
@@ -218,6 +220,8 @@ $ vestauth primitives verify GET https://example.com --signature "sig1=:K7z3Nozc
 ```
 
 </details>
+
+&nbsp;
 
 ## FAQ
 
