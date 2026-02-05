@@ -130,8 +130,35 @@ $ vestauth primitives headers GET https://api.vestauth.com/whoami --pp
 
 > As a provider of agentic tools, authenticate agents through cryptographic verification.
 
-```sh
+```js
+// index.js
+const express = require('express')
+const vestauth = require('vestauth')
+const app = express()
 
+// vestauth agent curl http://localhost:3000/whoami
+app.get('/whoami', async (req, res) => {
+  try {
+    const fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`
+    const agent = await vestauth.provider.verify(req.method, fullUrl, req.headers)
+    res.json(agent)
+  } catch (err) {
+    res.status(401).json({ error: { message: err.message }})
+  }
+})
+
+app.listen(3000, () => { console.log('listening on http://localhost:3000') })
+```
+
+```sh
+$ npm install express vestauth --save
+$ node index.js
+listening on http://localhost:3000
+```
+
+```sh
+$ vestauth agent curl http://localhost:3000/whoami
+{"success":true}
 ```
 
 ## Advanced
