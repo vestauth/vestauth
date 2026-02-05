@@ -6,6 +6,23 @@
 * authentication
 * verification
 
+```
+┌─────────┐      Signed HTTP Request      ┌───────────┐
+│  Agent  │ ───────────────────────────▶  │  Provider │
+└────┬────┘                               └─────┬─────┘
+     │                                          │
+     │  Publishes Public Keys                   │
+     ▼                                          ▼
+┌────────────────────────────────────────────────────┐
+│       /.well-known/http-message-signatures-dir     │
+└────────────────────────────────────────────────────┘
+
+             ✔ Signature Verified
+             ✔ Agent Identity Trusted
+```
+
+
+
 &nbsp;
 
 ### Quickstart [![npm version](https://img.shields.io/npm/v/vestauth.svg)](https://www.npmjs.com/package/vestauth) [![downloads](https://img.shields.io/npm/dw/vestauth)](https://www.npmjs.com/package/vestauth)
@@ -60,58 +77,9 @@ Download [the windows executable](https://github.com/vestauth/vestauth/releases)
 
 &nbsp;
 
-## How It Works
+## Identity
 
-Vestauth gives agents a cryptographic identity
-and uses that identity to securely authenticate requests using open standards.
-
-```
-┌─────────┐      Signed HTTP Request       ┌───────────┐
-│  Agent  │ ───────────────────────────▶  │  Provider │
-└────┬────┘                               └─────┬─────┘
-     │                                           │
-     │  Publishes Public Keys                    │
-     ▼                                           ▼
-┌────────────────────────────────────────────────────┐
-│        /.well-known/http-message-signatures-dir   │
-└────────────────────────────────────────────────────┘
-
-                ✔ Signature Verified
-                ✔ Agent Identity Trusted
-```
-
-```
-┌─────────┐        Signed Request        ┌───────────┐
-│  Agent  │ ─────────────────────────▶ │  Provider │
-└────┬────┘                             └─────┬─────┘
-     │                                         │
-     │  Signature-Agent Header                 │
-     │  (.well-known discovery)                │
-     ▼                                         ▼
-┌────────────────────────────────────────────────────┐
-│        Public Key Discovery (.well-known)          │
-└────────────────────────────────────────────────────┘
-                     │
-                     ▼
-              Signature Verified
-                     │
-                     ▼
-               Agent Trusted
-```
-
-```
-agent → signs request → provider → verifies signature → trusts agent
-             ↓
-      public key discovery via .well-known
-```
-
-### 1. Agent Identity
-
-Each agent generates a local public/private keypair.
-
-* The private key stays with the agent and is used to sign requests
-* The public key is published to a discovery endpoint using a .well-known directory
-* The agent is assigned a stable AGENT_ID that maps to its discovery domain
+> Give your agents cryptographic identities.
 
 ```sh
 $ mkdir your-agent
@@ -140,7 +108,7 @@ AGENT_ID="agent-4b94ccd425e939fac5016b6b"
 
 &nbsp;
 
-### Authentication
+## Authentication
 
 > Turn any curl request into a signed, authenticated request.
 
@@ -171,7 +139,7 @@ $ vestauth primitives headers GET https://api.vestauth.com/whoami --pp
 
 &nbsp;
 
-### Verification 
+## Verification 
 
 > As a provider of agentic tools, authenticate agents through cryptographic verification.
 
