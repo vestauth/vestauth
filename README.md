@@ -298,18 +298,6 @@ $ vestauth primitives verify GET https://example.com --signature "sig1=:K7z3Nozc
 
 </details>
 
-<details><summary>Is Vestauth replacing OAuth or API keys?</summary><br>
-
-> Vestauth is complementary.
->
-> OAuth and API keys authenticate applications or users. Vestauth authenticates agents and tools at the cryptographic level.
->
-> Many systems use Vestauth alongside existing auth mechanisms. For example, Vestauth can verify an agent's identity before issuing short-lived API tokens.
-
-&nbsp;
-
-</details>
-
 <details><summary>Where are agent keys stored?</summary><br>
 
 > Agent keys are generated locally and stored in the agent's environment configuration.
