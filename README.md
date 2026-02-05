@@ -165,6 +165,8 @@ $ vestauth agent curl http://localhost:3000/whoami
 
 > Become a `vestauth` power user.
 
+* coming soon
+
 ## Methodology
 
 * `vestauth` implements [RFC 9421 HTTP Message Signatures](https://datatracker.ietf.org/doc/rfc9421/)
