@@ -1,5 +1,4 @@
 const t = require('tap')
-const path = require('path')
 
 const headers = require('../../../src/lib/helpers/headers')
 const keypair = require('../../../src/lib/helpers/keypair')
