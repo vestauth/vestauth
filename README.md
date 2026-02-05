@@ -62,6 +62,18 @@ Download [the windows executable](https://github.com/vestauth/vestauth/releases)
 
 &nbsp;
 
+## How Vestauth Works
+
+Vestauth gives agents a cryptographic identity and uses that identity to authenticate requests using open standards.
+
+```
+Agent → signs request → Provider → verifies signature → trusts agent
+             ↓
+      Public key discovery via .well-known
+```
+
+&nbsp;
+
 ## Identity
 
 > Give your agent its cryptographic identity. 
