@@ -133,11 +133,11 @@ app.get('/whoami', async (req, res) => {
   try {
     const url = `${req.protocol}://${req.get('host')}${req.originalUrl}`
 
-    //
+    // ------------------------------------------------------------------------------
     // 🪪 Reveal the agent's cryptographic identity.
     // `vestauth.provider.verify` turns your endpoint into a cryptographically
     // authenticated provider — verifying signatures, keys, and returning the agent.
-    //
+    // ------------------------------------------------------------------------------
     const agent = await vestauth.provider.verify(req.method, url, req.headers)
 
     res.json(agent)
