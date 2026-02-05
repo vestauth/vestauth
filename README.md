@@ -124,7 +124,7 @@ $ vestauth primitives headers GET https://api.vestauth.com/whoami --pp
 
 ## Verification 
 
-> As a provider of agentic tools, authenticate agents through cryptographic verification.
+> Verify signed requests and safely trust agent identity using cryptographic proof.
 
 ```js
 // index.js
