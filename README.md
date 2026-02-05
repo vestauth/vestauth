@@ -72,8 +72,6 @@ $ vestauth agent init
 ✔ agent created (.env/AGENT_ID=agent-4b94ccd425e939fac5016b6b)
 ```
 
-<details><summary>learn more</summary><br>
-
 > …and sign their curl requests with cryptographic authentication.
 
 ```sh
