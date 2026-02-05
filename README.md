@@ -64,9 +64,43 @@ Vestauth gives agents a cryptographic identity
 and uses that identity to securely authenticate requests using open standards.
 
 ```
-Agent → signs request → Provider → verifies signature → trusts agent
+┌─────────┐      Signed HTTP Request       ┌───────────┐
+│  Agent  │ ───────────────────────────▶  │  Provider │
+└────┬────┘                               └─────┬─────┘
+     │                                           │
+     │  Publishes Public Keys                    │
+     ▼                                           ▼
+┌────────────────────────────────────────────────────┐
+│        /.well-known/http-message-signatures-dir   │
+└────────────────────────────────────────────────────┘
+
+                ✔ Signature Verified
+                ✔ Agent Identity Trusted
+```
+
+```
+┌─────────┐        Signed Request        ┌───────────┐
+│  Agent  │ ─────────────────────────▶ │  Provider │
+└────┬────┘                             └─────┬─────┘
+     │                                         │
+     │  Signature-Agent Header                 │
+     │  (.well-known discovery)                │
+     ▼                                         ▼
+┌────────────────────────────────────────────────────┐
+│        Public Key Discovery (.well-known)          │
+└────────────────────────────────────────────────────┘
+                     │
+                     ▼
+              Signature Verified
+                     │
+                     ▼
+               Agent Trusted
+```
+
+```
+agent → signs request → provider → verifies signature → trusts agent
              ↓
-      Public key discovery via .well-known
+      public key discovery via .well-known
 ```
 
 ### 1. Agent Identity
