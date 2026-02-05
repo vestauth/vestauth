@@ -167,7 +167,6 @@ Vestauth builds on open internet standards for agent authentication.
 |------------|------------|
 | **[RFC 9421 – HTTP Message Signatures](https://datatracker.ietf.org/doc/rfc9421/)** | Defines how requests are cryptographically signed and verified |
 | **[Web-Bot-Auth Draft](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture)** | Defines headers and authentication architecture for autonomous agents |
-| **[HTTP Message Signatures Directory Draft](https://datatracker.ietf.org/doc/html/draft-meunier-http-message-signatures-directory)** | Defines `.well-known` discovery format for publishing agent public keys |
 
 Vestauth follows these specifications to ensure interoperability between agents and providers while avoiding vendor lock-in. Vestauth focuses on developer ergonomics while staying compliant with these emerging standards.
 
