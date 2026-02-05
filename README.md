@@ -6,8 +6,6 @@
 * authentication
 * verification
 
-&nbsp;
-
 ### Quickstart [![npm version](https://img.shields.io/npm/v/vestauth.svg)](https://www.npmjs.com/package/vestauth) [![downloads](https://img.shields.io/npm/dw/vestauth)](https://www.npmjs.com/package/vestauth)
 
 ```sh
@@ -18,13 +16,11 @@ npm i -g vestauth
 vestauth agent init
 ```
 
-&nbsp;
-
 <details><summary>with curl 🌐 </summary><br>
 
 ```sh
 curl -sfS https://vestauth.sh | sh
-vestauth help
+vestauth agent init
 ```
 
 [![curl installs](https://img.shields.io/endpoint?url=https://vestauth.sh/stats/curl&label=curl%20installs)](https://github.com/vestauth/vestauth.sh/blob/main/install.sh)
@@ -38,7 +34,7 @@ vestauth help
 ```sh
 curl -L -o vestauth.tar.gz "https://github.com/vestauth/vestauth/releases/latest/download/vestauth-$(uname -s)-$(uname -m).tar.gz"
 tar -xzf vestauth.tar.gz
-./vestauth help
+./vestauth agent init
 ```
 
 [![github releases](https://img.shields.io/github/downloads/vestauth/vestauth/total)](https://github.com/vestauth/vestauth/releases)
@@ -62,9 +58,10 @@ Download [the windows executable](https://github.com/vestauth/vestauth/releases)
 
 &nbsp;
 
-## How Vestauth Works
+## How It Works
 
-Vestauth gives agents a cryptographic identity and uses that identity to authenticate requests using open standards.
+Vestauth gives agents a cryptographic identity
+and uses that identity to securely authenticate requests using open standards.
 
 ```
 Agent → signs request → Provider → verifies signature → trusts agent
@@ -72,11 +69,13 @@ Agent → signs request → Provider → verifies signature → trusts agent
       Public key discovery via .well-known
 ```
 
-&nbsp;
+### 1. Agent Identity
 
-### Identity
+Each agent generates a local public/private keypair.
 
-> Give your agent its cryptographic identity. 
+* The private key stays with the agent and is used to sign requests
+* The public key is published to a discovery endpoint using a .well-known directory
+* The agent is assigned a stable AGENT_ID that maps to its discovery domain
 
 ```sh
 $ mkdir your-agent
