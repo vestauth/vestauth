@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-[Unreleased](https://github.com/vestauth/vestauth/compare/v0.7.4...main)
+[Unreleased](https://github.com/vestauth/vestauth/compare/v0.8.0...main)
+
+## [0.8.0](https://github.com/vestauth/vestauth/compare/v0.7.4...v0.8.0) (2026-02-05)
+
+### Added
+
+* Return agent json on successful verify
 
 ## [0.7.4](https://github.com/vestauth/vestauth/compare/v0.7.3...v0.7.4) (2026-02-05)
 
