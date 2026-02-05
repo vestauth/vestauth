@@ -60,7 +60,7 @@ Download [the windows executable](https://github.com/vestauth/vestauth/releases)
 
 &nbsp;
 
-## Identity
+## Agent Identity & Authentication
 
 > Give agents cryptographic identities.
 
@@ -91,11 +91,7 @@ AGENT_ID="agent-4b94ccd425e939fac5016b6b"
 
 </details>
 
-&nbsp;
-
-## Authentication
-
-> Sign outgoing HTTP requests with cryptographic authentication.
+> and sign outgoing HTTP requests with cryptographic authentication.
 
 ```sh
 > UNSIGNED - 400
@@ -124,7 +120,7 @@ $ vestauth primitives headers GET https://api.vestauth.com/whoami --pp
 
 &nbsp;
 
-## Verification 
+## Provider Verification 
 
 > Verify requests and safely trust agent identity using cryptographic proof.
 
