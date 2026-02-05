@@ -157,7 +157,7 @@ listening on http://localhost:3000
 
 ```sh
 $ vestauth agent curl http://localhost:3000/whoami
-{"success":true}
+{"uid":"agent-4b94ccd425e939fac5016b6b",...}
 ```
 
 <details><summary>learn more</summary><br>
