@@ -131,8 +131,16 @@ const app = express()
 // vestauth agent curl http://localhost:3000/whoami
 app.get('/whoami', async (req, res) => {
   try {
-    const fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`
-    const agent = await vestauth.provider.verify(req.method, fullUrl, req.headers)
+    const url = `${req.protocol}://${req.get('host')}${req.originalUrl}`
+
+    //
+    // 🪪 Reveal the caller's cryptographic identity.
+    // This single call turns your endpoint into a cryptographically
+    // authenticated provider — verifying signatures, discovering keys,
+    // and returning the trusted agent.
+    //
+    const agent = await vestauth.provider.verify(req.method, url, req.headers)
+
     res.json(agent)
   } catch (err) {
     res.status(401).json({ error: { message: err.message }})
