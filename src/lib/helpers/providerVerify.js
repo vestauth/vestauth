@@ -5,7 +5,18 @@ const verifyAgentFqdn = require('./verifyAgentFqdn')
 const verify = require('./verify')
 
 async function providerVerify (httpMethod, uri, headers = {}) {
+  if (!httpMethod) {
+    throw new Errors().missingHttpMethod()
+  }
+  if (!uri) {
+    throw new Errors().missingUri()
+  }
+
   const signatureAgent = headers['Signature-Agent'] || headers['signature-agent'] // support either case (expressjs lowers headers)
+  if (!signatureAgent) {
+    throw new Errors().missingSignatureAgent()
+  }
+
   const { value } = parseSignatureAgentHeader(signatureAgent) // sig1=agent-1234.agents.vestauth.com
   const fqdn = value
   verifyAgentFqdn(fqdn)
@@ -34,9 +45,7 @@ async function providerVerify (httpMethod, uri, headers = {}) {
 
   // use publicJwk to verify
   const publicJwk = json.keys[0]
-  const output = await verify(httpMethod, uri, headers, publicJwk)
-
-  return output
+  return await verify(httpMethod, uri, headers, publicJwk)
 }
 
 module.exports = providerVerify

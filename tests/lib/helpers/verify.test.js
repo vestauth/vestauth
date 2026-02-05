@@ -38,10 +38,11 @@ t.test('#verify - expired signature', async t => {
   const signatureInput = '("@authority");created=1;keyid="' + publicJwk.kid + '";alg="ed25519";expires=2;nonce="n";tag="web-bot-auth"'
   const signature = webBotAuthSignature('GET', uri, signatureInput, privateJwk)
 
-  const output = verify('GET', uri, {
-    Signature: `sig1=:${signature}:`,
-    'Signature-Input': `sig1=${signatureInput}`
-  }, publicJwk)
-
-  t.equal(output.success, false)
+  t.throws(
+    () => verify('GET', uri, {
+      Signature: `sig1=:${signature}:`,
+      'Signature-Input': `sig1=${signatureInput}`
+    }, publicJwk),
+    { code: 'EXPIRED_SIGNATURE' }
+  )
 })

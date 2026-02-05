@@ -4,6 +4,7 @@ const parseSignatureInputHeader = require('./parseSignatureInputHeader')
 const stripDictionaryKey = require('./stripDictionaryKey')
 const authorityMessage = require('./authorityMessage')
 const publicJwkObject = require('./publicJwkObject')
+const Errors = require('./errors')
 
 function verify (httpMethod, uri, headers = {}, publicJwk) {
   const signature = headers.Signature || headers.signature
@@ -11,12 +12,8 @@ function verify (httpMethod, uri, headers = {}, publicJwk) {
 
   const { values } = parseSignatureInputHeader(signatureInput)
   const { expires } = values
-
-  // return early false, since expired
   if (expires && expires < (Math.floor(Date.now() / 1000))) {
-    return {
-      success: false
-    }
+    throw new Errors().expiredSignature()
   }
 
   const signatureParams = stripDictionaryKey(signatureInput)
