@@ -142,7 +142,7 @@ app.get('/whoami', async (req, res) => {
 
     res.json(agent)
   } catch (err) {
-    res.status(401).json({ error: { message: err.message }})
+    res.status(401).json({ code: 401, error: { message: err.message }})
   }
 })
 
