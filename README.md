@@ -74,7 +74,7 @@ Agent → signs request → Provider → verifies signature → trusts agent
 
 &nbsp;
 
-## Identity
+### Identity
 
 > Give your agent its cryptographic identity. 
 
@@ -105,7 +105,7 @@ AGENT_ID="agent-4b94ccd425e939fac5016b6b"
 
 &nbsp;
 
-## Authentication
+### Authentication
 
 > Turn any curl request into a signed, authenticated request.
 
@@ -136,7 +136,7 @@ $ vestauth primitives headers GET https://api.vestauth.com/whoami --pp
 
 &nbsp;
 
-## Verification 
+### Verification 
 
 > As a provider of agentic tools, authenticate agents through cryptographic verification.
 
