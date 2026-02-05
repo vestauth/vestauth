@@ -221,7 +221,7 @@ $ vestauth primitives verify GET https://example.com --signature "sig1=:K7z3Nozc
 
 ## FAQ
 
-#### What problem does Vestauth solve?
+<details><summary>What problem does Vestauth solve?</summary><br>
 
 Vestauth gives agents a cryptographic identity and a simple way to authenticate HTTP requests.
 
@@ -229,7 +229,11 @@ Most agent systems rely on API keys, bearer tokens, or username/passwords. These
 
 Vestauth replaces shared secrets with public/private key cryptography. Agents sign requests using a private key, and providers verify those requests using the agent’s public key.
 
-#### How does Vestauth authentication work?
+&nbsp;
+
+</details>
+
+<details><summary>How does Vestauth authentication work?</summary><br>
 
 Vestauth uses HTTP Message Signatures ([RFC 9421](https://datatracker.ietf.org/doc/rfc9421/)). Each request is signed using the agent's private key. The request includes signed headers such as:
 
@@ -241,13 +245,21 @@ Providers verify the request by retrieving the agent's public key from a discove
 
 If the signature is valid, the provider knows the request was created by the agent that owns that private key.
 
-#### Do I need to run a Vestauth server?
+&nbsp;
+
+</details>
+
+<details><summary>Do I need to run a Vestauth server?</summary><br>
 
 No.
 
 Vestauth is primarily a client-side and verification library. Agents generate keys locally and sign requests directly. Providers verify requests using public keys exposed via .well-known discovery endpoints.
 
 There is no central authentication server required.
+
+&nbsp;
+
+</details>
 
 #### Is Vestauth replacing OAuth or API keys?
 
