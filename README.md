@@ -85,8 +85,8 @@ AGENT_PRIVATE_JWK="{"crv":"Ed25519","d":"Z9vbwN-3eiFMVv_TPWXOxqSMJAT21kZvejWi72y
 AGENT_ID="agent-4b94ccd425e939fac5016b6b"
 ```
 
-* The `AGENT_PUBLIC_KEY` is auto-hosted to its own [`/.well-known/http-message-signatures-directory`](https://datatracker.ietf.org/doc/html/draft-meunier-http-message-signatures-directory-04#appendix-A) for discovery purposes.
-* The `AGENT_PRIVATE_KEY` must NOT be shared and is used to sign requests according to [RFC 9421](https://datatracker.ietf.org/doc/rfc9421/).
+* The `AGENT_PUBLIC_JWK` is auto-hosted to its own [`/.well-known/http-message-signatures-directory`](https://datatracker.ietf.org/doc/html/draft-meunier-http-message-signatures-directory-04#appendix-A) for discovery purposes.
+* The `AGENT_PRIVATE_JWK` must NOT be shared and is used to sign requests according to [RFC 9421](https://datatracker.ietf.org/doc/rfc9421/).
 * The `AGENT_ID` contributes to building the [FQDN for the `Signature-Agent` header](https://datatracker.ietf.org/doc/html/draft-meunier-http-message-signatures-directory-01#name-request-with-http-signature).
 
 </details>
