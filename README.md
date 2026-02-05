@@ -235,15 +235,15 @@ $ vestauth primitives verify GET https://example.com --signature "sig1=:K7z3Nozc
 
 <details><summary>How does Vestauth authentication work?</summary><br>
 
-Vestauth uses HTTP Message Signatures ([RFC 9421](https://datatracker.ietf.org/doc/rfc9421/)). Each request is signed using the agent's private key. The request includes signed headers such as:
-
-* Signature
-* Signature-Input
-* Signature-Agent
-
-Providers verify the request by retrieving the agent's public key from a discovery endpoint and verifying the signature cryptographically.
-
-If the signature is valid, the provider knows the request was created by the agent that owns that private key.
+> Vestauth uses HTTP Message Signatures ([RFC 9421](https://datatracker.ietf.org/doc/rfc9421/)). Each request is signed using the agent's private key. The request includes signed headers such as:
+> 
+> * Signature
+> * Signature-Input
+> * Signature-Agent
+> 
+> Providers verify the request by retrieving the agent's public key from a discovery endpoint and verifying the signature cryptographically.
+> 
+> If the signature is valid, the provider knows the request was created by the agent that owns that private key.
 
 &nbsp;
 
@@ -251,23 +251,27 @@ If the signature is valid, the provider knows the request was created by the age
 
 <details><summary>Do I need to run a Vestauth server?</summary><br>
 
-No.
-
-Vestauth is primarily a client-side and verification library. Agents generate keys locally and sign requests directly. Providers verify requests using public keys exposed via .well-known discovery endpoints.
-
-There is no central authentication server required.
+> No.
+> 
+> Vestauth is primarily a client-side and verification library. Agents generate keys locally and sign requests directly. Providers verify requests using public keys exposed via .well-known discovery endpoints.
+> 
+> There is no central authentication server required.
 
 &nbsp;
 
 </details>
 
-#### Is Vestauth replacing OAuth or API keys?
+<details><summary>Is Vestauth replacing OAuth or API keys?</summary><br>
 
-Vestauth is complementary.
+> Vestauth is complementary.
+> 
+> OAuth and API keys authenticate applications or users. Vestauth authenticates agents and tools at the cryptographic level.
+> 
+> Many systems use Vestauth alongside existing auth mechanisms. For example, Vestauth can verify an agent's identity before issuing short-lived API tokens.
 
-OAuth and API keys authenticate applications or users. Vestauth authenticates agents and tools at the cryptographic level.
+&nbsp;
 
-Many systems use Vestauth alongside existing auth mechanisms. For example, Vestauth can verify an agent's identity before issuing short-lived API tokens.
+</details>
 
 #### Where are agent keys stored?
 
