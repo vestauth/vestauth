@@ -1,6 +1,6 @@
 [![vestauth](https://vestauth.com/better-banner.png)](https://vestauth.com)
 
-*auth for agents*–from the creator of [`dotenv`](https://github.com/motdotla/dotenv) & [`dotenvx`](https://github.com/dotenvx/dotenvx).
+*auth for agents*–from the creator of [`dotenv`](https://github.com/motdotla/dotenv) and [`dotenvx`](https://github.com/dotenvx/dotenvx).
 
 * identity (cryptographic)
 * authentication
