@@ -47,6 +47,28 @@ class Errors {
     return e
   }
 
+  missingHttpMethod () {
+    const code = 'MISSING_HTTP_METHOD'
+    const message = `[${code}] missing httpMethod`
+    const help = `[${code}] pass httpMethod as the first argument (ex: GET)`
+
+    const e = new Error(message)
+    e.code = code
+    e.help = help
+    return e
+  }
+
+  missingUri () {
+    const code = 'MISSING_URI'
+    const message = `[${code}] missing uri`
+    const help = `[${code}] pass uri as the second argument (ex: https://example.com/path)`
+
+    const e = new Error(message)
+    e.code = code
+    e.help = help
+    return e
+  }
+
   econnrefused () {
     const code = 'ECONNREFUSED'
     const message = `[${code}] connection refused`
