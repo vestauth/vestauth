@@ -1,10 +1,18 @@
 const { logger } = require('./../../../shared/logger')
 const catchAndLog = require('./../../../lib/helpers/catchAndLog')
+const Errors = require('./../../../lib/helpers/errors')
 
 const primitives = require('./../../../lib/primitives')
 
 async function verify (httpMethod, uri) {
   try {
+    if (!httpMethod) {
+      throw new Errors().missingHttpMethod()
+    }
+    if (!uri) {
+      throw new Errors().missingUri()
+    }
+
     logger.debug(`httpMethod: ${httpMethod}`)
     logger.debug(`uri: ${uri}`)
 
