@@ -134,10 +134,9 @@ app.get('/whoami', async (req, res) => {
     const url = `${req.protocol}://${req.get('host')}${req.originalUrl}`
 
     //
-    // 🪪 Reveal the caller's cryptographic identity.
-    // This single call turns your endpoint into a cryptographically
-    // authenticated provider — verifying signatures, discovering keys,
-    // and returning the trusted agent.
+    // 🪪 Reveal the agent's cryptographic identity.
+    // `vestauth.provider.verify` turns your endpoint into a cryptographically
+    // authenticated provider — verifying signatures, keys, and returning the agent.
     //
     const agent = await vestauth.provider.verify(req.method, url, req.headers)
 
