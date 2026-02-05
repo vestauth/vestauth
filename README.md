@@ -60,9 +60,9 @@ Download [the windows executable](https://github.com/vestauth/vestauth/releases)
 
 &nbsp;
 
-## Agent Identity & Authentication
+## Agent: Identity & Authentication
 
-> Give agents cryptographic identities.
+> Give agents cryptographic identities…
 
 ```sh
 $ mkdir your-agent
@@ -74,7 +74,21 @@ $ vestauth agent init
 
 <details><summary>learn more</summary><br>
 
-This populates a `.env` file with an `AGENT_PUBLIC_JWK`, `AGENT_PRIVATE_JWK`, and `AGENT_ID`.
+> …and sign their curl requests with cryptographic authentication.
+
+```sh
+> SIGNED - 200
+$ vestauth agent curl https://api.vestauth.com/whoami
+{"uid":"agent-4b94ccd425e939fac5016b6b",...}
+
+> UNSIGNED - 400
+$ curl https://api.vestauth.com/whoami
+{"error":{"status":400,"code":null,"message":"bad_request","help":null,"meta":null}}
+```
+
+<details><summary>learn more</summary><br>
+
+`vestauth agent init` populates a `.env` file with an `AGENT_PUBLIC_JWK`, `AGENT_PRIVATE_JWK`, and `AGENT_ID`.
 
 ```ini
 # .env
@@ -91,21 +105,7 @@ AGENT_ID="agent-4b94ccd425e939fac5016b6b"
 
 </details>
 
-> and sign outgoing HTTP requests with cryptographic authentication.
-
-```sh
-> UNSIGNED - 400
-$ curl https://api.vestauth.com/whoami
-{"error":{"status":400,"code":null,"message":"bad_request","help":null,"meta":null}}
-
-> SIGNED - 200
-$ vestauth agent curl https://api.vestauth.com/whoami
-{"uid":"agent-4b94ccd425e939fac5016b6b",...}
-```
-
-<details><summary>learn more</summary><br>
-
-Vestauth autosigns each curl request – injecting valid signed headers according to the [web-bot-auth draft](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture). View these with the built-in `headers` primitive.
+`vestauth agent curl` autosigns curl requests – injecting valid signed headers according to the [web-bot-auth draft](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture). You can peek these with the built-in `headers` primitive.
 
 ```sh
 $ vestauth primitives headers GET https://api.vestauth.com/whoami --pp
@@ -120,7 +120,7 @@ $ vestauth primitives headers GET https://api.vestauth.com/whoami --pp
 
 &nbsp;
 
-## Provider Verification 
+## Provider: Verification 
 
 > Verify requests and safely trust agent identity using cryptographic proof.
 
