@@ -345,6 +345,8 @@ $ vestauth primitives verify GET https://example.com --signature "sig1=:K7z3Nozc
 
 <details><summary>Is Vestauth production ready?</summary><br>
 
+> Yes.
+>
 > Vestauth is built on established cryptographic and HTTP standards:
 >
 > * RFC 9421 HTTP Message Signatures
