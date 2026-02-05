@@ -24,12 +24,13 @@ t.test('#verify - invalid signature', async t => {
   const sig = match ? match[1] : ''
   const tampered = (sig[0] === 'A' ? 'B' : 'A') + sig.slice(1)
 
-  const output = verify('GET', uri, {
-    ...signedHeaders,
-    Signature: `sig1=:${tampered}:`
-  }, publicJwk)
-
-  t.equal(output.success, false)
+  t.throws(
+    () => verify('GET', uri, {
+      ...signedHeaders,
+      Signature: `sig1=:${tampered}:`
+    }, publicJwk),
+    { code: 'INVALID_SIGNATURE' }
+  )
 })
 
 t.test('#verify - expired signature', async t => {
