@@ -111,7 +111,7 @@ $ vestauth agent curl https://api.vestauth.com/whoami
 
 Vestauth autosigns each curl request – injecting valid signed headers according to the [web-bot-auth draft](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture). View these with the built-in `headers` primitive.
 
-```
+```sh
 $ vestauth primitives headers GET https://api.vestauth.com/whoami --pp
 {
   "Signature": "sig1=:d4Id5SXhUExsf1XyruD8eBmlDtWzt/vezoCS+SKf0M8CxSkhKBtdHH7KkYyMN6E0hmxmNHsYus11u32nhvpWBQ==:",
@@ -158,6 +158,24 @@ listening on http://localhost:3000
 $ vestauth agent curl http://localhost:3000/whoami
 {"success":true}
 ```
+
+<details><summary>learn more</summary><br>
+
+Vestauth verifies requests using public key discovery and HTTP Message Signature validation.
+
+When a signed request is received, Vestauth:
+
+1. Extracts the agent identity from the `Signature-Agent` header.
+2. Resolves the agent's discovery endpoint.
+3. Fetches the agent's public keys from its `.well-known/http-message-signatures-directory`.
+4. Verifies the request signature using RFC 9421.
+5. Validates timestamps and nonce protections to prevent replay attacks.
+
+If verification succeeds, the provider can safely trust the agent's cryptographic identity.
+
+Vestauth intentionally separates identity discovery from verification to support key rotation and distributed agent infrastructure.
+
+</details>
 
 &nbsp;
 
@@ -242,7 +260,7 @@ $ vestauth primitives verify GET https://example.com --signature "sig1=:K7z3Nozc
 >
 > Most agent systems rely on API keys, bearer tokens, or username/passwords. These approaches are difficult to rotate, easy to leak, and hard to attribute to a specific agent.
 >
-> Vestauth replaces shared secrets with public/private key cryptography. Agents sign requests using a private key, and providers verify those requests using the agent’s public key.
+> Vestauth replaces shared secrets with public/private key cryptography. Agents sign requests using a private key, and providers verify those requests using the agent's public key.
 
 &nbsp;
 
