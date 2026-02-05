@@ -45,13 +45,21 @@ class Errors {
     return e
   }
 
+  invalidSignature () {
+    const code = 'INVALID_SIGNATURE'
+    const message = `[${code}] invalid signature`
+
+    const e = new Error(message)
+    e.code = code
+    return e
+  }
+
   missingSignatureAgent () {
     const code = 'MISSING_SIGNATURE_AGENT'
     const message = `[${code}] missing --signature-agent`
 
     const e = new Error(message)
     e.code = code
-    e.help = help
     return e
   }
 

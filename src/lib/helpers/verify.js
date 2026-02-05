@@ -27,6 +27,10 @@ function verify (httpMethod, uri, headers = {}, publicJwk) {
     Buffer.from(sig, 'base64')
   )
 
+  if (!success) {
+    throw new Errors().invalidSignature()
+  }
+
   return {
     success
   }
