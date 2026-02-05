@@ -3,7 +3,19 @@ const Errors = require('./errors')
 
 // example: sig1=agent-9aa52a556ca85ee195866c0b.agents.vestauth.com
 function parseSignatureAgentHeader (signatureAgentHeader) {
-  const dictionary = parseDictionary(signatureAgentHeader)
+  if (Array.isArray(signatureAgentHeader)) {
+    signatureAgentHeader = signatureAgentHeader[0]
+  }
+  if (typeof signatureAgentHeader !== 'string' || signatureAgentHeader.length === 0) {
+    throw new Errors().invalidSignatureAgent()
+  }
+
+  let dictionary
+  try {
+    dictionary = parseDictionary(signatureAgentHeader)
+  } catch {
+    throw new Errors().invalidSignatureAgent()
+  }
   const entry = dictionary.entries().next()
   if (entry.done) throw new Errors().invalidSignatureAgent()
   const [key, member] = entry.value
