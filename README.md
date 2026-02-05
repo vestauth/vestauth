@@ -6,6 +6,8 @@
 * authentication
 * verification
 
+&nbsp;
+
 ### Quickstart [![npm version](https://img.shields.io/npm/v/vestauth.svg)](https://www.npmjs.com/package/vestauth) [![downloads](https://img.shields.io/npm/dw/vestauth)](https://www.npmjs.com/package/vestauth)
 
 ```sh
