@@ -6,26 +6,10 @@
 * authentication
 * verification
 
-```
-┌─────────┐      Signed HTTP Request      ┌───────────┐
-│  Agent  │ ───────────────────────────▶  │  Provider │
-└────┬────┘                               └─────┬─────┘
-     │                                          │
-     │  Publishes Public Keys                   │
-     ▼                                          ▼
-┌────────────────────────────────────────────────────┐
-│       /.well-known/http-message-signatures-dir     │
-└────────────────────────────────────────────────────┘
-
-             ✔ Signature Verified
-             ✔ Agent Identity Trusted
-```
-
-
-
 &nbsp;
 
-### Quickstart [![npm version](https://img.shields.io/npm/v/vestauth.svg)](https://www.npmjs.com/package/vestauth) [![downloads](https://img.shields.io/npm/dw/vestauth)](https://www.npmjs.com/package/vestauth)
+### Quickstart [![npm version](https://img.shields.io/npm/v/vestauth.svg)](https://www.npmjs.com/package/vestauth) [![downloads](https://img.shields.io/npm/dw/vestauth)](https://www.npmjs.com/package/vestauth) [![RFC 9421 Compatible](https://img.shields.io/badge/RFC%209421-Compatible-0A7F5A)](https://datatracker.ietf.org/doc/rfc9421/)
+[![Web-Bot-Auth Draft Compatible](https://img.shields.io/badge/Web--Bot--Auth-Draft%20Compatible-0A7F5A)](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture) 
 
 ```sh
 npm i -g vestauth
@@ -176,6 +160,20 @@ $ vestauth agent curl http://localhost:3000/whoami
 
 &nbsp;
 
+## Standards
+
+Vestauth builds on open internet standards for agent authentication.
+
+| Specification | Purpose |
+|------------|------------|
+| **[RFC 9421 – HTTP Message Signatures](https://datatracker.ietf.org/doc/rfc9421/)** | Defines how requests are cryptographically signed and verified |
+| **[Web-Bot-Auth Draft](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture)** | Defines headers and authentication architecture for autonomous agents |
+| **[HTTP Message Signatures Directory Draft](https://datatracker.ietf.org/doc/html/draft-meunier-http-message-signatures-directory)** | Defines `.well-known` discovery format for publishing agent public keys |
+
+Vestauth follows these specifications to ensure interoperability between agents and providers while avoiding vendor lock-in. Vestauth focuses on developer ergonomics while staying compliant with these emerging standards.
+
+&nbsp;
+
 ## Advanced
 
 > Become a `vestauth` power user.
@@ -233,20 +231,6 @@ $ vestauth primitives verify GET https://example.com --signature "sig1=:K7z3Nozc
 ```
 
 </details>
-
-&nbsp;
-
-## Standards & Drafts
-
-Vestauth builds on open internet standards for agent authentication.
-
-| Specification | Purpose |
-|------------|------------|
-| **[RFC 9421 – HTTP Message Signatures](https://datatracker.ietf.org/doc/rfc9421/)** | Defines how HTTP requests are cryptographically signed and verified |
-| **[Web-Bot-Auth Draft](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture)** | Defines headers and authentication architecture for autonomous agents |
-| **[HTTP Message Signatures Directory Draft](https://datatracker.ietf.org/doc/html/draft-meunier-http-message-signatures-directory)** | Defines `.well-known` discovery format for publishing agent public keys |
-
-Vestauth follows these specifications to ensure interoperability between agents and providers while avoiding vendor lock-in. Vestauth focuses on developer ergonomics while staying aligned with these emerging standards.
 
 &nbsp;
 
