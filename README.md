@@ -83,11 +83,11 @@ AGENT_PRIVATE_JWK="{"crv":"Ed25519","d":"Z9vbwN-3eiFMVv_TPWXOxqSMJAT21kZvejWi72y
 AGENT_ID="agent-4b94ccd425e939fac5016b6b"
 ```
 
-| Variable | Description |
-|----------|------------|
-| `AGENT_PUBLIC_JWK` | Public key providers use to verify agent signatures. Automatically published via `.well-known/http-message-signatures-directory`. |
-| `AGENT_PRIVATE_JWK` | Private signing key held only by the agent. **Must never be shared.** |
-| `AGENT_ID` | Stable agent identifier used to construct the `Signature-Agent` discovery hostname. |
+| Variable | Role | Usage |
+|----------|------------|------------|
+| `AGENT_PUBLIC_JWK` | Verification | Published for provider signature validation |
+| `AGENT_PRIVATE_JWK` | Signing | Used locally to sign HTTP requests |
+| `AGENT_ID` | Identity | Builds discovery FQDN and identifies the agent |
 
 </details>
 
@@ -95,14 +95,14 @@ AGENT_ID="agent-4b94ccd425e939fac5016b6b"
 
 ## Authentication
 
-> Turn any curl request into a signed, authenticated request.
+> Sign outgoing HTTP requests with cryptographic authentication.
 
 ```sh
-> without vestauth
+> UNSIGNED - 400
 $ curl https://api.vestauth.com/whoami
 {"error":{"status":400,"code":null,"message":"bad_request","help":null,"meta":null}}
 
-> with vestauth
+> SIGNED - 200
 $ vestauth agent curl https://api.vestauth.com/whoami
 {"uid":"agent-4b94ccd425e939fac5016b6b",...}
 ```
