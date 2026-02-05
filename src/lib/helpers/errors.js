@@ -36,6 +36,25 @@ class Errors {
     return e
   }
 
+  expiredSignature () {
+    const code = 'EXPIRED_SIGNATURE'
+    const message = `[${code}] expired signature`
+
+    const e = new Error(message)
+    e.code = code
+    return e
+  }
+
+  missingSignatureAgent () {
+    const code = 'MISSING_SIGNATURE_AGENT'
+    const message = `[${code}] missing --signature-agent`
+
+    const e = new Error(message)
+    e.code = code
+    e.help = help
+    return e
+  }
+
   invalidSignatureAgent () {
     const code = 'INVALID_SIGNATURE_AGENT'
     const message = `[${code}] invalid --signature-agent`

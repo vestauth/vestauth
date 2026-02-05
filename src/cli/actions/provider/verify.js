@@ -6,13 +6,6 @@ const provider = require('./../../../lib/provider')
 
 async function verify (httpMethod, uri) {
   try {
-    if (!httpMethod) {
-      throw new Errors().missingHttpMethod()
-    }
-    if (!uri) {
-      throw new Errors().missingUri()
-    }
-
     logger.debug(`httpMethod: ${httpMethod}`)
     logger.debug(`uri: ${uri}`)
 
