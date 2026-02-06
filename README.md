@@ -357,33 +357,177 @@ $ vestauth primitives verify GET https://api.vestauth.com/whoami --signature "si
 
 ## FAQ
 
-<details><summary>Why does Vestauth use .well-known discovery instead of embedding public keys directly?</summary><br>
+<details><summary>Why not just use API keys?</summary><br>
 
-> Vestauth uses .well-known discovery to keep requests small, enable key rotation, and support long-term identity management.
+> API keys are shared secrets. Anyone who obtains the key can impersonate the client, and keys are difficult to rotate safely.
 >
-> Embedding public keys directly in every request would increase header size, reduce caching opportunities, and make key rotation difficult. By publishing keys through a discovery endpoint, Vestauth allows providers to fetch and cache keys independently from individual requests.
+> Vestauth uses cryptographic signing instead of shared secrets. This allows providers to verify identity without storing or distributing sensitive credentials.
+
+&nbsp;
+
+</details>
+
+<details><summary>Where are agent keys stored?</summary><br>
+
+> Agent keys are generated locally and stored in the agent's environment configuration.
 >
-> This approach provides several benefits:
+> * `AGENT_PRIVATE_JWK` is used to sign requests and must never be shared.
+> * `AGENT_PUBLIC_JWK` is safe to publish and is used by providers for verification.
 >
-> **Efficient requests**
+> Vestauth automatically exposes public keys through a discovery endpoint.
+
+&nbsp;
+
+</details>
+
+<details><summary>Is Vestauth production ready?</summary><br>
+
+> Yes.
 >
-> Public keys are retrieved once and can be cached by providers. Agents do not need to send large key material with every request.
+> Vestauth is built on established cryptographic and HTTP standards:
 >
-> **Key rotation support**
+> * RFC 9421 HTTP Message Signatures
+> * JOSE / JWK key formats
+> * Web-Bot-Auth draft architecture
 >
-> Agents can rotate signing keys without changing their identity. Providers simply refresh keys from the discovery endpoint.
+> These standards are designed for secure, verifiable HTTP communication.
+
+&nbsp;
+
+</details>
+
+<details><summary>Can Vestauth work without curl?</summary><br>
+
+> Yes.
 >
-> **Multi-key support**
+> Vestauth provides libraries and primitives that can be integrated into any HTTP client or framework. The CLI simply makes it easy to adopt and demonstrate.
+
+&nbsp;
+
+</details>
+
+<details><summary>Is Vestauth only for AI agents?</summary><br>
+
+> No.
 >
-> Agents can safely publish multiple active keys (for rotation or staged rollouts) using the standard HTTP Message Signatures directory format.
+> Vestauth can authenticate any automated system including:
 >
-> **Standards alignment**
+> * developer tools
+> * CLIs
+> * automation services
+> * bots
+> * infrastructure tools
+
+&nbsp;
+
+</details>
+
+<details><summary>What problem does Vestauth solve?</summary><br>
+
+> Vestauth gives agents a cryptographic identity and a simple way to authenticate HTTP requests.
 >
-> Vestauth follows the discovery model used in:
+> Most agent systems rely on API keys, bearer tokens, or username/passwords. These approaches are difficult to rotate, easy to leak, and hard to attribute to a specific agent.
 >
-> * HTTP Message Signatures directories
-> * OAuth / OpenID Connect key discovery
-> * Web identity federation systems
+> Vestauth replaces shared secrets with public/private key cryptography. Agents sign requests using a private key, and providers verify those requests using the agent's public key.
+
+&nbsp;
+
+</details>
+
+<details><summary>Can someone impersonate my agent?</summary><br>
+
+> No, unless they obtain your private key.
+>
+> Vestauth relies on asymmetric cryptography. Only the holder of the private key can generate valid signatures. Providers verify those signatures using the corresponding public key.
+>
+> As long as your private key remains secure, your agent identity cannot be forged.
+
+&nbsp;
+
+</details>
+
+<details><summary>Do I need to run a Vestauth server?</summary><br>
+
+> No.
+>
+> Vestauth is primarily a client-side and verification library. Agents generate keys locally and sign requests directly. Providers verify requests using public keys exposed via .well-known discovery endpoints.
+>
+> There is no central authentication server required.
+
+&nbsp;
+
+</details>
+
+<details><summary>Why does Vestauth use Ed25519 keys?</summary><br>
+
+> Ed25519 provides:
+>
+> * Strong modern cryptographic security
+> * Fast signing and verification
+> * Small key sizes
+> * Wide ecosystem support
+
+&nbsp;
+
+</details>
+
+<details><summary>How does Vestauth authentication work?</summary><br>
+
+> Vestauth uses HTTP Message Signatures ([RFC 9421](https://datatracker.ietf.org/doc/rfc9421/)). Each request is signed using the agent's private key. The request includes signed headers such as:
+>
+> * Signature
+> * Signature-Input
+> * Signature-Agent
+>
+> Providers verify the request by retrieving the agent's public key from a discovery endpoint and verifying the signature cryptographically.
+>
+> If the signature is valid, the provider knows the request was created by the agent that owns that private key.
+
+&nbsp;
+
+</details>
+
+<details><summary>How does Vestauth prevent replay attacks?</summary><br>
+
+> Vestauth prevents replay attacks using multiple mechanisms built into HTTP Message Signatures.
+>
+> Each signed request includes:
+>
+> * created timestamp - limits how old a signature can be
+> * expires timestamp - defines a short validity window
+> * nonce value - ensures each request is unique
+>
+> Providers verify that:
+>
+> 1. The signature is still within the allowed time window
+> 2. The nonce has not been used before
+> 3. The signature cryptographically matches the request
+>
+> Because signatures are short-lived and tied to unique nonce values, an intercepted request cannot be reused successfully.
+>
+> Providers may optionally store nonce values for additional replay protection.
+
+&nbsp;
+
+</details>
+
+<details><summary>Why does Vestauth use public key discovery?</summary><br>
+
+> Public key discovery allows providers to verify agent signatures without manual key exchange. Each agent hosts its public keys in a standardized .well-known directory.
+>
+> This enables dynamic agent onboarding while preserving cryptographic verification.
+
+&nbsp;
+
+</details>
+
+<details><summary>Does Vestauth send secrets over the network?</summary><br>
+
+> No.
+>
+> Vestauth signs requests using private keys locally. Only public keys are shared for verification.
+
+&nbsp;
 
 </details>
 
@@ -438,177 +582,33 @@ $ vestauth primitives verify GET https://api.vestauth.com/whoami --signature "si
 
 </details>
 
-<details><summary>Does Vestauth send secrets over the network?</summary><br>
+<details><summary>Why does Vestauth use .well-known discovery instead of embedding public keys directly?</summary><br>
 
-> No.
+> Vestauth uses .well-known discovery to keep requests small, enable key rotation, and support long-term identity management.
 >
-> Vestauth signs requests using private keys locally. Only public keys are shared for verification.
-
-&nbsp;
-
-</details>
-
-<details><summary>Why does Vestauth use public key discovery?</summary><br>
-
-> Public key discovery allows providers to verify agent signatures without manual key exchange. Each agent hosts its public keys in a standardized .well-known directory.
+> Embedding public keys directly in every request would increase header size, reduce caching opportunities, and make key rotation difficult. By publishing keys through a discovery endpoint, Vestauth allows providers to fetch and cache keys independently from individual requests.
 >
-> This enables dynamic agent onboarding while preserving cryptographic verification.
-
-&nbsp;
-
-</details>
-
-<details><summary>How does Vestauth prevent replay attacks?</summary><br>
-
-> Vestauth prevents replay attacks using multiple mechanisms built into HTTP Message Signatures.
+> This approach provides several benefits:
 >
-> Each signed request includes:
+> **Efficient requests**
 >
-> * created timestamp - limits how old a signature can be
-> * expires timestamp - defines a short validity window
-> * nonce value - ensures each request is unique
+> Public keys are retrieved once and can be cached by providers. Agents do not need to send large key material with every request.
 >
-> Providers verify that:
+> **Key rotation support**
 >
-> 1. The signature is still within the allowed time window
-> 2. The nonce has not been used before
-> 3. The signature cryptographically matches the request
+> Agents can rotate signing keys without changing their identity. Providers simply refresh keys from the discovery endpoint.
 >
-> Because signatures are short-lived and tied to unique nonce values, an intercepted request cannot be reused successfully.
+> **Multi-key support**
 >
-> Providers may optionally store nonce values for additional replay protection.
-
-&nbsp;
-
-</details>
-
-<details><summary>How does Vestauth authentication work?</summary><br>
-
-> Vestauth uses HTTP Message Signatures ([RFC 9421](https://datatracker.ietf.org/doc/rfc9421/)). Each request is signed using the agent's private key. The request includes signed headers such as:
+> Agents can safely publish multiple active keys (for rotation or staged rollouts) using the standard HTTP Message Signatures directory format.
 >
-> * Signature
-> * Signature-Input
-> * Signature-Agent
+> **Standards alignment**
 >
-> Providers verify the request by retrieving the agent's public key from a discovery endpoint and verifying the signature cryptographically.
+> Vestauth follows the discovery model used in:
 >
-> If the signature is valid, the provider knows the request was created by the agent that owns that private key.
-
-&nbsp;
-
-</details>
-
-<details><summary>Do I need to run a Vestauth server?</summary><br>
-
-> No.
->
-> Vestauth is primarily a client-side and verification library. Agents generate keys locally and sign requests directly. Providers verify requests using public keys exposed via .well-known discovery endpoints.
->
-> There is no central authentication server required.
-
-&nbsp;
-
-</details>
-
-<details><summary>Why does Vestauth use Ed25519 keys?</summary><br>
-
-> Ed25519 provides:
->
-> * Strong modern cryptographic security
-> * Fast signing and verification
-> * Small key sizes
-> * Wide ecosystem support
-
-&nbsp;
-
-</details>
-
-<details><summary>What problem does Vestauth solve?</summary><br>
-
-> Vestauth gives agents a cryptographic identity and a simple way to authenticate HTTP requests.
->
-> Most agent systems rely on API keys, bearer tokens, or username/passwords. These approaches are difficult to rotate, easy to leak, and hard to attribute to a specific agent.
->
-> Vestauth replaces shared secrets with public/private key cryptography. Agents sign requests using a private key, and providers verify those requests using the agent's public key.
-
-&nbsp;
-
-</details>
-
-<details><summary>Can someone impersonate my agent?</summary><br>
-
-> No, unless they obtain your private key.
->
-> Vestauth relies on asymmetric cryptography. Only the holder of the private key can generate valid signatures. Providers verify those signatures using the corresponding public key.
->
-> As long as your private key remains secure, your agent identity cannot be forged.
-
-&nbsp;
-
-</details>
-
-<details><summary>Can Vestauth work without curl?</summary><br>
-
-> Yes.
->
-> Vestauth provides libraries and primitives that can be integrated into any HTTP client or framework. The CLI simply makes it easy to adopt and demonstrate.
-
-&nbsp;
-
-</details>
-
-<details><summary>Is Vestauth only for AI agents?</summary><br>
-
-> No.
->
-> Vestauth can authenticate any automated system including:
->
-> * developer tools
-> * CLIs
-> * automation services
-> * bots
-> * infrastructure tools
-
-&nbsp;
-
-</details>
-
-<details><summary>Is Vestauth production ready?</summary><br>
-
-> Yes.
->
-> Vestauth is built on established cryptographic and HTTP standards:
->
-> * RFC 9421 HTTP Message Signatures
-> * JOSE / JWK key formats
-> * Web-Bot-Auth draft architecture
->
-> These standards are designed for secure, verifiable HTTP communication.
-
-&nbsp;
-
-</details>
-
-<details><summary>Where are agent keys stored?</summary><br>
-
-> Agent keys are generated locally and stored in the agent's environment configuration.
->
-> * `AGENT_PRIVATE_JWK` is used to sign requests and must never be shared.
-> * `AGENT_PUBLIC_JWK` is safe to publish and is used by providers for verification.
->
-> Vestauth automatically exposes public keys through a discovery endpoint.
-
-&nbsp;
-
-</details>
-
-<details><summary>Why not just use API keys?</summary><br>
-
-> API keys are shared secrets. Anyone who obtains the key can impersonate the client, and keys are difficult to rotate safely.
->
-> Vestauth uses cryptographic signing instead of shared secrets. This allows providers to verify identity without storing or distributing sensitive credentials.
-
-&nbsp;
+> * HTTP Message Signatures directories
+> * OAuth / OpenID Connect key discovery
+> * Web identity federation systems
 
 </details>
 
