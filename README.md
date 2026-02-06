@@ -293,6 +293,17 @@ $ vestauth agent headers GET https://api.vestauth.com/whoami --private-jwk '{"cr
 
 </details>
 
+<details><summary>`provider verify`</summary><br>
+
+Verify agent.
+
+```sh
+$ vestauth provider verify GET https://api.vestauth.com/whoami --signature "sig1=:H1kxwSRWFbIzKbHaUy4hQFp/JrmVTX//72JPHcW4W7cPt9q6LytRJgx5pUgWrrr7DCcMWgx/jpTPc8Ht8SZ3CQ==:" --signature-input "sig1=(\"@authority\");created=1770396709;keyid=\"FGzgs758DBGnI1S0BejChDsK0IKZm3qPpOOXdRnnBkM\";alg=\"ed25519\";expires=1770397009;nonce=\"BZSDVktdkjO6XH5jafAdPDttsB6eytXO7u8KXJN1tMtd5bprE3rp08HiaTRo7H6gZGtYb4_qtL7RiGi8P2Gq7w\";tag=\"web-bot-auth\"" --signature-agent "sig1=agent-609a4fd2ebf4e6347108c517.agents.vestauth.com"
+{"uid":"agent-609a4fd2ebf4e6347108c517",...}
+```
+
+</details>
+
 <details><summary>`primitives keypair`</summary><br>
 
 Generate public/private keypair.
