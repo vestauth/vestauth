@@ -357,6 +357,18 @@ $ vestauth primitives verify GET https://api.vestauth.com/whoami --signature "si
 
 ## FAQ
 
+<details><summary>What problem does Vestauth solve?</summary><br>
+
+> Vestauth gives agents a cryptographic identity and a simple way to authenticate HTTP requests.
+>
+> Most agent systems rely on API keys, bearer tokens, or username/passwords. These approaches are difficult to rotate, easy to leak, and hard to attribute to a specific agent.
+>
+> Vestauth replaces shared secrets with public/private key cryptography. Agents sign requests using a private key, and providers verify those requests using the agent's public key.
+
+&nbsp;
+
+</details>
+
 <details><summary>Why not just use API keys?</summary><br>
 
 > API keys are shared secrets. Anyone who obtains the key can impersonate the client, and keys are difficult to rotate safely.
@@ -417,18 +429,6 @@ $ vestauth primitives verify GET https://api.vestauth.com/whoami --signature "si
 > * automation services
 > * bots
 > * infrastructure tools
-
-&nbsp;
-
-</details>
-
-<details><summary>What problem does Vestauth solve?</summary><br>
-
-> Vestauth gives agents a cryptographic identity and a simple way to authenticate HTTP requests.
->
-> Most agent systems rely on API keys, bearer tokens, or username/passwords. These approaches are difficult to rotate, easy to leak, and hard to attribute to a specific agent.
->
-> Vestauth replaces shared secrets with public/private key cryptography. Agents sign requests using a private key, and providers verify those requests using the agent's public key.
 
 &nbsp;
 
