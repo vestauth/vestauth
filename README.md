@@ -187,19 +187,6 @@ Vestauth intentionally separates identity discovery from verification to support
 
 &nbsp;
 
-## Standards
-
-Vestauth builds on open internet standards for agent authentication.
-
-| Specification | Purpose |
-|------------|------------|
-| **[RFC 9421 – HTTP Message Signatures](https://datatracker.ietf.org/doc/rfc9421/)** | Defines how requests are cryptographically signed and verified |
-| **[Web-Bot-Auth Draft](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture)** | Defines headers and authentication architecture for autonomous agents |
-
-Vestauth follows these specifications to ensure interoperability between agents and providers while avoiding vendor lock-in. Vestauth focuses on developer ergonomics while staying compliant with these emerging standards.
-
-&nbsp;
-
 ## Advanced
 
 > Become a `vestauth` power user.
@@ -355,9 +342,9 @@ $ vestauth primitives verify GET https://api.vestauth.com/whoami --signature "si
 
 &nbsp;
 
-## Vestauth vs Existing-auth 
+## Compare
 
-**Agent + Provider Matrix**
+**Agent + Provider Matrix** – Compare Vestauth vs existing auth.
 
 | Capability | Vestauth | API Keys | OAuth | Cookies |
 |---|---|---|---|---|
@@ -382,6 +369,21 @@ Legend: ✅ strong fit, ⚠️ partial/conditional, ❌ poor fit
 4. Requests are attributable, auditable, and do not require shared secrets or browser sessions.
 
 &nbsp;
+
+## Standards
+
+Vestauth builds on open internet standards for agent authentication.
+
+| Specification | Purpose |
+|------------|------------|
+| **[RFC 9421 – HTTP Message Signatures](https://datatracker.ietf.org/doc/rfc9421/)** | Defines how requests are cryptographically signed and verified |
+| **[Web-Bot-Auth Draft](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture)** | Defines headers and authentication architecture for autonomous agents |
+
+Vestauth follows these specifications to ensure interoperability between agents and providers while avoiding vendor lock-in. Vestauth focuses on developer ergonomics while staying compliant with these emerging standards.
+
+&nbsp;
+
+
 
 ## FAQ
 
