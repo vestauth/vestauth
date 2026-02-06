@@ -12,7 +12,6 @@ agent
 const initAction = require('./../actions/agent/init')
 agent.command('init')
   .description('create agent')
-  .option('--pp, --pretty-print', 'pretty print output')
   .action(initAction)
 
 // vestauth agent curl
