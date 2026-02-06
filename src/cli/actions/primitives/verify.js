@@ -28,7 +28,6 @@ async function verify (httpMethod, uri) {
     const publicJwk = options.publicJwk ? JSON.parse(options.publicJwk) : undefined
 
     const output = await primitives.verify(httpMethod, uri, headers, publicJwk)
-    // const output = await primitive.verifyWebBotAuth(httpMethod, uri, signature, signatureInput, JSON.parse(publicJwk))
 
     let space = 0
     if (options.prettyPrint) {

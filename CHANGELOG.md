@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-[Unreleased](https://github.com/vestauth/vestauth/compare/v0.8.3...main)
+[Unreleased](https://github.com/vestauth/vestauth/compare/v0.8.4...main)
+
+## [0.8.4](https://github.com/vestauth/vestauth/compare/v0.8.3...v0.8.4) (2026-02-06)
+
+### Changed
+
+* Patch bug with missing `web-bot-auth` lib
 
 ## [0.8.3](https://github.com/vestauth/vestauth/compare/v0.8.2...v0.8.3) (2026-02-06)
 

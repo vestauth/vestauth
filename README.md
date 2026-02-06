@@ -18,7 +18,7 @@ npm i -g vestauth
 
 ```sh
 vestauth agent init
-vestauth agent curl https://ping.vestauth.com/ping
+vestauth agent curl -X POST https://ping.vestauth.com
 ```
 
 <details><summary>with curl 🌐 </summary><br>
