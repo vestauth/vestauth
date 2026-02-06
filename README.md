@@ -2,15 +2,12 @@
 
 *auth for agents*–from the creator of [`dotenv`](https://github.com/motdotla/dotenv) and [`dotenvx`](https://github.com/dotenvx/dotenvx).
 
-* identity (cryptographic)
-* authentication
-* verification
-
-> Vestauth gives agents a cryptographic identity and a simple way to authenticate HTTP requests. Most agent systems rely on API keys, bearer tokens, or username/passwords. These approaches are difficult to rotate, easy to leak, and hard to attribute to a specific agent. Vestauth replaces shared secrets with public/private key cryptography. Agents sign requests using a private key, and providers verify those requests using the agent’s public key.
+> <small>Vestauth gives agents a cryptographic identity and a simple way to authenticate HTTP requests. Most agent systems rely on API keys, bearer tokens, or username/passwords. These approaches are difficult to rotate, easy to leak, and hard to attribute to a specific agent. Vestauth replaces shared secrets with public/private key cryptography. Agents sign requests using a private key, and providers verify those requests using the agent’s public key.
 > 
-> Scott Motte (Mot) – creator of dotenv and dotenvx
-
-[Watch demo video 📺](https://www.youtube.com/watch?v=cHARyULr_qk)
+> Scott Motte (Mot) – creator of dotenv and dotenvx</small>
+>
+> [Watch demo video 📺](https://www.youtube.com/watch?v=cHARyULr_qk)
+> 
 
 &nbsp;
 
@@ -64,34 +61,6 @@ Download [the windows executable](https://github.com/vestauth/vestauth/releases)
 (unzip to extract `vestauth.exe`)
 
 </details>
-
-&nbsp;
-
-## Why Existing Auth Fails (for Agents)
-
-Legend: ✅ strong fit, ⚠️ partial/conditional, ❌ poor fit
-
-**Agent + Provider Matrix**
-
-| Capability | Vestauth (Signed HTTP) | API Keys | OAuth | Cookies/Sessions |
-|---|---|---|---|---|
-| **Agent: no browser required** | ✅ | ✅ | ⚠️ (depends on flow) | ❌ |
-| **Agent: easy to automate** | ✅ | ✅ | ⚠️ | ❌ |
-| **Agent: no shared secret** | ✅ | ❌ | ⚠️ (bearer tokens) | ❌ |
-| **Agent: per‑request identity proof** | ✅ | ❌ | ⚠️ (token‑based) | ❌ |
-| **Agent: easy key/token rotation** | ✅ | ⚠️ | ⚠️ | ⚠️ |
-| **Provider: no secret storage** | ✅ (public keys only) | ❌ | ❌ | ❌ |
-| **Provider: strong attribution to agent** | ✅ | ⚠️ | ⚠️ | ❌ |
-| **Provider: stateless verification** | ✅ | ✅ | ✅ | ❌ |
-| **Provider: simple to implement** | ⚠️ (sig verification) | ✅ | ❌ | ✅ |
-| **Provider: revocation control** | ✅ | ⚠️ | ✅ | ⚠️ |
-
-## How Vestauth Works
-
-1. An agent generates a public/private keypair.
-2. The agent signs each HTTP request with its private key.
-3. The provider verifies the signature using the agent’s public key.
-4. Requests are attributable, auditable, and do not require shared secrets or browser sessions.
 
 &nbsp;
 
@@ -387,6 +356,34 @@ $ vestauth primitives verify GET https://api.vestauth.com/whoami --signature "si
 
 &nbsp;
 
+## Vestauth vs Existing auth 
+
+Legend: ✅ strong fit, ⚠️ partial/conditional, ❌ poor fit
+
+**Agent + Provider Matrix**
+
+| Capability | Vestauth (Signed HTTP) | API Keys | OAuth | Cookies/Sessions |
+|---|---|---|---|---|
+| **Agent: no browser required** | ✅ | ✅ | ⚠️ (depends on flow) | ❌ |
+| **Agent: easy to automate** | ✅ | ✅ | ⚠️ | ❌ |
+| **Agent: no shared secret** | ✅ | ❌ | ⚠️ (bearer tokens) | ❌ |
+| **Agent: per‑request identity proof** | ✅ | ❌ | ⚠️ (token‑based) | ❌ |
+| **Agent: easy key/token rotation** | ✅ | ⚠️ | ⚠️ | ⚠️ |
+| **Provider: no secret storage** | ✅ (public keys only) | ❌ | ❌ | ❌ |
+| **Provider: strong attribution to agent** | ✅ | ⚠️ | ⚠️ | ❌ |
+| **Provider: stateless verification** | ✅ | ✅ | ✅ | ❌ |
+| **Provider: simple to implement** | ⚠️ (sig verification) | ✅ | ❌ | ✅ |
+| **Provider: revocation control** | ✅ | ⚠️ | ✅ | ⚠️ |
+
+#### How It Works
+
+1. An agent generates a public/private keypair.
+2. The agent signs each HTTP request with its private key.
+3. The provider verifies the signature using the agent’s public key.
+4. Requests are attributable, auditable, and do not require shared secrets or browser sessions.
+
+&nbsp;
+
 ## FAQ
 
 <details><summary>What problem does Vestauth solve?</summary><br>
@@ -614,6 +611,7 @@ $ vestauth primitives verify GET https://api.vestauth.com/whoami --signature "si
 
 </details>
 
+&nbsp;
 
 ## Contributing
 
