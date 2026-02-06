@@ -20,7 +20,7 @@ npm i -g vestauth
 vestauth agent init
 
 vestauth agent curl https://api.vestauth.com/whoami
-vestauth agent curl -X POST https://ping.vestauth.com
+vestauth agent curl -X POST https://ping.vestauth.com/ping
 ```
 
 <details><summary>with curl 🌐 </summary><br>
