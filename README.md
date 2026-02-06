@@ -381,12 +381,10 @@ $ vestauth primitives verify GET https://api.vestauth.com/whoami --signature "si
 
 <details><summary>Where are agent keys stored?</summary><br>
 
-> Agent keys are generated locally and stored in the agent's environment configuration.
+> Agent keys are generated locally and stored in the agent's environment configuration (`.env`).
 >
 > * `AGENT_PRIVATE_JWK` is used to sign requests and must never be shared.
 > * `AGENT_PUBLIC_JWK` is safe to publish and is used by providers for verification.
->
-> Vestauth automatically exposes public keys through a discovery endpoint.
 
 &nbsp;
 
@@ -429,18 +427,6 @@ $ vestauth primitives verify GET https://api.vestauth.com/whoami --signature "si
 > * automation services
 > * bots
 > * infrastructure tools
-
-&nbsp;
-
-</details>
-
-<details><summary>Can someone impersonate my agent?</summary><br>
-
-> No, unless they obtain your private key.
->
-> Vestauth relies on asymmetric cryptography. Only the holder of the private key can generate valid signatures. Providers verify those signatures using the corresponding public key.
->
-> As long as your private key remains secure, your agent identity cannot be forged.
 
 &nbsp;
 
