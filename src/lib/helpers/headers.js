@@ -19,18 +19,6 @@ async function headers (httpMethod, uri, id, privateJwk, tag = 'web-bot-auth', n
   const kid = thumbprint(privateJwk)
   privateJwk.kid = kid
 
-  // // theirs
-  // const request = new Request(uri)
-  // const now = new Date()
-  // return await signatureHeaders(
-  //   request,
-  //   await signerFromJWK(JSON.parse(privateJwk)),
-  //   {
-  //     created: now,
-  //     expires: new Date(now.getTime() + 300_000), // now + 5 min
-  //   }
-  // )
-
   const signatureInput = signatureParams(privateJwk.kid, tag, nonce)
   const signature = webBotAuthSignature(httpMethod, uri, signatureInput, privateJwk)
   const signatureAgent = `${id}.agents.vestauth.com` // agent-1234.agents.vestauth.com (no scheme) /.well-known/http-message-signatures-directory
