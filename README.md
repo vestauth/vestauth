@@ -67,7 +67,7 @@ Download [the windows executable](https://github.com/vestauth/vestauth/releases)
 >
 > Vestauth replaces shared secrets with public/private key cryptography. Agents sign requests using a private key, and providers verify those requests using the agent’s public key.
 > 
-> — Mot, creator of dotenv and dotenvx
+> - Scott Motte (Mot), creator of dotenv and dotenvx
 
 &nbsp;
 
