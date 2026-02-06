@@ -63,6 +63,42 @@ Download [the windows executable](https://github.com/vestauth/vestauth/releases)
 
 &nbsp;
 
+## Problem
+
+Vestauth gives agents a cryptographic identity and a simple way to authenticate HTTP requests.
+
+Most agent systems rely on API keys, bearer tokens, or username/passwords. These approaches are difficult to rotate, easy to leak, and hard to attribute to a specific agent.
+
+Vestauth replaces shared secrets with public/private key cryptography. Agents sign requests using a private key, and providers verify those requests using the agent’s public key.
+
+## Why Existing Auth Fails (for Agents)
+
+Legend: ✅ strong fit, ⚠️ partial/conditional, ❌ poor fit
+
+**Agent + Provider Matrix**
+
+| Capability | Vestauth (Signed HTTP) | API Keys | OAuth | Cookies/Sessions |
+|---|---|---|---|---|
+| **Agent: no browser required** | ✅ | ✅ | ⚠️ (depends on flow) | ❌ |
+| **Agent: easy to automate** | ✅ | ✅ | ⚠️ | ❌ |
+| **Agent: no shared secret** | ✅ | ❌ | ⚠️ (bearer tokens) | ❌ |
+| **Agent: per‑request identity proof** | ✅ | ❌ | ⚠️ (token‑based) | ❌ |
+| **Agent: easy key/token rotation** | ✅ | ⚠️ | ⚠️ | ⚠️ |
+| **Provider: no secret storage** | ✅ (public keys only) | ❌ | ❌ | ❌ |
+| **Provider: strong attribution to agent** | ✅ | ⚠️ | ⚠️ | ❌ |
+| **Provider: stateless verification** | ✅ | ✅ | ✅ | ❌ |
+| **Provider: simple to implement** | ⚠️ (sig verification) | ✅ | ❌ | ✅ |
+| **Provider: revocation control** | ✅ | ⚠️ | ✅ | ⚠️ |
+
+## How Vestauth Works
+
+1. An agent generates a public/private keypair.
+2. The agent signs each HTTP request with its private key.
+3. The provider verifies the signature using the agent’s public key.
+4. Requests are attributable, auditable, and do not require shared secrets or browser sessions.
+
+&nbsp;
+
 ## Agent: Identity & Authentication
 
 > Give agents cryptographic identities…
