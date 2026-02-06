@@ -13,7 +13,7 @@ class PostRegister {
     const publicJwk = this.publicJwk
 
     const httpMethod = 'POST'
-    const headers = await agentHeaders(httpMethod, url, 'agent-123')
+    const headers = await agentHeaders(httpMethod, url, 'REQUESTING')
     headers['Content-Type'] = 'application/json'
 
     const resp = await http(url, {
