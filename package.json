@@ -44,8 +44,7 @@
     "eciesjs": "^0.4.16",
     "execa": "^5.1.1",
     "structured-headers": "^2.0.2",
-    "undici": "7.11.0",
-    "web-bot-auth": "^0.1.2"
+    "undici": "7.11.0"
   },
   "devDependencies": {
     "@yao-pkg/pkg": "^5.14.2",
@@ -55,6 +54,7 @@
     "sinon": "^14.0.1",
     "standard": "^17.1.0",
     "standard-version": "^9.5.0",
-    "tap": "^21.0.1"
+    "tap": "^21.0.1",
+    "web-bot-auth": "^0.1.2"
   }
 }

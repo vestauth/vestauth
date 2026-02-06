@@ -3,6 +3,9 @@ const t = require('tap')
 const Errors = require('../../../src/lib/helpers/errors')
 const headers = require('../../../src/lib/helpers/headers')
 const keypair = require('../../../src/lib/helpers/keypair')
+const { signatureHeaders } = require('web-bot-auth')
+const { signerFromJWK } = require('web-bot-auth/crypto')
+const { Request } = require('undici')
 
 t.test('#headers - deterministic signature input and format', async t => {
   const originalNow = Date.now
@@ -29,6 +32,44 @@ t.test('#headers - deterministic signature input and format', async t => {
       'nonce="nonce-123";' +
       'tag="web-bot-auth"'
   )
+
+  Date.now = originalNow
+})
+
+t.test('#headers - matches web-bot-auth signatureHeaders', async t => {
+  const originalNow = Date.now
+  Date.now = () => 1700000000000
+
+  const { privateJwk } = keypair()
+  const privateJwkString = JSON.stringify(privateJwk)
+  const nonce = Buffer.alloc(64).toString('base64')
+
+  const ours = await headers(
+    'GET',
+    'https://example.com/resource',
+    'agent-123',
+    privateJwkString,
+    undefined,
+    nonce
+  )
+
+  const request = new Request('https://example.com/resource', { method: 'GET' })
+  const now = new Date(Date.now())
+  const signer = await signerFromJWK(JSON.parse(privateJwkString))
+  const theirs = await signatureHeaders(
+    request,
+    signer,
+    {
+      created: now,
+      expires: new Date(now.getTime() + 300_000),
+      nonce,
+      tag: 'web-bot-auth'
+    }
+  )
+
+  t.equal(ours.Signature, theirs.Signature)
+  t.equal(ours['Signature-Input'], theirs['Signature-Input'])
+  t.equal(ours['Signature-Agent'], 'sig1=agent-123.agents.vestauth.com')
 
   Date.now = originalNow
 })
