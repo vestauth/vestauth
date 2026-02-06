@@ -209,6 +209,90 @@ Vestauth follows these specifications to ensure interoperability between agents 
 
 Advanced CLI commands.
 
+<details><summary>`agent init`</summary><br>
+
+Create agent.
+
+```sh
+$ vestauth agent init
+✔ agent created (.env/AGENT_ID=agent-609a4fd2ebf4e6347108c517)
+⮕ next run: [vestauth agent curl https://api.vestauth.com/whoami]
+```
+
+</details>
+<details><summary>`agent curl`</summary><br>
+
+Run curl as agent.
+
+```sh
+$ vestauth agent curl https://api.vestauth.com/whoami
+{"uid":"agent-609a4fd2ebf4e6347108c517", ...}
+```
+
+</details>
+<details><summary>`agent curl --pretty-print`</summary><br>
+
+Pretty print curl json output.
+
+```sh
+$ vestauth agent curl https://api.vestauth.com/whoami --pp
+{
+  "uid": "agent-609a4fd2ebf4e6347108c517",
+  "kid": "FGzgs758DBGnI1S0BejChDsK0IKZm3qPpOOXdRnnBkM",
+  "public_jwk": {
+    ...
+  },
+  "well_known_url": "https://agent-609a4fd2ebf4e6347108c517.agents.vestauth.com/.well-known/http-message-signatures-directory"
+}
+```
+
+</details>
+
+<details><summary>`agent headers`</summary><br>
+
+Generate signed headers as agent.
+
+```sh
+$ vestauth agent headers GET https://api.vestauth.com/whoami --pp
+{
+  "Signature": "sig1=:UW6A7j8jo+gQxd+EeVgDddY51ZOc9plrSaupW/N53hQnQFvP9BuwQHgL7SVPLQIu4cnRzLgvwm7Yu9YMO+HUDQ==:",
+  "Signature-Input": "sig1=(\"@authority\");created=1770396357;keyid=\"FGzgs758DBGnI1S0BejChDsK0IKZm3qPpOOXdRnnBkM\";alg=\"ed25519\";expires=1770396657;nonce=\"PrE7A6I_5fWnxBsBigNvxjp3-YangXl71V1uM3hPZavh918JqzjMSRcjHv_n5XIb3N8WivZEeigCBH6QGDSqgA\";tag=\"web-bot-auth\"",
+  "Signature-Agent": "sig1=agent-609a4fd2ebf4e6347108c517.agents.vestauth.com"
+}
+```
+
+</details>
+
+<details><summary>`agent headers --id`</summary><br>
+
+Change the `AGENT_ID`.
+
+```sh
+$ vestauth agent headers GET https://api.vestauth.com/whoami --id agent-1234 --pp
+{
+  "Signature": "sig1=:UW6A7j8jo+gQxd+EeVgDddY51ZOc9plrSaupW/N53hQnQFvP9BuwQHgL7SVPLQIu4cnRzLgvwm7Yu9YMO+HUDQ==:",
+  "Signature-Input": "sig1=(\"@authority\");created=1770396357;keyid=\"FGzgs758DBGnI1S0BejChDsK0IKZm3qPpOOXdRnnBkM\";alg=\"ed25519\";expires=1770396657;nonce=\"PrE7A6I_5fWnxBsBigNvxjp3-YangXl71V1uM3hPZavh918JqzjMSRcjHv_n5XIb3N8WivZEeigCBH6QGDSqgA\";tag=\"web-bot-auth\"",
+  "Signature-Agent": "sig1=agent-1234.agents.vestauth.com"
+}
+```
+
+</details>
+
+<details><summary>`agent headers --private-jwk`</summary><br>
+
+Change the `AGENT_PRIVATE_JWK` used to sign the headers.
+
+```sh
+$ vestauth agent headers GET https://api.vestauth.com/whoami --private-jwk '{"crv":"Ed25519","d":"RyFk7QTOk_bMjFQKjyAR-vJDp7BITn9U0YBFNdpR9wE","x":"hyAxNMbuTcFQq420Dr46ucF0dRZ_FIyxgsujruEoklM","kty":"OKP","kid":"UfHTArlyLsqM8cB8sNfH2z6XOwc0RmJIq2CAPGfvMjk"}' --pp
+{
+  "Signature": "sig1=:PZUVVjqiECYuk8Hg1GZKKeJmwhLrcRdRA7nm1R595UFK9cx0q9atNFBzKP5wBEmszMIgvpYdMrIQbPEeKz4tCQ==:",
+  "Signature-Input": "sig1=(\"@authority\");created=1770396546;keyid=\"UfHTArlyLsqM8cB8sNfH2z6XOwc0RmJIq2CAPGfvMjk\";alg=\"ed25519\";expires=1770396846;nonce=\"BSIugautfZvN3u5QUgl1mMuyxgmeRsRy9XxX7GXxjJxq1mI0kJl4F-C1nITtOfSeEt6xR1YBfyxsffNKy_wKSA\";tag=\"web-bot-auth\"",
+  "Signature-Agent": "sig1=agent-609a4fd2ebf4e6347108c517.agents.vestauth.com"
+}
+```
+
+</details>
+
 <details><summary>`primitives keypair`</summary><br>
 
 Generate public/private keypair.
@@ -252,8 +336,8 @@ $ vestauth primitives headers GET http://example.com --pp
 Verify signed headers.
 
 ```sh
-$ vestauth primitives verify GET https://example.com --signature "sig1=:K7z3Nozcq1z5zfJhrd540DWYbjyQ1kR/S7ZDcMXE5gVhxezvG6Rn9BxEvfteiAnBuQhOkvbpGtF83WpQQerGBw==:" --signature-input "sig1=(\"@authority\");created=1770263541;keyid=\"_4GFBGmXKinLBoh3-GJZCiLBt-84GP9Fb0iBzmYncUg\";alg=\"ed25519\";expires=1770263841;nonce=\"0eu7hVMVFm61lQvIryKNmZXIbzkkgpVocoKvN0de5QO8Eu5slTxklJAcVLQs0L_UTVtx4f8qJcqYZ21JTeOQww\";tag=\"web-bot-auth\""
-{"success":true}
+$ vestauth primitives verify GET https://api.vestauth.com/whoami --signature "sig1=:UHqXQbWZmyYW40JRcdCl+NLccLgPmcoirUKwLtdcpEcIgxG2+i+Q2U3yIYeMquseON3fKm29WSL2ntHeRefHBQ==:" --signature-input "sig1=(\"@authority\");created=1770395703;keyid=\"FGzgs758DBGnI1S0BejChDsK0IKZm3qPpOOXdRnnBkM\";alg=\"ed25519\";expires=1770396003;nonce=\"O8JOC1reBofwbpPcdD-MRRCdrtAf4khvJTuhpRI_RiaH_hpU93okLkmPZVFFcUEdYtYfcduaB8Sca54GTd2GXA\";tag=\"web-bot-auth\"" --signature-agent "sig1=agent-609a4fd2ebf4e6347108c517.agents.vestauth.com"
+{"uid":"agent-609a4fd2ebf4e6347108c517", ...}
 ```
 
 </details>

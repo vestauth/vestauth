@@ -1,6 +1,7 @@
 class Errors {
   constructor (options = {}) {
     this.message = options.message
+    this.exitCode = options.exitCode
   }
 
   missingId () {
@@ -104,6 +105,15 @@ class Errors {
     const e = new Error(message)
     e.code = code
     e.help = help
+    return e
+  }
+
+  commandFailed () {
+    const code = 'COMMAND_FAILED'
+    const message = `[${code}] command failed with exit code ${this.exitCode}`
+
+    const e = new Error(message)
+    e.code = code
     return e
   }
 

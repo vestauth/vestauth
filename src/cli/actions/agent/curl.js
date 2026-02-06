@@ -1,6 +1,7 @@
 const { logger } = require('./../../../shared/logger')
 const agent = require('./../../../lib/agent')
 const execute = require('./../../../lib/helpers/execute')
+const Errors = require('./../../../lib/helpers/errors')
 const findUrl = require('./../../../lib/helpers/findUrl')
 const catchAndLog = require('./../../../lib/helpers/catchAndLog')
 
@@ -27,7 +28,7 @@ async function curl () {
 
     if (exitCode !== 0) {
       logger.debug(`received exitCode ${exitCode}`)
-      throw new Error(`Command exited with exit code ${exitCode}`)
+      throw new Errors({ exitCode }).commandFailed()
     }
 
     let space = 0
