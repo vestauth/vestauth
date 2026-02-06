@@ -390,6 +390,16 @@ $ vestauth primitives verify GET https://api.vestauth.com/whoami --signature "si
 
 </details>
 
+<details><summary>Can Vestauth work without curl?</summary><br>
+
+> Yes.
+>
+> Vestauth provides libraries and primitives that can be integrated into any HTTP client or framework. The CLI simply makes it easy to adopt and demonstrate.
+
+&nbsp;
+
+</details>
+
 <details><summary>Is Vestauth production ready?</summary><br>
 
 > Yes.
@@ -401,16 +411,6 @@ $ vestauth primitives verify GET https://api.vestauth.com/whoami --signature "si
 > * Web-Bot-Auth draft architecture
 >
 > These standards are designed for secure, verifiable HTTP communication.
-
-&nbsp;
-
-</details>
-
-<details><summary>Can Vestauth work without curl?</summary><br>
-
-> Yes.
->
-> Vestauth provides libraries and primitives that can be integrated into any HTTP client or framework. The CLI simply makes it easy to adopt and demonstrate.
 
 &nbsp;
 
