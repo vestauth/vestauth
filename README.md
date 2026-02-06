@@ -4,9 +4,9 @@
 
 > [1 minute demo 📺](https://www.youtube.com/watch?v=cHARyULr_qk)
 >
-> Vestauth gives agents a cryptographic identity and a simple way to authenticate HTTP requests. Most agent systems rely on API keys, bearer tokens, or username/passwords. These approaches are difficult to rotate, easy to leak, and hard to attribute to a specific agent. Vestauth replaces shared secrets with public/private key cryptography. Agents sign requests using a private key, and providers verify those requests using the agent’s public key. [[1](#vestauth-vs-existing-auth)]
+> Vestauth gives agents a cryptographic identity and a simple way to authenticate HTTP requests. Most agent systems rely on API keys, bearer tokens, or username/passwords. These approaches are difficult to rotate, easy to leak, and hard to attribute to a specific agent. Vestauth replaces shared secrets with public/private key cryptography. Agents sign requests using a private key, and providers verify those requests using the agent's public key. [[1](#compare)]
 > 
-> Scott Motte – creator of dotenv and dotenvx
+> Scott Motte–creator of dotenv and dotenvx
 
 &nbsp;
 
