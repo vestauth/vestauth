@@ -26,6 +26,9 @@ async function curl () {
 
     const { stdout, exitCode } = await execute.execa(injected[0], injected.slice(1), {})
 
+    logger.debug(`exitCode: ${exitCode}`)
+    logger.debug(`stdout: ${stdout}`)
+
     if (exitCode !== 0) {
       logger.debug(`received exitCode ${exitCode}`)
       throw new Errors({ exitCode }).commandFailed()
