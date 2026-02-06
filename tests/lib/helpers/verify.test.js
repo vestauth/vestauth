@@ -4,6 +4,9 @@ const headers = require('../../../src/lib/helpers/headers')
 const keypair = require('../../../src/lib/helpers/keypair')
 const verify = require('../../../src/lib/helpers/verify')
 const webBotAuthSignature = require('../../../src/lib/helpers/webBotAuthSignature')
+const { verify: webBotAuthVerify } = require('web-bot-auth')
+const { verifierFromJWK } = require('web-bot-auth/crypto')
+const { Request } = require('undici')
 
 t.test('#verify - valid signature', async t => {
   const { publicJwk, privateJwk } = keypair()
@@ -14,6 +17,24 @@ t.test('#verify - valid signature', async t => {
 
   t.same(output.public_jwk, publicJwk)
   t.equal(output.kid, publicJwk.kid)
+})
+
+t.test('#verify - matches web-bot-auth verify (valid signature)', async t => {
+  const { publicJwk, privateJwk } = keypair()
+  const uri = 'https://example.com/resource'
+  const nonce = Buffer.alloc(64).toString('base64')
+  const signedHeaders = await headers('GET', uri, 'agent-123', JSON.stringify(privateJwk), undefined, nonce)
+
+  await verify('GET', uri, signedHeaders, publicJwk)
+
+  const request = new Request(uri, {
+    method: 'GET',
+    headers: {
+      Signature: signedHeaders.Signature,
+      'Signature-Input': signedHeaders['Signature-Input']
+    }
+  })
+  await webBotAuthVerify(request, await verifierFromJWK(publicJwk))
 })
 
 t.test('#verify - invalid signature', async t => {
@@ -31,6 +52,37 @@ t.test('#verify - invalid signature', async t => {
       Signature: `sig1=:${tampered}:`
     }, publicJwk),
     { code: 'INVALID_SIGNATURE' }
+  )
+})
+
+t.test('#verify - matches web-bot-auth verify (invalid signature)', async t => {
+  const { publicJwk, privateJwk } = keypair()
+  const uri = 'https://example.com/resource'
+  const nonce = Buffer.alloc(64).toString('base64')
+  const signedHeaders = await headers('GET', uri, 'agent-123', JSON.stringify(privateJwk), undefined, nonce)
+
+  const match = signedHeaders.Signature.match(/^sig1=:(.*):$/)
+  const sig = match ? match[1] : ''
+  const tampered = (sig[0] === 'A' ? 'B' : 'A') + sig.slice(1)
+  const tamperedHeaders = {
+    ...signedHeaders,
+    Signature: `sig1=:${tampered}:`
+  }
+
+  await t.rejects(
+    verify('GET', uri, tamperedHeaders, publicJwk),
+    { code: 'INVALID_SIGNATURE' }
+  )
+
+  const request = new Request(uri, {
+    method: 'GET',
+    headers: {
+      Signature: tamperedHeaders.Signature,
+      'Signature-Input': tamperedHeaders['Signature-Input']
+    }
+  })
+  await t.rejects(
+    webBotAuthVerify(request, await verifierFromJWK(publicJwk))
   )
 })
 
