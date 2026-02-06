@@ -2,11 +2,9 @@
 
 *auth for agents*–from the creator of [`dotenv`](https://github.com/motdotla/dotenv) and [`dotenvx`](https://github.com/dotenvx/dotenvx).
 
-```sh
-Vestauth gives agents a cryptographic identity and a simple way to authenticate HTTP requests. Most agent systems rely on API keys, bearer tokens, or username/passwords. These approaches are difficult to rotate, easy to leak, and hard to attribute to a specific agent. Vestauth replaces shared secrets with public/private key cryptography. Agents sign requests using a private key, and providers verify those requests using the agent’s public key.
-
-- Scott Motte – Mot
-```
+> Vestauth gives agents a cryptographic identity and a simple way to authenticate HTTP requests. Most agent systems rely on API keys, bearer tokens, or username/passwords. These approaches are difficult to rotate, easy to leak, and hard to attribute to a specific agent. Vestauth replaces shared secrets with public/private key cryptography. Agents sign requests using a private key, and providers verify those requests using the agent’s public key.
+> 
+> [Scott Motte – Mot](https://mot.la)
 
 [Watch demo video 📺](https://www.youtube.com/watch?v=cHARyULr_qk)
 
@@ -357,13 +355,11 @@ $ vestauth primitives verify GET https://api.vestauth.com/whoami --signature "si
 
 &nbsp;
 
-## Vestauth vs Existing auth 
-
-Legend: ✅ strong fit, ⚠️ partial/conditional, ❌ poor fit
+## Vestauth vs Existing-auth 
 
 **Agent + Provider Matrix**
 
-| Capability | Vestauth (Signed HTTP) | API Keys | OAuth | Cookies/Sessions |
+| Capability | Vestauth | API Keys | OAuth | Cookies |
 |---|---|---|---|---|
 | **Agent: no browser required** | ✅ | ✅ | ⚠️ (depends on flow) | ❌ |
 | **Agent: easy to automate** | ✅ | ✅ | ⚠️ | ❌ |
@@ -375,6 +371,8 @@ Legend: ✅ strong fit, ⚠️ partial/conditional, ❌ poor fit
 | **Provider: stateless verification** | ✅ | ✅ | ✅ | ❌ |
 | **Provider: simple to implement** | ⚠️ (sig verification) | ✅ | ❌ | ✅ |
 | **Provider: revocation control** | ✅ | ⚠️ | ✅ | ⚠️ |
+
+Legend: ✅ strong fit, ⚠️ partial/conditional, ❌ poor fit
 
 #### How It Works
 
