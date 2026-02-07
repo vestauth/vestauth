@@ -3,7 +3,14 @@
   "version": "0.9.0",
   "description": "auth for agents–from the creator of dotenvx",
   "keywords": [
-    "vestauth"
+    "vestauth",
+    "web-bot-auth",
+    "webbotauth",
+    "cryptography",
+    "ai-agent",
+    "agent-auth",
+    "rfc9421",
+    "http-signatures"
   ],
   "homepage": "https://github.com/vestauth/vestauth",
   "repository": {
