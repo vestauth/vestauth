@@ -37,4 +37,15 @@ agent.command('headers')
   .option('--pp, --pretty-print', 'pretty print output')
   .action(headersAction)
 
+// vestauth agent rotate
+const rotateAction = require('./../actions/agent/rotate')
+agent.command('rotate')
+  .description('rotate keypair')
+  .option('--id <id>', 'id (string)', env('AGENT_ID'))
+  .option('--private-jwk <privateJwk>', 'AGENT_PRIVATE_JWK (default)', env('AGENT_PRIVATE_JWK'))
+  .option('--tag <tag>', 'web-bot-auth (default) | web-bot-auth', 'web-bot-auth')
+  .option('--nonce <nonce>', 'null (default)')
+  .option('--pp, --pretty-print', 'pretty print output')
+  .action(rotateAction)
+
 module.exports = agent
