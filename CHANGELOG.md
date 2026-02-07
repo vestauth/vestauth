@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-[Unreleased](https://github.com/vestauth/vestauth/compare/v0.8.7...main)
+[Unreleased](https://github.com/vestauth/vestauth/compare/v0.8.8...main)
+
+## [0.8.8](https://github.com/vestauth/vestauth/compare/v0.8.7...v0.8.8) (2026-02-06)
+
+### Added
+
+* Add link to [demo](https://ping.vestauth.com)
 
 ## [0.8.7](https://github.com/vestauth/vestauth/compare/v0.8.6...v0.8.7) (2026-02-06)
 
