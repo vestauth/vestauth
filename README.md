@@ -281,7 +281,17 @@ $ vestauth agent headers GET https://api.vestauth.com/whoami --private-jwk '{"cr
 ```
 
 </details>
+<details><summary>`agent rotate`</summary><br>
 
+Rotate your `AGENT_PRIVATE_JWK` and `AGENT_PUBLIC_JWK`.
+
+```sh
+$ vestauth agent rotate
+✔ agent keys rotated (.env/AGENT_ID=agent-8f1b347e2e58899f3147c05b)
+⮕ next run: [vestauth agent curl https://api.vestauth.com/whoami]
+```
+
+</details>
 <details><summary>`provider verify`</summary><br>
 
 Verify agent.

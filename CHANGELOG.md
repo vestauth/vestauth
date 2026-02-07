@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-[Unreleased](https://github.com/vestauth/vestauth/compare/v0.8.8...main)
+[Unreleased](https://github.com/vestauth/vestauth/compare/v0.9.0...main)
+
+## [0.9.0](https://github.com/vestauth/vestauth/compare/v0.8.8...v0.9.0) (2026-02-06)
+
+### Added
+
+* Add `agent rotate` command ([#12](https://github.com/vestauth/vestauth/pull/12))
 
 ## [0.8.8](https://github.com/vestauth/vestauth/compare/v0.8.7...v0.8.8) (2026-02-06)
 
