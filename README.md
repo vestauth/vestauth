@@ -385,7 +385,12 @@ Vestauth follows these specifications to ensure interoperability between agents 
 
 &nbsp;
 
+## Demo
 
+[![vestauth:ping](https://vestauth.com/demo.png)](https://ping.vestauth.com)
+> [https://ping.vestauth.com](https://ping.vestauth.com)
+
+&nbsp;
 
 ## FAQ
 
