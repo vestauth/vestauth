@@ -21,10 +21,10 @@ if (commanderVersion && parseInt(commanderVersion.split('.')[0], 10) >= 12) {
 // global log levels
 program
   .usage('vestauth')
-  .option('-l, --log-level <level>', 'set log level', 'info')
-  .option('-q, --quiet', 'sets log level to error')
-  .option('-v, --verbose', 'sets log level to verbose')
-  .option('-d, --debug', 'sets log level to debug')
+  .option('--log-level <level>', 'set log level', 'info')
+  .option('--quiet', 'sets log level to error')
+  .option('--verbose', 'sets log level to verbose')
+  .option('--debug', 'sets log level to debug')
   .hook('preAction', (thisCommand, actionCommand) => {
     const options = thisCommand.opts()
 
