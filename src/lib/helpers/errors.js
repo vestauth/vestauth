@@ -4,15 +4,19 @@ class Errors {
     this.exitCode = options.exitCode
   }
 
-  missingId () {
+  missingUid () {
     const code = 'MISSING_ID'
-    const message = `[${code}] missing --id (AGENT_ID)`
+    const message = `[${code}] missing --uid (AGENT_UID)`
     const help = `[${code}] https://github.com/vestauth/vestauth/issues/6`
 
     const e = new Error(message)
     e.code = code
     e.help = help
     return e
+  }
+
+  missingId () {
+    return this.missingUid()
   }
 
   missingPrivateJwk () {

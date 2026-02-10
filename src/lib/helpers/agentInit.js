@@ -19,11 +19,12 @@ async function agentInit () {
 
   // register agent
   const agent = await new PostRegister(null, kp.publicJwk).run()
+  dotenvx.set('AGENT_UID', agent.uid, { path: envPath, plain: true, quiet: true })
   dotenvx.set('AGENT_ID', agent.uid, { path: envPath, plain: true, quiet: true })
 
   return {
     AGENT_PUBLIC_JWK: kp.publicJwk,
-    AGENT_ID: agent.uid,
+    AGENT_UID: agent.uid,
     path: envPath,
     isNew: agent.is_new
   }
