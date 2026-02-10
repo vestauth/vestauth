@@ -1,5 +1,6 @@
 const { logger } = require('./../../../shared/logger')
 const catchAndLog = require('./../../../lib/helpers/catchAndLog')
+const env = require('./../../../lib/helpers/env')
 
 const primitives = require('./../../../lib/primitives')
 
@@ -11,7 +12,8 @@ async function headers (httpMethod, uri) {
     const options = this.opts()
     logger.debug(`options: ${JSON.stringify(options)}`)
 
-    const output = await primitives.headers(httpMethod, uri, options.id, options.privateJwk, options.tag, options.nonce)
+    const uid = options.uid || options.id || env('AGENT_UID') || env('AGENT_ID')
+    const output = await primitives.headers(httpMethod, uri, uid, options.privateJwk, options.tag, options.nonce)
 
     let space = 0
     if (options.prettyPrint) {
