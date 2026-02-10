@@ -11,9 +11,9 @@ async function init () {
     const output = await agent.init()
 
     if (output.isNew) {
-      logger.success(`✔ agent created (${output.path}/AGENT_ID=${output.AGENT_ID})`)
+      logger.success(`✔ agent created (${output.path}/AGENT_UID=${output.AGENT_UID})`)
     } else {
-      logger.info(`• agent exists (${output.path}/AGENT_ID=${output.AGENT_ID})`)
+      logger.info(`• agent exists (${output.path}/AGENT_UID=${output.AGENT_UID})`)
     }
 
     logger.help('⮕ next run: [vestauth agent curl https://api.vestauth.com/whoami]')
