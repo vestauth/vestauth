@@ -637,3 +637,7 @@ You can fork this repo and create [pull requests](https://github.com/vestauth/ve
 
 * [github.com/vestauth/vestauth](https://github.com/vestauth/vestauth/issues) - bugs and discussions
 * [@vestauth 𝕏](https://x.com/vestauthx) (DMs are open)
+
+## Roadmap
+
+* Feb 15: Add first vestauth provider `dotenvx as2`
