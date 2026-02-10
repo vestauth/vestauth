@@ -3,22 +3,22 @@ const buildApiError = require('../helpers/buildApiError')
 const agentHeaders = require('../helpers/agentHeaders')
 
 class PostRotate {
-  constructor (hostname, publicJwk, id, privateJwk) {
+  constructor (hostname, publicJwk, uid, privateJwk) {
     this.hostname = hostname || 'https://api.vestauth.com'
     this.publicJwk = publicJwk // new publicJwk
 
-    this.id = id
+    this.uid = uid
     this.privateJwk = privateJwk
   }
 
   async run () {
     const url = `${this.hostname}/rotate`
     const publicJwk = this.publicJwk
-    const id = this.id
+    const uid = this.uid
     const privateJwk = this.privateJwk
 
     const httpMethod = 'POST'
-    const headers = await agentHeaders(httpMethod, url, id, privateJwk)
+    const headers = await agentHeaders(httpMethod, url, uid, privateJwk)
     headers['Content-Type'] = 'application/json'
 
     const resp = await http(url, {

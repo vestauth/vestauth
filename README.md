@@ -74,7 +74,7 @@ $ mkdir your-agent
 $ cd your-agent
 
 $ vestauth agent init
-✔ agent created (.env/AGENT_ID=agent-4b94ccd425e939fac5016b6b)
+✔ agent created (.env/AGENT_UID=agent-4b94ccd425e939fac5016b6b)
 ```
 
 > …and sign their `curl` requests with cryptographic authentication.
@@ -91,20 +91,20 @@ $ curl https://api.vestauth.com/whoami
 
 <details><summary>learn more</summary><br>
 
-First `vestauth agent init` populates a `.env` file with an `AGENT_PUBLIC_JWK`, `AGENT_PRIVATE_JWK`, and `AGENT_ID`.
+First `vestauth agent init` populates a `.env` file with an `AGENT_PUBLIC_JWK`, `AGENT_PRIVATE_JWK`, and `AGENT_UID`.
 
 ```ini
 # .env
 AGENT_PUBLIC_JWK="{"crv":"Ed25519","x":"py2xNaAfjKZiau-jtmJls6h_3n8xJ1Ur0ie-n9b8zWg","kty":"OKP","kid":"B0u80Gw28W9U2Jl5t_EBiWeBajO2104kOYZ9Ikucl5I"}"
 AGENT_PRIVATE_JWK="{"crv":"Ed25519","d":"Z9vbwN-3eiFMVv_TPWXOxqSMJAT21kZvejWi72yiAaQ","x":"py2xNaAfjKZiau-jtmJls6h_3n8xJ1Ur0ie-n9b8zWg","kty":"OKP","kid":"B0u80Gw28W9U2Jl5t_EBiWeBajO2104kOYZ9Ikucl5I"}"
-AGENT_ID="agent-4b94ccd425e939fac5016b6b"
+AGENT_UID="agent-4b94ccd425e939fac5016b6b"
 ```
 
 | Variable | Role | Usage |
 |----------|------------|------------|
 | `AGENT_PUBLIC_JWK` | Verification | Published for provider signature validation |
 | `AGENT_PRIVATE_JWK` | Signing | Used locally to sign HTTP requests |
-| `AGENT_ID` | Identity | Builds discovery FQDN and identifies the agent |
+| `AGENT_UID` | Identity | Builds discovery FQDN and identifies the agent |
 
 Then `vestauth agent curl` autosigns `curl` requests – injecting valid signed headers according to the [web-bot-auth draft](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture). You can peek these with the built-in `headers` primitive.
 
@@ -204,7 +204,7 @@ Create agent.
 
 ```sh
 $ vestauth agent init
-✔ agent created (.env/AGENT_ID=agent-609a4fd2ebf4e6347108c517)
+✔ agent created (.env/AGENT_UID=agent-609a4fd2ebf4e6347108c517)
 ⮕ next run: [vestauth agent curl https://api.vestauth.com/whoami]
 ```
 
@@ -252,12 +252,12 @@ $ vestauth agent headers GET https://api.vestauth.com/whoami --pp
 
 </details>
 
-<details><summary>`agent headers --id`</summary><br>
+<details><summary>`agent headers --uid`</summary><br>
 
-Change the `AGENT_ID`.
+Change the `AGENT_UID`.
 
 ```sh
-$ vestauth agent headers GET https://api.vestauth.com/whoami --id agent-1234 --pp
+$ vestauth agent headers GET https://api.vestauth.com/whoami --uid agent-1234 --pp
 {
   "Signature": "sig1=:UW6A7j8jo+gQxd+EeVgDddY51ZOc9plrSaupW/N53hQnQFvP9BuwQHgL7SVPLQIu4cnRzLgvwm7Yu9YMO+HUDQ==:",
   "Signature-Input": "sig1=(\"@authority\");created=1770396357;keyid=\"FGzgs758DBGnI1S0BejChDsK0IKZm3qPpOOXdRnnBkM\";alg=\"ed25519\";expires=1770396657;nonce=\"PrE7A6I_5fWnxBsBigNvxjp3-YangXl71V1uM3hPZavh918JqzjMSRcjHv_n5XIb3N8WivZEeigCBH6QGDSqgA\";tag=\"web-bot-auth\"",
@@ -287,7 +287,7 @@ Rotate your `AGENT_PRIVATE_JWK` and `AGENT_PUBLIC_JWK`.
 
 ```sh
 $ vestauth agent rotate
-✔ agent keys rotated (.env/AGENT_ID=agent-8f1b347e2e58899f3147c05b)
+✔ agent keys rotated (.env/AGENT_UID=agent-8f1b347e2e58899f3147c05b)
 ⮕ next run: [vestauth agent curl https://api.vestauth.com/whoami]
 ```
 

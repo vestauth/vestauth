@@ -9,7 +9,8 @@ async function headers (httpMethod, uri) {
   const options = this.opts()
   logger.debug(`options: ${JSON.stringify(options)}`)
 
-  const output = await agent.headers(httpMethod, uri, options.id, options.privateJwk, options.tag, options.nonce)
+  const uid = options.uid || options.id
+  const output = await agent.headers(httpMethod, uri, uid, options.privateJwk, options.tag, options.nonce)
 
   let space = 0
   if (options.prettyPrint) {

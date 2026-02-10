@@ -3,8 +3,8 @@ const thumbprint = require('./thumbprint')
 const signatureParams = require('./signatureParams')
 const webBotAuthSignature = require('./webBotAuthSignature')
 
-async function headers (httpMethod, uri, id, privateJwk, tag = 'web-bot-auth', nonce = null) {
-  if (!id) throw new Errors().missingId()
+async function headers (httpMethod, uri, uid, privateJwk, tag = 'web-bot-auth', nonce = null) {
+  if (!uid) throw new Errors().missingUid()
   if (!privateJwk) throw new Errors().missingPrivateJwk()
 
   try {
@@ -21,7 +21,7 @@ async function headers (httpMethod, uri, id, privateJwk, tag = 'web-bot-auth', n
 
   const signatureInput = signatureParams(privateJwk.kid, tag, nonce)
   const signature = webBotAuthSignature(httpMethod, uri, signatureInput, privateJwk)
-  const signatureAgent = `${id}.agents.vestauth.com` // agent-1234.agents.vestauth.com (no scheme) /.well-known/http-message-signatures-directory
+  const signatureAgent = `${uid}.agents.vestauth.com` // agent-1234.agents.vestauth.com (no scheme) /.well-known/http-message-signatures-directory
 
   return {
     Signature: `sig1=:${signature}:`,
