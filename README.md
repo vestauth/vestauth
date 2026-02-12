@@ -368,11 +368,11 @@ const agent = await vestauth.provider.verify(req.method, url, req.headers)
 
 &nbsp;
 
-## Providers
+## Available Providers
+
+> Vestauth is pioneering the auth layer for agents. Get in early on this distribution train. [Become a vestauth provider](mailto:mot@dotenvx.com)
 
 * AS2 (Agentic Secret Storage) - https://as2.dotenvx.com
-
-[Become a vestauth provider!](mailto:mot@dotenvx.com)
 
 &nbsp;
 
