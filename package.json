@@ -23,8 +23,10 @@
   ],
   "license": "BSD-3-Clause",
   "main": "src/lib/main.js",
+  "types": "./src/lib/main.d.ts",
   "exports": {
     ".": {
+      "types": "./src/lib/main.d.ts",
       "require": "./src/lib/main.js",
       "default": "./src/lib/main.js"
     },
