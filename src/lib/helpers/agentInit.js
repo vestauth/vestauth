@@ -8,6 +8,7 @@ const PostRegister = require('../api/postRegister')
 async function agentInit (hostname = null) {
   const envPath = '.env'
   const normalizedHostname = normalizeAgentHostname(hostname)
+  const shouldPersistHostname = Boolean(hostname && String(hostname).trim())
 
   // keypair
   const currentPrivateJwk = identity(false).privateJwk
@@ -18,6 +19,9 @@ async function agentInit (hostname = null) {
   // must come before registration so that registration can send headers
   dotenvx.set('AGENT_PUBLIC_JWK', JSON.stringify(kp.publicJwk), { path: envPath, plain: true, quiet: true })
   dotenvx.set('AGENT_PRIVATE_JWK', JSON.stringify(kp.privateJwk), { path: envPath, plain: true, quiet: true })
+  if (shouldPersistHostname) {
+    dotenvx.set('AGENT_HOSTNAME', new URL(normalizedHostname).host, { path: envPath, plain: true, quiet: true })
+  }
 
   // register agent
   const agent = await new PostRegister(normalizedHostname, kp.publicJwk).run()

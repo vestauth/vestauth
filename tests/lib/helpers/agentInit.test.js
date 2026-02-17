@@ -9,6 +9,7 @@ const postRegisterPath = require.resolve('../../../src/lib/api/postRegister')
 
 function mockAgentInitDeps (registerResponse = { uid: 'agent-test', is_new: true }) {
   const constructorArgs = []
+  const dotenvSetCalls = []
 
   const originals = {
     dotenvx: require.cache[dotenvxPath],
@@ -20,7 +21,9 @@ function mockAgentInitDeps (registerResponse = { uid: 'agent-test', is_new: true
 
   require.cache[dotenvxPath] = {
     exports: {
-      set: () => {}
+      set: (...args) => {
+        dotenvSetCalls.push(args)
+      }
     }
   }
 
@@ -55,6 +58,7 @@ function mockAgentInitDeps (registerResponse = { uid: 'agent-test', is_new: true
 
   return {
     constructorArgs,
+    dotenvSetCalls,
     restore: () => {
       if (originals.dotenvx) require.cache[dotenvxPath] = originals.dotenvx
       else delete require.cache[dotenvxPath]
@@ -80,7 +84,7 @@ t.test('agentInit normalizes hostname arg when provided', async t => {
   const original = process.env.AGENT_HOSTNAME
   process.env.AGENT_HOSTNAME = 'api.from-env.com'
 
-  const { constructorArgs, restore } = mockAgentInitDeps()
+  const { constructorArgs, dotenvSetCalls, restore } = mockAgentInitDeps()
   t.teardown(() => {
     restore()
     if (original === undefined) delete process.env.AGENT_HOSTNAME
@@ -91,13 +95,22 @@ t.test('agentInit normalizes hostname arg when provided', async t => {
   await agentInit('api.from-flag.com')
 
   t.equal(constructorArgs[0].hostname, 'https://api.from-flag.com')
+  t.match(
+    dotenvSetCalls,
+    [
+      ['AGENT_PUBLIC_JWK'],
+      ['AGENT_PRIVATE_JWK'],
+      ['AGENT_HOSTNAME', 'api.from-flag.com'],
+      ['AGENT_UID']
+    ]
+  )
 })
 
 t.test('agentInit uses AGENT_HOSTNAME when arg is not provided', async t => {
   const original = process.env.AGENT_HOSTNAME
   process.env.AGENT_HOSTNAME = 'api.from-env.com'
 
-  const { constructorArgs, restore } = mockAgentInitDeps()
+  const { constructorArgs, dotenvSetCalls, restore } = mockAgentInitDeps()
   t.teardown(() => {
     restore()
     if (original === undefined) delete process.env.AGENT_HOSTNAME
@@ -108,13 +121,15 @@ t.test('agentInit uses AGENT_HOSTNAME when arg is not provided', async t => {
   await agentInit()
 
   t.equal(constructorArgs[0].hostname, 'https://api.from-env.com')
+  const hasAgentHostnameSet = dotenvSetCalls.some((call) => call[0] === 'AGENT_HOSTNAME')
+  t.equal(hasAgentHostnameSet, false)
 })
 
 t.test('agentInit defaults register URL to api.vestauth.com', async t => {
   const original = process.env.AGENT_HOSTNAME
   delete process.env.AGENT_HOSTNAME
 
-  const { constructorArgs, restore } = mockAgentInitDeps()
+  const { constructorArgs, dotenvSetCalls, restore } = mockAgentInitDeps()
   t.teardown(() => {
     restore()
     if (original === undefined) delete process.env.AGENT_HOSTNAME
@@ -125,6 +140,8 @@ t.test('agentInit defaults register URL to api.vestauth.com', async t => {
   await agentInit()
 
   t.equal(constructorArgs[0].hostname, 'https://api.vestauth.com')
+  const hasAgentHostnameSet = dotenvSetCalls.some((call) => call[0] === 'AGENT_HOSTNAME')
+  t.equal(hasAgentHostnameSet, false)
 })
 
 t.test('agentInit rejects hostname values with path', async t => {
