@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-[Unreleased](https://github.com/vestauth/vestauth/compare/v0.11.0...main)
+[Unreleased](https://github.com/vestauth/vestauth/compare/v0.11.1...main)
+
+## [0.11.1](https://github.com/vestauth/vestauth/compare/v0.11.0...v0.11.1) (2026-02-17)
+
+### Removed
+
+* Remove write to `AGENT_ID` environment variable. Instead `AGENT_UID` is in place. ([#14](https://github.com/vestauth/vestauth/pull/14))
 
 ## [0.11.0](https://github.com/vestauth/vestauth/compare/v0.10.1...v0.11.0) (2026-02-10)
 
