@@ -209,6 +209,17 @@ $ vestauth agent init
 ```
 
 </details>
+<details><summary>`agent init --hostname`</summary><br>
+
+Use `--hostname` to override the agent API hostname (defaults to `AGENT_HOSTNAME`, then `api.vestauth.com`):
+
+```sh
+$ vestauth agent init --hostname https://vestauth.yoursite.com
+✔ agent created (.env/AGENT_UID=agent-609a4fd2ebf4e6347108c517)
+⮕ next run: [vestauth agent curl https://api.vestauth.com/whoami]
+```
+
+</details>
 <details><summary>`agent curl`</summary><br>
 
 Run curl as agent.

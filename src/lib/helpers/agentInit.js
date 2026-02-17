@@ -2,10 +2,12 @@ const dotenvx = require('@dotenvx/dotenvx')
 const identity = require('./identity')
 const keypair = require('./keypair')
 const touch = require('./touch')
+const normalizeAgentHostname = require('./normalizeAgentHostname')
 const PostRegister = require('../api/postRegister')
 
-async function agentInit () {
+async function agentInit (hostname = null) {
   const envPath = '.env'
+  const normalizedHostname = normalizeAgentHostname(hostname)
 
   // keypair
   const currentPrivateJwk = identity(false).privateJwk
@@ -18,7 +20,7 @@ async function agentInit () {
   dotenvx.set('AGENT_PRIVATE_JWK', JSON.stringify(kp.privateJwk), { path: envPath, plain: true, quiet: true })
 
   // register agent
-  const agent = await new PostRegister(null, kp.publicJwk).run()
+  const agent = await new PostRegister(normalizedHostname, kp.publicJwk).run()
   dotenvx.set('AGENT_UID', agent.uid, { path: envPath, plain: true, quiet: true })
 
   return {

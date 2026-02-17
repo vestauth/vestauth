@@ -10,7 +10,7 @@ async function rotate () {
     logger.debug(`options: ${JSON.stringify(options)}`)
 
     const uid = options.uid || options.id || env('AGENT_UID') || env('AGENT_ID')
-    const output = await agent.rotate(uid, options.privateJwk, options.tag, options.nonce)
+    const output = await agent.rotate(uid, options.privateJwk, options.tag, options.nonce, options.hostname)
 
     logger.success(`✔ agent keys rotated (${output.path}/AGENT_UID=${output.AGENT_UID})`)
     logger.help('⮕ next run: [vestauth agent curl https://api.vestauth.com/whoami]')
