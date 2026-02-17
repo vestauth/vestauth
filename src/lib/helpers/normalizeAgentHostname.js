@@ -1,4 +1,4 @@
-function normalizeAgentApiOrigin (hostname = null) {
+function normalizeAgentHostname (hostname = null) {
   const value = (hostname || process.env.AGENT_HOSTNAME || 'api.vestauth.com').trim()
   const candidate = /^https?:\/\//i.test(value) ? value : `https://${value}`
   const url = new URL(candidate)
@@ -10,4 +10,4 @@ function normalizeAgentApiOrigin (hostname = null) {
   return url.origin
 }
 
-module.exports = normalizeAgentApiOrigin
+module.exports = normalizeAgentHostname

@@ -1,11 +1,11 @@
 const dotenvx = require('@dotenvx/dotenvx')
 const keypair = require('./keypair')
-const normalizeAgentApiOrigin = require('./normalizeAgentApiOrigin')
+const normalizeAgentHostname = require('./normalizeAgentHostname')
 const PostRotate = require('../api/postRotate')
 
 async function agentRotate (uid, privateJwk, tag = 'web-bot-auth', nonce = null, hostname = null) {
   const envPath = '.env'
-  const rotateUrl = normalizeAgentApiOrigin(hostname)
+  const rotateUrl = normalizeAgentHostname(hostname)
 
   // new keypair
   const newKp = keypair()

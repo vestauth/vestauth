@@ -2,12 +2,12 @@ const dotenvx = require('@dotenvx/dotenvx')
 const identity = require('./identity')
 const keypair = require('./keypair')
 const touch = require('./touch')
-const normalizeAgentApiOrigin = require('./normalizeAgentApiOrigin')
+const normalizeAgentHostname = require('./normalizeAgentHostname')
 const PostRegister = require('../api/postRegister')
 
 async function agentInit (hostname = null) {
   const envPath = '.env'
-  const registerUrl = normalizeAgentApiOrigin(hostname)
+  const registerUrl = normalizeAgentHostname(hostname)
 
   // keypair
   const currentPrivateJwk = identity(false).privateJwk
