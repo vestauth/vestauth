@@ -2,7 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-[Unreleased](https://github.com/vestauth/vestauth/compare/v0.11.2...main)
+[Unreleased](https://github.com/vestauth/vestauth/compare/v0.12.0...main)
+
+## [0.12.0](https://github.com/vestauth/vestauth/compare/v0.11.2...v0.12.0) (2026-02-17)
+
+### Added
+
+* Add `--hostname` flag for `agent init` ([#17](https://github.com/vestauth/vestauth/pull/17) & [#18](https://github.com/vestauth/vestauth/pull/18))
+* Add types file ([#16](https://github.com/vestauth/vestauth/pull/16))
 
 ## [0.11.2](https://github.com/vestauth/vestauth/compare/v0.11.0...v0.11.2) (2026-02-17)
 
