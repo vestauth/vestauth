@@ -7,7 +7,7 @@ const PostRegister = require('../api/postRegister')
 
 async function agentInit (hostname = null) {
   const envPath = '.env'
-  const registerUrl = normalizeAgentHostname(hostname)
+  const normalizedHostname = normalizeAgentHostname(hostname)
 
   // keypair
   const currentPrivateJwk = identity(false).privateJwk
@@ -20,7 +20,7 @@ async function agentInit (hostname = null) {
   dotenvx.set('AGENT_PRIVATE_JWK', JSON.stringify(kp.privateJwk), { path: envPath, plain: true, quiet: true })
 
   // register agent
-  const agent = await new PostRegister(registerUrl, kp.publicJwk).run()
+  const agent = await new PostRegister(normalizedHostname, kp.publicJwk).run()
   dotenvx.set('AGENT_UID', agent.uid, { path: envPath, plain: true, quiet: true })
 
   return {
