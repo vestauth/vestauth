@@ -208,6 +208,12 @@ $ vestauth agent init
 ⮕ next run: [vestauth agent curl https://api.vestauth.com/whoami]
 ```
 
+Use `--register-url` to override the register API host (defaults to `AGENT_REGISTER_URL`, then `https://api.vestauth.com`):
+
+```sh
+$ vestauth agent init --register-url https://api.customer.com
+```
+
 </details>
 <details><summary>`agent curl`</summary><br>
 

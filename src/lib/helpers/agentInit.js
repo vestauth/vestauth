@@ -4,8 +4,12 @@ const keypair = require('./keypair')
 const touch = require('./touch')
 const PostRegister = require('../api/postRegister')
 
-async function agentInit () {
+async function agentInit (registerUrl = null) {
   const envPath = '.env'
+
+  if (!registerUrl) {
+    registerUrl = process.env.AGENT_REGISTER_URL || 'https://api.vestauth.com'
+  }
 
   // keypair
   const currentPrivateJwk = identity(false).privateJwk
@@ -18,7 +22,7 @@ async function agentInit () {
   dotenvx.set('AGENT_PRIVATE_JWK', JSON.stringify(kp.privateJwk), { path: envPath, plain: true, quiet: true })
 
   // register agent
-  const agent = await new PostRegister(null, kp.publicJwk).run()
+  const agent = await new PostRegister(registerUrl, kp.publicJwk).run()
   dotenvx.set('AGENT_UID', agent.uid, { path: envPath, plain: true, quiet: true })
 
   return {
