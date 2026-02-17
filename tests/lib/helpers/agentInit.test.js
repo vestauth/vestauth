@@ -76,32 +76,32 @@ function mockAgentInitDeps (registerResponse = { uid: 'agent-test', is_new: true
   }
 }
 
-t.test('agentInit uses options.registerUrl when provided', async t => {
-  const original = process.env.AGENT_REGISTER_URL
-  process.env.AGENT_REGISTER_URL = 'https://api.from-env.com'
+t.test('agentInit normalizes hostname arg when provided', async t => {
+  const original = process.env.AGENT_HOSTNAME
+  process.env.AGENT_HOSTNAME = 'api.from-env.com'
 
   const { constructorArgs, restore } = mockAgentInitDeps()
   t.teardown(() => {
     restore()
-    if (original === undefined) delete process.env.AGENT_REGISTER_URL
-    else process.env.AGENT_REGISTER_URL = original
+    if (original === undefined) delete process.env.AGENT_HOSTNAME
+    else process.env.AGENT_HOSTNAME = original
   })
 
   const agentInit = require('../../../src/lib/helpers/agentInit')
-  await agentInit('https://api.from-flag.com')
+  await agentInit('api.from-flag.com')
 
   t.equal(constructorArgs[0].hostname, 'https://api.from-flag.com')
 })
 
-t.test('agentInit uses AGENT_REGISTER_URL when option is not provided', async t => {
-  const original = process.env.AGENT_REGISTER_URL
-  process.env.AGENT_REGISTER_URL = 'https://api.from-env.com'
+t.test('agentInit uses AGENT_HOSTNAME when arg is not provided', async t => {
+  const original = process.env.AGENT_HOSTNAME
+  process.env.AGENT_HOSTNAME = 'api.from-env.com'
 
   const { constructorArgs, restore } = mockAgentInitDeps()
   t.teardown(() => {
     restore()
-    if (original === undefined) delete process.env.AGENT_REGISTER_URL
-    else process.env.AGENT_REGISTER_URL = original
+    if (original === undefined) delete process.env.AGENT_HOSTNAME
+    else process.env.AGENT_HOSTNAME = original
   })
 
   const agentInit = require('../../../src/lib/helpers/agentInit')
@@ -111,18 +111,35 @@ t.test('agentInit uses AGENT_REGISTER_URL when option is not provided', async t 
 })
 
 t.test('agentInit defaults register URL to api.vestauth.com', async t => {
-  const original = process.env.AGENT_REGISTER_URL
-  delete process.env.AGENT_REGISTER_URL
+  const original = process.env.AGENT_HOSTNAME
+  delete process.env.AGENT_HOSTNAME
 
   const { constructorArgs, restore } = mockAgentInitDeps()
   t.teardown(() => {
     restore()
-    if (original === undefined) delete process.env.AGENT_REGISTER_URL
-    else process.env.AGENT_REGISTER_URL = original
+    if (original === undefined) delete process.env.AGENT_HOSTNAME
+    else process.env.AGENT_HOSTNAME = original
   })
 
   const agentInit = require('../../../src/lib/helpers/agentInit')
   await agentInit()
 
   t.equal(constructorArgs[0].hostname, 'https://api.vestauth.com')
+})
+
+t.test('agentInit rejects hostname values with path', async t => {
+  const original = process.env.AGENT_HOSTNAME
+  delete process.env.AGENT_HOSTNAME
+
+  const { constructorArgs, restore } = mockAgentInitDeps()
+  t.teardown(() => {
+    restore()
+    if (original === undefined) delete process.env.AGENT_HOSTNAME
+    else process.env.AGENT_HOSTNAME = original
+  })
+
+  const agentInit = require('../../../src/lib/helpers/agentInit')
+  await t.rejects(() => agentInit('https://api.example.com/path'))
+
+  t.equal(constructorArgs.length, 0)
 })
