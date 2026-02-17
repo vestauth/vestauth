@@ -11,7 +11,7 @@ agent
 const initAction = require('./../actions/agent/init')
 agent.command('init')
   .description('create agent')
-  .option('--hostname <hostname>', 'agent API hostname', env('AGENT_HOSTNAME'))
+  .option('--hostname <hostname>', 'agent API hostname')
   .action(initAction)
 
 // vestauth agent curl
@@ -43,7 +43,7 @@ agent.command('rotate')
   .description('rotate keypair')
   .option('--uid, --id <uid>', 'uid (string)', env('AGENT_UID') || env('AGENT_ID'))
   .option('--private-jwk <privateJwk>', 'AGENT_PRIVATE_JWK (default)', env('AGENT_PRIVATE_JWK'))
-  .option('--hostname <hostname>', 'agent API hostname', env('AGENT_HOSTNAME'))
+  .option('--hostname <hostname>', 'agent API hostname')
   .option('--tag <tag>', 'web-bot-auth (default) | web-bot-auth', 'web-bot-auth')
   .option('--nonce <nonce>', 'null (default)')
   .option('--pp, --pretty-print', 'pretty print output')
