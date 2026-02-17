@@ -17,6 +17,7 @@ export interface OkpEd25519PublicJwk {
   crv: 'Ed25519'
   x: string
   kid?: string
+  [prop: string]: unknown
 }
 
 /** Minimal private JWK shape used by Vestauth (Ed25519 OKP). */
@@ -24,8 +25,8 @@ export interface OkpEd25519PrivateJwk extends OkpEd25519PublicJwk {
   d: string
 }
 
-export type PublicJwk = OkpEd25519PublicJwk & Record<string, unknown>
-export type PrivateJwk = OkpEd25519PrivateJwk & Record<string, unknown>
+export type PublicJwk = OkpEd25519PublicJwk
+export type PrivateJwk = OkpEd25519PrivateJwk
 
 export interface Keypair {
   publicJwk: PublicJwk
