@@ -2,14 +2,12 @@ const dotenvx = require('@dotenvx/dotenvx')
 const identity = require('./identity')
 const keypair = require('./keypair')
 const touch = require('./touch')
+const normalizeAgentApiOrigin = require('./normalizeAgentApiOrigin')
 const PostRegister = require('../api/postRegister')
 
-async function agentInit (registerUrl = null) {
+async function agentInit (hostname = null) {
   const envPath = '.env'
-
-  if (!registerUrl) {
-    registerUrl = process.env.AGENT_REGISTER_URL || 'https://api.vestauth.com'
-  }
+  const registerUrl = normalizeAgentApiOrigin(hostname)
 
   // keypair
   const currentPrivateJwk = identity(false).privateJwk
