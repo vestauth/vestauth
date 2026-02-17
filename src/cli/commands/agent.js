@@ -11,6 +11,7 @@ agent
 const initAction = require('./../actions/agent/init')
 agent.command('init')
   .description('create agent')
+  .option('--register-url <url>', 'register API base URL', env('AGENT_REGISTER_URL'))
   .action(initAction)
 
 // vestauth agent curl
