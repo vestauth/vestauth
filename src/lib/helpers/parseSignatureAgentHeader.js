@@ -1,7 +1,7 @@
 const { parseDictionary } = require('structured-headers')
 const Errors = require('./errors')
 
-// example: sig1=agent-9aa52a556ca85ee195866c0b.agents.vestauth.com
+// example: sig1=agent-9aa52a556ca85ee195866c0b.api.vestauth.com
 function parseSignatureAgentHeader (signatureAgentHeader) {
   if (Array.isArray(signatureAgentHeader)) {
     signatureAgentHeader = signatureAgentHeader[0]

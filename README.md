@@ -113,7 +113,7 @@ $ vestauth primitives headers GET https://api.vestauth.com/whoami --pp
 {
   "Signature": "sig1=:d4Id5SXhUExsf1XyruD8eBmlDtWzt/vezoCS+SKf0M8CxSkhKBtdHH7KkYyMN6E0hmxmNHsYus11u32nhvpWBQ==:",
   "Signature-Input": "sig1=(\"@authority\");created=1770247189;keyid=\"B0u80Gw28W9U2Jl5t_EBiWeBajO2104kOYZ9Ikucl5I\";alg=\"ed25519\";expires=1770247489;nonce=\"NURxn28X7zyKJ9k5bHxuOyO5qdvF9L5s2qHmhTrGUzbwGSIoUCHmwSlwiiCRgTDGuum83yyWMHJU4jmrVI_XPg\";tag=\"web-bot-auth\"",
-  "Signature-Agent": "sig1=agent-4b94ccd425e939fac5016b6b.agents.vestauth.com"
+  "Signature-Agent": "sig1=agent-4b94ccd425e939fac5016b6b.api.vestauth.com"
 }
 ```
 
@@ -242,7 +242,7 @@ $ vestauth agent curl https://api.vestauth.com/whoami --pp
   "public_jwk": {
     ...
   },
-  "well_known_url": "https://agent-609a4fd2ebf4e6347108c517.agents.vestauth.com/.well-known/http-message-signatures-directory"
+  "well_known_url": "https://agent-609a4fd2ebf4e6347108c517.api.vestauth.com/.well-known/http-message-signatures-directory"
 }
 ```
 
@@ -257,7 +257,7 @@ $ vestauth agent headers GET https://api.vestauth.com/whoami --pp
 {
   "Signature": "sig1=:UW6A7j8jo+gQxd+EeVgDddY51ZOc9plrSaupW/N53hQnQFvP9BuwQHgL7SVPLQIu4cnRzLgvwm7Yu9YMO+HUDQ==:",
   "Signature-Input": "sig1=(\"@authority\");created=1770396357;keyid=\"FGzgs758DBGnI1S0BejChDsK0IKZm3qPpOOXdRnnBkM\";alg=\"ed25519\";expires=1770396657;nonce=\"PrE7A6I_5fWnxBsBigNvxjp3-YangXl71V1uM3hPZavh918JqzjMSRcjHv_n5XIb3N8WivZEeigCBH6QGDSqgA\";tag=\"web-bot-auth\"",
-  "Signature-Agent": "sig1=agent-609a4fd2ebf4e6347108c517.agents.vestauth.com"
+  "Signature-Agent": "sig1=agent-609a4fd2ebf4e6347108c517.api.vestauth.com"
 }
 ```
 
@@ -272,7 +272,7 @@ $ vestauth agent headers GET https://api.vestauth.com/whoami --uid agent-1234 --
 {
   "Signature": "sig1=:UW6A7j8jo+gQxd+EeVgDddY51ZOc9plrSaupW/N53hQnQFvP9BuwQHgL7SVPLQIu4cnRzLgvwm7Yu9YMO+HUDQ==:",
   "Signature-Input": "sig1=(\"@authority\");created=1770396357;keyid=\"FGzgs758DBGnI1S0BejChDsK0IKZm3qPpOOXdRnnBkM\";alg=\"ed25519\";expires=1770396657;nonce=\"PrE7A6I_5fWnxBsBigNvxjp3-YangXl71V1uM3hPZavh918JqzjMSRcjHv_n5XIb3N8WivZEeigCBH6QGDSqgA\";tag=\"web-bot-auth\"",
-  "Signature-Agent": "sig1=agent-1234.agents.vestauth.com"
+  "Signature-Agent": "sig1=agent-1234.api.vestauth.com"
 }
 ```
 
@@ -287,7 +287,7 @@ $ vestauth agent headers GET https://api.vestauth.com/whoami --private-jwk '{"cr
 {
   "Signature": "sig1=:PZUVVjqiECYuk8Hg1GZKKeJmwhLrcRdRA7nm1R595UFK9cx0q9atNFBzKP5wBEmszMIgvpYdMrIQbPEeKz4tCQ==:",
   "Signature-Input": "sig1=(\"@authority\");created=1770396546;keyid=\"UfHTArlyLsqM8cB8sNfH2z6XOwc0RmJIq2CAPGfvMjk\";alg=\"ed25519\";expires=1770396846;nonce=\"BSIugautfZvN3u5QUgl1mMuyxgmeRsRy9XxX7GXxjJxq1mI0kJl4F-C1nITtOfSeEt6xR1YBfyxsffNKy_wKSA\";tag=\"web-bot-auth\"",
-  "Signature-Agent": "sig1=agent-609a4fd2ebf4e6347108c517.agents.vestauth.com"
+  "Signature-Agent": "sig1=agent-609a4fd2ebf4e6347108c517.api.vestauth.com"
 }
 ```
 
@@ -308,7 +308,7 @@ $ vestauth agent rotate
 Verify agent.
 
 ```sh
-$ vestauth provider verify GET https://api.vestauth.com/whoami --signature "sig1=:H1kxwSRWFbIzKbHaUy4hQFp/JrmVTX//72JPHcW4W7cPt9q6LytRJgx5pUgWrrr7DCcMWgx/jpTPc8Ht8SZ3CQ==:" --signature-input "sig1=(\"@authority\");created=1770396709;keyid=\"FGzgs758DBGnI1S0BejChDsK0IKZm3qPpOOXdRnnBkM\";alg=\"ed25519\";expires=1770397009;nonce=\"BZSDVktdkjO6XH5jafAdPDttsB6eytXO7u8KXJN1tMtd5bprE3rp08HiaTRo7H6gZGtYb4_qtL7RiGi8P2Gq7w\";tag=\"web-bot-auth\"" --signature-agent "sig1=agent-609a4fd2ebf4e6347108c517.agents.vestauth.com"
+$ vestauth provider verify GET https://api.vestauth.com/whoami --signature "sig1=:H1kxwSRWFbIzKbHaUy4hQFp/JrmVTX//72JPHcW4W7cPt9q6LytRJgx5pUgWrrr7DCcMWgx/jpTPc8Ht8SZ3CQ==:" --signature-input "sig1=(\"@authority\");created=1770396709;keyid=\"FGzgs758DBGnI1S0BejChDsK0IKZm3qPpOOXdRnnBkM\";alg=\"ed25519\";expires=1770397009;nonce=\"BZSDVktdkjO6XH5jafAdPDttsB6eytXO7u8KXJN1tMtd5bprE3rp08HiaTRo7H6gZGtYb4_qtL7RiGi8P2Gq7w\";tag=\"web-bot-auth\"" --signature-agent "sig1=agent-609a4fd2ebf4e6347108c517.api.vestauth.com"
 {"uid":"agent-609a4fd2ebf4e6347108c517",...}
 ```
 
@@ -347,7 +347,7 @@ $ vestauth primitives headers GET http://example.com --pp
 {
   "Signature": "sig1=:K7z3Nozcq1z5zfJhrd540DWYbjyQ1kR/S7ZDcMXE5gVhxezvG6Rn9BxEvfteiAnBuQhOkvbpGtF83WpQQerGBw==:",
   "Signature-Input": "sig1=(\"@authority\");created=1770263541;keyid=\"_4GFBGmXKinLBoh3-GJZCiLBt-84GP9Fb0iBzmYncUg\";alg=\"ed25519\";expires=1770263841;nonce=\"0eu7hVMVFm61lQvIryKNmZXIbzkkgpVocoKvN0de5QO8Eu5slTxklJAcVLQs0L_UTVtx4f8qJcqYZ21JTeOQww\";tag=\"web-bot-auth\"",
-  "Signature-Agent": "sig1=agent-35e4a794a904d227ee2373b6.agents.vestauth.com"
+  "Signature-Agent": "sig1=agent-35e4a794a904d227ee2373b6.api.vestauth.com"
 }
 ```
 
@@ -357,7 +357,7 @@ $ vestauth primitives headers GET http://example.com --pp
 Verify signed headers.
 
 ```sh
-$ vestauth primitives verify GET https://api.vestauth.com/whoami --signature "sig1=:UHqXQbWZmyYW40JRcdCl+NLccLgPmcoirUKwLtdcpEcIgxG2+i+Q2U3yIYeMquseON3fKm29WSL2ntHeRefHBQ==:" --signature-input "sig1=(\"@authority\");created=1770395703;keyid=\"FGzgs758DBGnI1S0BejChDsK0IKZm3qPpOOXdRnnBkM\";alg=\"ed25519\";expires=1770396003;nonce=\"O8JOC1reBofwbpPcdD-MRRCdrtAf4khvJTuhpRI_RiaH_hpU93okLkmPZVFFcUEdYtYfcduaB8Sca54GTd2GXA\";tag=\"web-bot-auth\"" --signature-agent "sig1=agent-609a4fd2ebf4e6347108c517.agents.vestauth.com"
+$ vestauth primitives verify GET https://api.vestauth.com/whoami --signature "sig1=:UHqXQbWZmyYW40JRcdCl+NLccLgPmcoirUKwLtdcpEcIgxG2+i+Q2U3yIYeMquseON3fKm29WSL2ntHeRefHBQ==:" --signature-input "sig1=(\"@authority\");created=1770395703;keyid=\"FGzgs758DBGnI1S0BejChDsK0IKZm3qPpOOXdRnnBkM\";alg=\"ed25519\";expires=1770396003;nonce=\"O8JOC1reBofwbpPcdD-MRRCdrtAf4khvJTuhpRI_RiaH_hpU93okLkmPZVFFcUEdYtYfcduaB8Sca54GTd2GXA\";tag=\"web-bot-auth\"" --signature-agent "sig1=agent-609a4fd2ebf4e6347108c517.api.vestauth.com"
 {"uid":"agent-609a4fd2ebf4e6347108c517", ...}
 ```
 
@@ -588,7 +588,7 @@ Vestauth follows these specifications to ensure interoperability between agents 
 > By default, Vestauth only resolves agent discovery endpoints inside the controlled namespace:
 >
 > ```ini
-> *.agents.vestauth.com
+> *.api.vestauth.com
 > ```
 >
 > When a provider verifies a request, Vestauth converts the agent identity into a fixed .well-known endpoint within this trusted domain. Because this domain is controlled by Vestauth, providers never fetch attacker-supplied URLs or internal network addresses.
