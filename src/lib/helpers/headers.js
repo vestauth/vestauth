@@ -5,7 +5,7 @@ const webBotAuthSignature = require('./webBotAuthSignature')
 const env = require('./env')
 
 function getAgentDiscoveryDomain () {
-  const hostname = (env('AGENT_DISCOVERY_HOSTNAME') || process.env.AGENT_DISCOVERY_HOSTNAME || 'agents.vestauth.com').trim().toLowerCase()
+  const hostname = (env('AGENT_HOSTNAME') || process.env.AGENT_HOSTNAME || 'api.vestauth.com').trim().toLowerCase()
   return hostname.replace(/^https?:\/\//, '').split('/')[0]
 }
 

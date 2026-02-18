@@ -21,7 +21,7 @@ t.test('lib/main#agent.headers - deterministic signature input and format', asyn
 
   t.type(result, 'object')
   t.equal(Object.keys(result).length, 3)
-  t.equal(result['Signature-Agent'], 'sig1=agent-123.agents.vestauth.com')
+  t.equal(result['Signature-Agent'], 'sig1=agent-123.api.vestauth.com')
 
   Date.now = originalNow
 })
