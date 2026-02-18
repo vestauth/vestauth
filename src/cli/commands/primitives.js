@@ -12,7 +12,7 @@ const keypairAction = require('./../actions/primitives/keypair')
 primitives.command('keypair')
   .description('generate public/private keypair')
   .option('--private-jwk <privateJwk>', 'pre-existing private JWK')
-  .option('--prefix <type>', 'agent (default) | provider | none', 'agent')
+  .option('--prefix <type>', 'agent (default) | tool | none', 'agent')
   .option('--pp, --pretty-print', 'pretty print output')
   .action(keypairAction)
 

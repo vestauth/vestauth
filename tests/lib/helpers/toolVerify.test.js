@@ -4,7 +4,7 @@ const headers = require('../../../src/lib/helpers/headers')
 const keypair = require('../../../src/lib/helpers/keypair')
 
 const httpPath = require.resolve('../../../src/lib/helpers/http')
-const providerPath = require.resolve('../../../src/lib/helpers/providerVerify')
+const toolPath = require.resolve('../../../src/lib/helpers/toolVerify')
 
 function mockHttp (responseJson) {
   const mock = async () => ({
@@ -23,11 +23,11 @@ function mockHttp (responseJson) {
     } else {
       delete require.cache[httpPath]
     }
-    delete require.cache[providerPath]
+    delete require.cache[toolPath]
   }
 }
 
-t.test('#providerVerify - returns agent info', async t => {
+t.test('#toolVerify - returns agent info', async t => {
   const { publicJwk, privateJwk } = keypair()
   const { publicJwk: otherPublicJwk } = keypair()
 
@@ -39,8 +39,8 @@ t.test('#providerVerify - returns agent info', async t => {
   })
   t.teardown(restore)
 
-  const providerVerify = require('../../../src/lib/helpers/providerVerify')
-  const output = await providerVerify('GET', uri, signedHeaders)
+  const toolVerify = require('../../../src/lib/helpers/toolVerify')
+  const output = await toolVerify('GET', uri, signedHeaders)
 
   t.equal(output.uid, 'agent-123')
   t.equal(output.kid, publicJwk.kid)

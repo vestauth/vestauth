@@ -1,7 +1,7 @@
 const { logger } = require('./../../../shared/logger')
 const catchAndLog = require('./../../../lib/helpers/catchAndLog')
 
-const provider = require('./../../../lib/provider')
+const tool = require('./../../../lib/tool')
 
 async function verify (httpMethod, uri) {
   try {
@@ -17,7 +17,7 @@ async function verify (httpMethod, uri) {
       'Signature-Agent': options.signatureAgent
     }
 
-    const output = await provider.verify(httpMethod, uri, headers)
+    const output = await tool.verify(httpMethod, uri, headers)
 
     let space = 0
     if (options.prettyPrint) {
