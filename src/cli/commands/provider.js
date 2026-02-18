@@ -3,7 +3,7 @@ const { Command } = require('commander')
 const provider = new Command('provider')
 
 provider
-  .description('🔌 provider')
+  .description('🔨 provider')
   .allowUnknownOption()
 
 // vestauth provider verify
