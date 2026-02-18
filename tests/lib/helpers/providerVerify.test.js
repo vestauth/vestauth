@@ -47,6 +47,6 @@ t.test('#providerVerify - returns agent info', async t => {
   t.same(output.public_jwk, publicJwk)
   t.equal(
     output.well_known_url,
-    'https://agent-123.agents.vestauth.com/.well-known/http-message-signatures-directory'
+    'https://agent-123.api.vestauth.com/.well-known/http-message-signatures-directory'
   )
 })
