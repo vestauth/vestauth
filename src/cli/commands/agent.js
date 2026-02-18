@@ -11,7 +11,7 @@ agent
 const initAction = require('./../actions/agent/init')
 agent.command('init')
   .description('create agent')
-  .option('--hostname <hostname>', 'agent API hostname')
+  .option('--hostname <hostname>', 'agent API hostname', env('AGENT_HOSTNAME'))
   .action(initAction)
 
 // vestauth agent curl
