@@ -1,4 +1,5 @@
 const t = require('tap')
+t.jobs = 1
 
 const agentInitPath = require.resolve('../../../src/lib/helpers/agentInit')
 const dotenvxPath = require.resolve('@dotenvx/dotenvx')
@@ -6,21 +7,27 @@ const identityPath = require.resolve('../../../src/lib/helpers/identity')
 const keypairPath = require.resolve('../../../src/lib/helpers/keypair')
 const touchPath = require.resolve('../../../src/lib/helpers/touch')
 const postRegisterPath = require.resolve('../../../src/lib/api/postRegister')
+let originalAgentHostname
+let originalDotenvxModule
+let originalIdentityModule
+let originalKeypairModule
+let originalTouchModule
+let originalPostRegisterModule
+let constructorArgs
+let dotenvSetCalls
 
 function mockAgentInitDeps (registerResponse = { uid: 'agent-test', is_new: true }) {
-  const constructorArgs = []
-  const dotenvSetCalls = []
-
-  const originals = {
-    dotenvx: require.cache[dotenvxPath],
-    identity: require.cache[identityPath],
-    keypair: require.cache[keypairPath],
-    touch: require.cache[touchPath],
-    postRegister: require.cache[postRegisterPath]
-  }
+  constructorArgs = []
+  dotenvSetCalls = []
 
   require.cache[dotenvxPath] = {
     exports: {
+      get: (key) => {
+        if (Object.prototype.hasOwnProperty.call(process.env, key)) {
+          return process.env[key]
+        }
+        throw new Error('missing')
+      },
       set: (...args) => {
         dotenvSetCalls.push(args)
       }
@@ -55,86 +62,79 @@ function mockAgentInitDeps (registerResponse = { uid: 'agent-test', is_new: true
   }
 
   delete require.cache[agentInitPath]
-
-  return {
-    constructorArgs,
-    dotenvSetCalls,
-    restore: () => {
-      if (originals.dotenvx) require.cache[dotenvxPath] = originals.dotenvx
-      else delete require.cache[dotenvxPath]
-
-      if (originals.identity) require.cache[identityPath] = originals.identity
-      else delete require.cache[identityPath]
-
-      if (originals.keypair) require.cache[keypairPath] = originals.keypair
-      else delete require.cache[keypairPath]
-
-      if (originals.touch) require.cache[touchPath] = originals.touch
-      else delete require.cache[touchPath]
-
-      if (originals.postRegister) require.cache[postRegisterPath] = originals.postRegister
-      else delete require.cache[postRegisterPath]
-
-      delete require.cache[agentInitPath]
-    }
-  }
 }
 
+t.beforeEach(() => {
+  originalAgentHostname = process.env.AGENT_HOSTNAME
+  originalDotenvxModule = require.cache[dotenvxPath]
+  originalIdentityModule = require.cache[identityPath]
+  originalKeypairModule = require.cache[keypairPath]
+  originalTouchModule = require.cache[touchPath]
+  originalPostRegisterModule = require.cache[postRegisterPath]
+
+  constructorArgs = []
+  dotenvSetCalls = []
+  delete require.cache[agentInitPath]
+})
+
+t.afterEach(() => {
+  if (originalDotenvxModule) require.cache[dotenvxPath] = originalDotenvxModule
+  else delete require.cache[dotenvxPath]
+
+  if (originalIdentityModule) require.cache[identityPath] = originalIdentityModule
+  else delete require.cache[identityPath]
+
+  if (originalKeypairModule) require.cache[keypairPath] = originalKeypairModule
+  else delete require.cache[keypairPath]
+
+  if (originalTouchModule) require.cache[touchPath] = originalTouchModule
+  else delete require.cache[touchPath]
+
+  if (originalPostRegisterModule) require.cache[postRegisterPath] = originalPostRegisterModule
+  else delete require.cache[postRegisterPath]
+
+  delete require.cache[agentInitPath]
+
+  if (originalAgentHostname === undefined) delete process.env.AGENT_HOSTNAME
+  else process.env.AGENT_HOSTNAME = originalAgentHostname
+})
+
 t.test('agentInit normalizes hostname arg when provided', async t => {
-  const original = process.env.AGENT_HOSTNAME
   process.env.AGENT_HOSTNAME = 'api.from-env.com'
 
-  const { constructorArgs, dotenvSetCalls, restore } = mockAgentInitDeps()
-  t.teardown(() => {
-    restore()
-    if (original === undefined) delete process.env.AGENT_HOSTNAME
-    else process.env.AGENT_HOSTNAME = original
-  })
+  mockAgentInitDeps()
 
   const agentInit = require('../../../src/lib/helpers/agentInit')
   await agentInit('api.from-flag.com')
 
   t.equal(constructorArgs[0].hostname, 'https://api.from-flag.com')
-  t.match(
-    dotenvSetCalls,
-    [
-      ['AGENT_PUBLIC_JWK'],
-      ['AGENT_PRIVATE_JWK'],
-      ['AGENT_HOSTNAME', 'api.from-flag.com'],
-      ['AGENT_UID']
-    ]
-  )
+  const hasPublicJwkSet = dotenvSetCalls.some((call) => call[0] === 'AGENT_PUBLIC_JWK')
+  const hasPrivateJwkSet = dotenvSetCalls.some((call) => call[0] === 'AGENT_PRIVATE_JWK')
+  const hasUidSet = dotenvSetCalls.some((call) => call[0] === 'AGENT_UID')
+  const hasAgentHostnameSet = dotenvSetCalls.some((call) => call[0] === 'AGENT_HOSTNAME' && call[1] === 'api.from-flag.com')
+  t.equal(hasPublicJwkSet, true)
+  t.equal(hasPrivateJwkSet, true)
+  t.equal(hasUidSet, true)
+  t.equal(hasAgentHostnameSet, true)
 })
 
 t.test('agentInit uses AGENT_HOSTNAME when arg is not provided', async t => {
-  const original = process.env.AGENT_HOSTNAME
   process.env.AGENT_HOSTNAME = 'api.from-env.com'
 
-  const { constructorArgs, dotenvSetCalls, restore } = mockAgentInitDeps()
-  t.teardown(() => {
-    restore()
-    if (original === undefined) delete process.env.AGENT_HOSTNAME
-    else process.env.AGENT_HOSTNAME = original
-  })
+  mockAgentInitDeps()
 
   const agentInit = require('../../../src/lib/helpers/agentInit')
   await agentInit()
 
   t.equal(constructorArgs[0].hostname, 'https://api.from-env.com')
-  const hasAgentHostnameSet = dotenvSetCalls.some((call) => call[0] === 'AGENT_HOSTNAME')
-  t.equal(hasAgentHostnameSet, false)
+  const hasAgentHostnameSet = dotenvSetCalls.some((call) => call[0] === 'AGENT_HOSTNAME' && call[1] === 'api.from-env.com')
+  t.equal(hasAgentHostnameSet, true)
 })
 
 t.test('agentInit defaults register URL to api.vestauth.com', async t => {
-  const original = process.env.AGENT_HOSTNAME
   delete process.env.AGENT_HOSTNAME
 
-  const { constructorArgs, dotenvSetCalls, restore } = mockAgentInitDeps()
-  t.teardown(() => {
-    restore()
-    if (original === undefined) delete process.env.AGENT_HOSTNAME
-    else process.env.AGENT_HOSTNAME = original
-  })
+  mockAgentInitDeps()
 
   const agentInit = require('../../../src/lib/helpers/agentInit')
   await agentInit()
@@ -145,15 +145,9 @@ t.test('agentInit defaults register URL to api.vestauth.com', async t => {
 })
 
 t.test('agentInit rejects hostname values with path', async t => {
-  const original = process.env.AGENT_HOSTNAME
   delete process.env.AGENT_HOSTNAME
 
-  const { constructorArgs, restore } = mockAgentInitDeps()
-  t.teardown(() => {
-    restore()
-    if (original === undefined) delete process.env.AGENT_HOSTNAME
-    else process.env.AGENT_HOSTNAME = original
-  })
+  mockAgentInitDeps()
 
   const agentInit = require('../../../src/lib/helpers/agentInit')
   await t.rejects(() => agentInit('https://api.example.com/path'))

@@ -1,5 +1,8 @@
+const env = require('./env')
+
 function normalizeAgentHostname (hostname = null) {
-  const value = (hostname || process.env.AGENT_HOSTNAME || 'api.vestauth.com').trim()
+  const envHostname = env('AGENT_HOSTNAME')
+  const value = (hostname || envHostname || 'api.vestauth.com').trim()
   const candidate = /^https?:\/\//i.test(value) ? value : `https://${value}`
   const url = new URL(candidate)
 
