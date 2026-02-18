@@ -40,7 +40,7 @@ program
 
 program.addCommand(require('./commands/agent'))
 program.addCommand(require('./commands/tool'))
-program.addCommand(require('./commands/provider'))
+program.addCommand(require('./commands/provider'), { hidden: true })
 program.addCommand(require('./commands/primitives'))
 
 // vestauth help
