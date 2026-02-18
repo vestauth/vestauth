@@ -15,7 +15,7 @@ class PostRegister {
     const privateJwk = this.privateJwk
 
     const httpMethod = 'POST'
-    const headers = await agentHeaders(httpMethod, url, 'REGISTERING', privateJwk)
+    const headers = await agentHeaders(httpMethod, url, 'REGISTERING', JSON.stringify(privateJwk))
     headers['Content-Type'] = 'application/json'
 
     const resp = await http(url, {
