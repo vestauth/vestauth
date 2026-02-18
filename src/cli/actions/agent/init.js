@@ -7,8 +7,11 @@ async function init () {
   try {
     const options = this.opts()
     logger.debug(`options: ${JSON.stringify(options)}`)
+    const hostnameWasSetByUser = typeof this.getOptionValueSource === 'function'
+      ? this.getOptionValueSource('hostname') === 'cli'
+      : Boolean(options.hostname)
 
-    const output = await agent.init(options.hostname)
+    const output = await agent.init(hostnameWasSetByUser ? options.hostname : null)
 
     if (output.isNew) {
       logger.success(`✔ agent created (${output.path}/AGENT_UID=${output.AGENT_UID})`)
