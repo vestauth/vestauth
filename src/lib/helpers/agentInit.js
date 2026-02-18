@@ -8,7 +8,7 @@ const PostRegister = require('../api/postRegister')
 async function agentInit (hostname = null) {
   const envPath = '.env'
   const normalizedHostname = normalizeAgentHostname(hostname)
-  const shouldPersistHostname = normalizedHostname != 'https://api.vestauth.com'
+  const shouldPersistHostname = normalizedHostname !== 'https://api.vestauth.com'
 
   // keypair
   const currentPrivateJwk = identity(false).privateJwk

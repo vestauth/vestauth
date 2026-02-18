@@ -2,6 +2,12 @@ const Errors = require('./errors')
 const thumbprint = require('./thumbprint')
 const signatureParams = require('./signatureParams')
 const webBotAuthSignature = require('./webBotAuthSignature')
+const env = require('./env')
+
+function getAgentDiscoveryDomain () {
+  const hostname = (env('AGENT_DISCOVERY_HOSTNAME') || process.env.AGENT_DISCOVERY_HOSTNAME || 'agents.vestauth.com').trim().toLowerCase()
+  return hostname.replace(/^https?:\/\//, '').split('/')[0]
+}
 
 async function headers (httpMethod, uri, uid, privateJwk, tag = 'web-bot-auth', nonce = null) {
   if (!uid) throw new Errors().missingUid()
@@ -21,7 +27,7 @@ async function headers (httpMethod, uri, uid, privateJwk, tag = 'web-bot-auth', 
 
   const signatureInput = signatureParams(privateJwk.kid, tag, nonce)
   const signature = webBotAuthSignature(httpMethod, uri, signatureInput, privateJwk)
-  const signatureAgent = `${uid}.agents.vestauth.com` // agent-1234.agents.vestauth.com (no scheme) /.well-known/http-message-signatures-directory
+  const signatureAgent = `${uid}.${getAgentDiscoveryDomain()}` // no scheme; fqdn only
 
   return {
     Signature: `sig1=:${signature}:`,
