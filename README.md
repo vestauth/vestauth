@@ -4,7 +4,7 @@
 
 > [1 minute demo 📺](https://www.youtube.com/watch?v=cHARyULr_qk)
 >
-> Vestauth gives agents a cryptographic identity and a simple way to authenticate HTTP requests. Most agent systems rely on API keys, bearer tokens, or username/passwords. These approaches are difficult to rotate, easy to leak, and hard to attribute to a specific agent. Vestauth replaces shared secrets with public/private key cryptography. Agents sign requests using a private key, and providers verify those requests using the agent's public key. It's elegant and the future. [[1](#compare)]
+> Vestauth gives agents a cryptographic identity and a simple way to authenticate HTTP requests. Most agent systems rely on API keys, bearer tokens, or username/passwords. These approaches are difficult to rotate, easy to leak, and hard to attribute to a specific agent. Vestauth replaces shared secrets with public/private key cryptography. Agents sign requests using a private key, and tools verify those requests using the agent's public key. It's elegant and the future. [[1](#compare)]
 > 
 > *Scott Motte–creator of `dotenv` and `dotenvx`*
 
@@ -102,7 +102,7 @@ AGENT_UID="agent-4b94ccd425e939fac5016b6b"
 
 | Variable | Role | Usage |
 |----------|------------|------------|
-| `AGENT_PUBLIC_JWK` | Verification | Published for provider signature validation |
+| `AGENT_PUBLIC_JWK` | Verification | Published for tool signature validation |
 | `AGENT_PRIVATE_JWK` | Signing | Used locally to sign HTTP requests |
 | `AGENT_UID` | Identity | Builds discovery FQDN and identifies the agent |
 
@@ -117,13 +117,13 @@ $ vestauth primitives headers GET https://api.vestauth.com/whoami --pp
 }
 ```
 
-Vestauth turns `curl` into a powerful primitive for provider-side agent identity, verification, and authentication. See the next section.
+Vestauth turns `curl` into a powerful primitive for tool-side agent identity, verification, and authentication. See the next section.
 
 </details>
 
 &nbsp;
 
-## Provider: Verification 
+## Tool: Verification 
 
 > Verify requests and safely trust agent identity using cryptographic proof.
 
@@ -140,10 +140,10 @@ app.get('/whoami', async (req, res) => {
 
     // --------------------------------------------------------------------------------
     // 🪪 Reveal the agent's cryptographic identity.                                 //
-    // The `provider.verify` method turns your endpoint into a cryptographically     //
-    // authenticated provider — verifying signatures, keys, and returning the agent. //
+    // The `tool.verify` method turns your endpoint into a cryptographically     //
+    // authenticated tool — verifying signatures, keys, and returning the agent. //
     // --------------------------------------------------------------------------------
-    const agent = await vestauth.provider.verify(req.method, url, req.headers)
+    const agent = await vestauth.tool.verify(req.method, url, req.headers)
 
     res.json(agent)
   } catch (err) {
@@ -168,7 +168,7 @@ $ vestauth agent curl http://localhost:3000/whoami
 <details><summary>learn more</summary><br>
 
 ```sh
-Agent → Signs Request → Provider → Discovers Keys → Verifies Signature → Trusted Agent
+Agent → Signs Request → Tool → Discovers Keys → Verifies Signature → Trusted Agent
 ```
 
 Vestauth verifies requests using public key discovery and HTTP Message Signature validation.
@@ -181,7 +181,7 @@ When a signed request is received, Vestauth:
 4. Verifies the request signature using RFC 9421.
 5. Validates timestamps and nonce protections to prevent replay attacks.
 
-If verification succeeds, the provider can safely trust the agent's cryptographic identity.
+If verification succeeds, the tool can safely trust the agent's cryptographic identity.
 
 Vestauth intentionally separates identity discovery from verification to support key rotation and distributed agent infrastructure.
 
@@ -303,12 +303,12 @@ $ vestauth agent rotate
 ```
 
 </details>
-<details><summary>`provider verify`</summary><br>
+<details><summary>`tool verify`</summary><br>
 
 Verify agent.
 
 ```sh
-$ vestauth provider verify GET https://api.vestauth.com/whoami --signature "sig1=:H1kxwSRWFbIzKbHaUy4hQFp/JrmVTX//72JPHcW4W7cPt9q6LytRJgx5pUgWrrr7DCcMWgx/jpTPc8Ht8SZ3CQ==:" --signature-input "sig1=(\"@authority\");created=1770396709;keyid=\"FGzgs758DBGnI1S0BejChDsK0IKZm3qPpOOXdRnnBkM\";alg=\"ed25519\";expires=1770397009;nonce=\"BZSDVktdkjO6XH5jafAdPDttsB6eytXO7u8KXJN1tMtd5bprE3rp08HiaTRo7H6gZGtYb4_qtL7RiGi8P2Gq7w\";tag=\"web-bot-auth\"" --signature-agent "sig1=agent-609a4fd2ebf4e6347108c517.api.vestauth.com"
+$ vestauth tool verify GET https://api.vestauth.com/whoami --signature "sig1=:H1kxwSRWFbIzKbHaUy4hQFp/JrmVTX//72JPHcW4W7cPt9q6LytRJgx5pUgWrrr7DCcMWgx/jpTPc8Ht8SZ3CQ==:" --signature-input "sig1=(\"@authority\");created=1770396709;keyid=\"FGzgs758DBGnI1S0BejChDsK0IKZm3qPpOOXdRnnBkM\";alg=\"ed25519\";expires=1770397009;nonce=\"BZSDVktdkjO6XH5jafAdPDttsB6eytXO7u8KXJN1tMtd5bprE3rp08HiaTRo7H6gZGtYb4_qtL7RiGi8P2Gq7w\";tag=\"web-bot-auth\"" --signature-agent "sig1=agent-609a4fd2ebf4e6347108c517.api.vestauth.com"
 {"uid":"agent-609a4fd2ebf4e6347108c517",...}
 ```
 
@@ -367,21 +367,21 @@ $ vestauth primitives verify GET https://api.vestauth.com/whoami --signature "si
 
 Use vestauth directly in code.
 
-<details><summary>`provider.verify()`</summary><br>
+<details><summary>`tool.verify()`</summary><br>
 
 Verify and authenticate an agent's cryptographic identity.
 
 ```js
-const agent = await vestauth.provider.verify(req.method, url, req.headers)
+const agent = await vestauth.tool.verify(req.method, url, req.headers)
 ```
 
 </details>
 
 &nbsp;
 
-## Available Providers
+## Available Tools
 
-> Vestauth is pioneering the auth layer for agents. Get in early on this distribution train. [Become a vestauth provider](mailto:mot@dotenvx.com)
+> Vestauth is pioneering the auth layer for agents. Get in early on this distribution train. [Become a vestauth tool](mailto:mot@dotenvx.com)
 
 * AS2 (Agentic Secret Storage) - https://as2.dotenvx.com
 
@@ -389,7 +389,7 @@ const agent = await vestauth.provider.verify(req.method, url, req.headers)
 
 ## Compare
 
-**Agent + Provider Matrix** – Compare Vestauth vs existing auth.
+**Agent + Tool Matrix** – Compare Vestauth vs existing auth.
 
 | Capability | Vestauth | API Keys | OAuth | Cookies |
 |---|---|---|---|---|
@@ -398,11 +398,11 @@ const agent = await vestauth.provider.verify(req.method, url, req.headers)
 | **Agent: no shared secret** | ✅ | ❌ | ⚠️ (bearer tokens) | ❌ |
 | **Agent: per‑request identity proof** | ✅ | ❌ | ⚠️ (token‑based) | ❌ |
 | **Agent: easy key/token rotation** | ✅ | ⚠️ | ⚠️ | ⚠️ |
-| **Provider: no secret storage** | ✅ (public keys only) | ❌ | ❌ | ❌ |
-| **Provider: strong attribution to agent** | ✅ | ⚠️ | ⚠️ | ❌ |
-| **Provider: stateless verification** | ✅ | ✅ | ✅ | ❌ |
-| **Provider: simple to implement** | ⚠️ (sig verification) | ✅ | ❌ | ✅ |
-| **Provider: revocation control** | ✅ | ⚠️ | ✅ | ⚠️ |
+| **Tool: no secret storage** | ✅ (public keys only) | ❌ | ❌ | ❌ |
+| **Tool: strong attribution to agent** | ✅ | ⚠️ | ⚠️ | ❌ |
+| **Tool: stateless verification** | ✅ | ✅ | ✅ | ❌ |
+| **Tool: simple to implement** | ⚠️ (sig verification) | ✅ | ❌ | ✅ |
+| **Tool: revocation control** | ✅ | ⚠️ | ✅ | ⚠️ |
 
 Legend: ✅ strong fit, ⚠️ partial/conditional, ❌ poor fit
 
@@ -410,7 +410,7 @@ Legend: ✅ strong fit, ⚠️ partial/conditional, ❌ poor fit
 
 1. An agent generates a public/private keypair.
 2. The agent signs each HTTP request with its private key.
-3. The provider verifies the signature using the agent’s public key.
+3. The tool verifies the signature using the agent’s public key.
 4. Requests are attributable, auditable, and do not require shared secrets or browser sessions.
 
 &nbsp;
@@ -424,7 +424,7 @@ Vestauth builds on open internet standards for agent authentication.
 | **[RFC 9421 – HTTP Message Signatures](https://datatracker.ietf.org/doc/rfc9421/)** | Defines how requests are cryptographically signed and verified |
 | **[Web-Bot-Auth Draft](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture)** | Defines headers and authentication architecture for autonomous agents |
 
-Vestauth follows these specifications to ensure interoperability between agents and providers while avoiding vendor lock-in. Vestauth focuses on developer ergonomics while staying compliant with these emerging standards.
+Vestauth follows these specifications to ensure interoperability between agents and tools while avoiding vendor lock-in. Vestauth focuses on developer ergonomics while staying compliant with these emerging standards.
 
 &nbsp;
 
@@ -443,7 +443,7 @@ Vestauth follows these specifications to ensure interoperability between agents 
 >
 > Most agent systems rely on API keys, bearer tokens, or username/passwords. These approaches are difficult to rotate, easy to leak, and hard to attribute to a specific agent.
 >
-> Vestauth replaces shared secrets with public/private key cryptography. Agents sign requests using a private key, and providers verify those requests using the agent's public key.
+> Vestauth replaces shared secrets with public/private key cryptography. Agents sign requests using a private key, and tools verify those requests using the agent's public key.
 
 &nbsp;
 
@@ -453,7 +453,7 @@ Vestauth follows these specifications to ensure interoperability between agents 
 
 > API keys are shared secrets. Anyone who obtains the key can impersonate the client, and keys are difficult to rotate safely.
 >
-> Vestauth uses cryptographic signing instead of shared secrets. This allows providers to verify identity without storing or distributing sensitive credentials.
+> Vestauth uses cryptographic signing instead of shared secrets. This allows tools to verify identity without storing or distributing sensitive credentials.
 
 &nbsp;
 
@@ -464,7 +464,7 @@ Vestauth follows these specifications to ensure interoperability between agents 
 > Agent keys are generated locally and stored in the agent's environment configuration (`.env`).
 >
 > * `AGENT_PRIVATE_JWK` is used to sign requests and must never be shared.
-> * `AGENT_PUBLIC_JWK` is safe to publish and is used by providers for verification.
+> * `AGENT_PUBLIC_JWK` is safe to publish and is used by tools for verification.
 
 &nbsp;
 
@@ -500,7 +500,7 @@ Vestauth follows these specifications to ensure interoperability between agents 
 
 > No.
 >
-> Vestauth is primarily a client-side and verification library. Agents generate keys locally and sign requests directly. Providers verify requests using public keys exposed via .well-known discovery endpoints.
+> Vestauth is primarily a client-side and verification library. Agents generate keys locally and sign requests directly. Tools verify requests using public keys exposed via .well-known discovery endpoints.
 >
 > There is no central authentication server required.
 
@@ -529,9 +529,9 @@ Vestauth follows these specifications to ensure interoperability between agents 
 > * Signature-Input
 > * Signature-Agent
 >
-> Providers verify the request by retrieving the agent's public key from a discovery endpoint and verifying the signature cryptographically.
+> Tools verify the request by retrieving the agent's public key from a discovery endpoint and verifying the signature cryptographically.
 >
-> If the signature is valid, the provider knows the request was created by the agent that owns that private key.
+> If the signature is valid, the tool knows the request was created by the agent that owns that private key.
 
 &nbsp;
 
@@ -547,7 +547,7 @@ Vestauth follows these specifications to ensure interoperability between agents 
 > * expires timestamp - defines a short validity window
 > * nonce value - ensures each request is unique
 >
-> Providers verify that:
+> Tools verify that:
 >
 > 1. The signature is still within the allowed time window
 > 2. The nonce has not been used before
@@ -555,7 +555,7 @@ Vestauth follows these specifications to ensure interoperability between agents 
 >
 > Because signatures are short-lived and tied to unique nonce values, an intercepted request cannot be reused successfully.
 >
-> Providers may optionally store nonce values for additional replay protection.
+> Tools may optionally store nonce values for additional replay protection.
 
 &nbsp;
 
@@ -563,7 +563,7 @@ Vestauth follows these specifications to ensure interoperability between agents 
 
 <details><summary>Why does Vestauth use public key discovery?</summary><br>
 
-> Public key discovery allows providers to verify agent signatures without manual key exchange. Each agent hosts its public keys in a standardized .well-known directory.
+> Public key discovery allows tools to verify agent signatures without manual key exchange. Each agent hosts its public keys in a standardized .well-known directory.
 >
 > This enables dynamic agent onboarding while preserving cryptographic verification.
 
@@ -591,16 +591,16 @@ Vestauth follows these specifications to ensure interoperability between agents 
 > *.api.vestauth.com
 > ```
 >
-> When a provider verifies a request, Vestauth converts the agent identity into a fixed .well-known endpoint within this trusted domain. Because this domain is controlled by Vestauth, providers never fetch attacker-supplied URLs or internal network addresses.
+> When a tool verifies a request, Vestauth converts the agent identity into a fixed .well-known endpoint within this trusted domain. Because this domain is controlled by Vestauth, tools never fetch attacker-supplied URLs or internal network addresses.
 >
 > This removes the most common SSRF attack vector during signature verification.
 >
 > **Custom trusted discovery domains**
 >
-> Providers can optionally configure additional trusted discovery domains using:
+> Tools can optionally configure additional trusted discovery domains using:
 >
 > ```ini
-> PROVIDER_FQDN_REGEX
+> TOOL_FQDN_REGEX
 > ```
 >
 > This allows organizations to:
@@ -612,14 +612,14 @@ Vestauth follows these specifications to ensure interoperability between agents 
 > For example:
 >
 > ```ini
-> PROVIDER_FQDN_REGEX=".*\.agents\.vestauth\.com|.*\.agents\.example\.internal"
+> TOOL_FQDN_REGEX=".*\.agents\.vestauth\.com|.*\.agents\.example\.internal"
 > ```
 >
 > Only discovery endpoints matching this allowlist will be fetched.
 >
 > **Defense in depth**
 >
-> Even with domain scoping, providers may optionally add safeguards such as:
+> Even with domain scoping, tools may optionally add safeguards such as:
 >
 > * HTTPS-only enforcement
 > * Request timeouts
@@ -636,17 +636,17 @@ Vestauth follows these specifications to ensure interoperability between agents 
 
 > Vestauth uses .well-known discovery to keep requests small, enable key rotation, and support long-term identity management.
 >
-> Embedding public keys directly in every request would increase header size, reduce caching opportunities, and make key rotation difficult. By publishing keys through a discovery endpoint, Vestauth allows providers to fetch and cache keys independently from individual requests.
+> Embedding public keys directly in every request would increase header size, reduce caching opportunities, and make key rotation difficult. By publishing keys through a discovery endpoint, Vestauth allows tools to fetch and cache keys independently from individual requests.
 >
 > This approach provides several benefits:
 >
 > **Efficient requests**
 >
-> Public keys are retrieved once and can be cached by providers. Agents do not need to send large key material with every request.
+> Public keys are retrieved once and can be cached by tools. Agents do not need to send large key material with every request.
 >
 > **Key rotation support**
 >
-> Agents can rotate signing keys without changing their identity. Providers simply refresh keys from the discovery endpoint.
+> Agents can rotate signing keys without changing their identity. Tools simply refresh keys from the discovery endpoint.
 >
 > **Multi-key support**
 >
