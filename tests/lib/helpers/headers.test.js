@@ -7,6 +7,16 @@ const { signatureHeaders } = require('web-bot-auth')
 const { signerFromJWK } = require('web-bot-auth/crypto')
 const { Request } = require('undici')
 
+t.beforeEach(() => {
+  delete process.env.AGENT_HOSTNAME
+  delete process.env.AGENT_DISCOVERY_HOSTNAME
+})
+
+t.afterEach(() => {
+  delete process.env.AGENT_HOSTNAME
+  delete process.env.AGENT_DISCOVERY_HOSTNAME
+})
+
 t.test('#headers - deterministic signature input and format', async t => {
   const originalNow = Date.now
   Date.now = () => 1700000000000
@@ -86,4 +96,14 @@ t.test('#headers - empty privateJwk string', async t => {
     headers('GET', 'https://example.com/resource', 'agent-123', ''),
     new Errors().missingPrivateJwk()
   )
+})
+
+t.test('#headers - derives Signature-Agent domain from AGENT_DISCOVERY_HOSTNAME', async t => {
+  process.env.AGENT_DISCOVERY_HOSTNAME = 'agents.example.internal'
+  const { privateJwk } = keypair()
+  const privateJwkString = JSON.stringify(privateJwk)
+
+  const result = await headers('GET', 'https://example.com/resource', 'agent-123', privateJwkString)
+
+  t.equal(result['Signature-Agent'], 'sig1=agent-123.agents.example.internal')
 })
