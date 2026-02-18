@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-[Unreleased](https://github.com/vestauth/vestauth/compare/v0.12.0...main)
+[Unreleased](https://github.com/vestauth/vestauth/compare/v0.12.1...main)
+
+## [0.12.1](https://github.com/vestauth/vestauth/compare/v0.12.0...v0.12.1) (2026-02-17)
+
+### Changed
+
+* Change usage message to `vestauth agent init`
 
 ## [0.12.0](https://github.com/vestauth/vestauth/compare/v0.11.2...v0.12.0) (2026-02-17)
 
