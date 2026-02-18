@@ -19,13 +19,13 @@ async function agentInit (hostname = null) {
   // must come before registration so that registration can send headers
   dotenvx.set('AGENT_PUBLIC_JWK', JSON.stringify(kp.publicJwk), { path: envPath, plain: true, quiet: true })
   dotenvx.set('AGENT_PRIVATE_JWK', JSON.stringify(kp.privateJwk), { path: envPath, plain: true, quiet: true })
-  if (shouldPersistHostname) {
-    dotenvx.set('AGENT_HOSTNAME', new URL(normalizedHostname).host, { path: envPath, plain: true, quiet: true })
-  }
 
   // register agent
   const agent = await new PostRegister(normalizedHostname, kp.publicJwk).run()
   dotenvx.set('AGENT_UID', agent.uid, { path: envPath, plain: true, quiet: true })
+  if (shouldPersistHostname) {
+    dotenvx.set('AGENT_HOSTNAME', new URL(normalizedHostname).host, { path: envPath, plain: true, quiet: true })
+  }
 
   return {
     AGENT_PUBLIC_JWK: kp.publicJwk,

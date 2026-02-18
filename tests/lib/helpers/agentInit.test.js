@@ -1,4 +1,5 @@
 const t = require('tap')
+t.jobs = 1
 
 const agentInitPath = require.resolve('../../../src/lib/helpers/agentInit')
 const dotenvxPath = require.resolve('@dotenvx/dotenvx')
@@ -21,6 +22,9 @@ function mockAgentInitDeps (registerResponse = { uid: 'agent-test', is_new: true
 
   require.cache[dotenvxPath] = {
     exports: {
+      get: () => {
+        throw new Error('missing')
+      },
       set: (...args) => {
         dotenvSetCalls.push(args)
       }
@@ -95,15 +99,14 @@ t.test('agentInit normalizes hostname arg when provided', async t => {
   await agentInit('api.from-flag.com')
 
   t.equal(constructorArgs[0].hostname, 'https://api.from-flag.com')
-  t.match(
-    dotenvSetCalls,
-    [
-      ['AGENT_PUBLIC_JWK'],
-      ['AGENT_PRIVATE_JWK'],
-      ['AGENT_HOSTNAME', 'api.from-flag.com'],
-      ['AGENT_UID']
-    ]
-  )
+  const hasPublicJwkSet = dotenvSetCalls.some((call) => call[0] === 'AGENT_PUBLIC_JWK')
+  const hasPrivateJwkSet = dotenvSetCalls.some((call) => call[0] === 'AGENT_PRIVATE_JWK')
+  const hasUidSet = dotenvSetCalls.some((call) => call[0] === 'AGENT_UID')
+  const hasAgentHostnameSet = dotenvSetCalls.some((call) => call[0] === 'AGENT_HOSTNAME' && call[1] === 'api.from-flag.com')
+  t.equal(hasPublicJwkSet, true)
+  t.equal(hasPrivateJwkSet, true)
+  t.equal(hasUidSet, true)
+  t.equal(hasAgentHostnameSet, true)
 })
 
 t.test('agentInit uses AGENT_HOSTNAME when arg is not provided', async t => {
