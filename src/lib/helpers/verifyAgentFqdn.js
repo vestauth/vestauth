@@ -1,4 +1,4 @@
-const DEFAULT_PROVIDER_FQDN_REGEX = /^[A-Za-z0-9-]+\.\(?:agents|api).vestauth\.com$/
+const DEFAULT_PROVIDER_FQDN_REGEX = /^[A-Za-z0-9-]+\.(?:agents|api)\.vestauth\.com$/
 const Errors = require('./errors')
 
 function getProviderFqdnRegex () {
