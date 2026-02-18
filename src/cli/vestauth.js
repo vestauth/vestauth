@@ -20,7 +20,7 @@ if (commanderVersion && parseInt(commanderVersion.split('.')[0], 10) >= 12) {
 
 // global log levels
 program
-  .usage('vestauth')
+  .usage('agent init')
   .option('--log-level <level>', 'set log level', 'info')
   .option('--quiet', 'sets log level to error')
   .option('--verbose', 'sets log level to verbose')
