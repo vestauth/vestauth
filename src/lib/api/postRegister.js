@@ -3,17 +3,19 @@ const buildApiError = require('../helpers/buildApiError')
 const agentHeaders = require('../helpers/agentHeaders')
 
 class PostRegister {
-  constructor (hostname, publicJwk) {
+  constructor (hostname, publicJwk, privateJwk) {
     this.hostname = hostname || 'https://api.vestauth.com'
     this.publicJwk = publicJwk
+    this.privateJwk = privateJwk
   }
 
   async run () {
     const url = `${this.hostname}/register`
     const publicJwk = this.publicJwk
+    const privateJwk = this.privateJwk
 
     const httpMethod = 'POST'
-    const headers = await agentHeaders(httpMethod, url, 'REGISTERING')
+    const headers = await agentHeaders(httpMethod, url, 'REGISTERING', privateJwk)
     headers['Content-Type'] = 'application/json'
 
     const resp = await http(url, {
