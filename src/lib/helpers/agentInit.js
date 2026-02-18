@@ -17,7 +17,7 @@ async function agentInit (hostname = null) {
   touch(envPath)
 
   // register agent
-  const agent = await new PostRegister(normalizedHostname, kp.privateJwk).run()
+  const agent = await new PostRegister(normalizedHostname, kp.publicJwk, kp.privateJwk).run()
   dotenvx.set('AGENT_UID', agent.uid, { path: envPath, plain: true, quiet: true })
   dotenvx.set('AGENT_PUBLIC_JWK', JSON.stringify(kp.publicJwk), { path: envPath, plain: true, quiet: true })
   dotenvx.set('AGENT_PRIVATE_JWK', JSON.stringify(kp.privateJwk), { path: envPath, plain: true, quiet: true })

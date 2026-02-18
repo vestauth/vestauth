@@ -9,12 +9,10 @@ const { Request } = require('undici')
 
 t.beforeEach(() => {
   delete process.env.AGENT_HOSTNAME
-  delete process.env.AGENT_DISCOVERY_HOSTNAME
 })
 
 t.afterEach(() => {
   delete process.env.AGENT_HOSTNAME
-  delete process.env.AGENT_DISCOVERY_HOSTNAME
 })
 
 t.test('#headers - deterministic signature input and format', async t => {
@@ -30,7 +28,7 @@ t.test('#headers - deterministic signature input and format', async t => {
   t.equal(Object.keys(result).length, 3)
   t.ok(result.Signature, 'Signature header exists')
   t.ok(result['Signature-Input'], 'Signature-Input header exists')
-  t.equal(result['Signature-Agent'], 'sig1=agent-123.agents.vestauth.com')
+  t.equal(result['Signature-Agent'], 'sig1=agent-123.api.vestauth.com')
   t.match(result.Signature, /^sig1=:[A-Za-z0-9+/=]+:$/)
   t.equal(
     result['Signature-Input'],
@@ -79,7 +77,7 @@ t.test('#headers - matches web-bot-auth signatureHeaders', async t => {
 
   t.equal(ours.Signature, theirs.Signature)
   t.equal(ours['Signature-Input'], theirs['Signature-Input'])
-  t.equal(ours['Signature-Agent'], 'sig1=agent-123.agents.vestauth.com')
+  t.equal(ours['Signature-Agent'], 'sig1=agent-123.api.vestauth.com')
 
   Date.now = originalNow
 })
@@ -98,12 +96,12 @@ t.test('#headers - empty privateJwk string', async t => {
   )
 })
 
-t.test('#headers - derives Signature-Agent domain from AGENT_DISCOVERY_HOSTNAME', async t => {
-  process.env.AGENT_DISCOVERY_HOSTNAME = 'agents.example.internal'
+t.test('#headers - derives Signature-Agent domain from AGENT_HOSTNAME', async t => {
+  process.env.AGENT_HOSTNAME = 'api.example.internal'
   const { privateJwk } = keypair()
   const privateJwkString = JSON.stringify(privateJwk)
 
   const result = await headers('GET', 'https://example.com/resource', 'agent-123', privateJwkString)
 
-  t.equal(result['Signature-Agent'], 'sig1=agent-123.agents.example.internal')
+  t.equal(result['Signature-Agent'], 'sig1=agent-123.api.example.internal')
 })
