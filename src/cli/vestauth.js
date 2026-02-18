@@ -39,6 +39,7 @@ program
   .allowUnknownOption()
 
 program.addCommand(require('./commands/agent'))
+program.addCommand(require('./commands/tool'))
 program.addCommand(require('./commands/provider'))
 program.addCommand(require('./commands/primitives'))
 
