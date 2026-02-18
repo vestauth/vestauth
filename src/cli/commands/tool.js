@@ -1,14 +1,14 @@
 const { Command } = require('commander')
 
-const provider = new Command('provider')
+const tool = new Command('tool')
 
-provider
-  .description('🔨 provider')
+tool
+  .description('🔨 tool')
   .allowUnknownOption()
 
-// vestauth provider verify
-const verifyAction = require('./../actions/provider/verify')
-provider.command('verify')
+// vestauth tool verify
+const verifyAction = require('./../actions/tool/verify')
+tool.command('verify')
   .description('verify agent')
   .argument('<httpMethod>', 'GET (default)')
   .argument('<uri>', '')
@@ -18,4 +18,4 @@ provider.command('verify')
   .option('--pp, --pretty-print', 'pretty print output')
   .action(verifyAction)
 
-module.exports = provider
+module.exports = tool

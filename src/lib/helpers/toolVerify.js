@@ -1,7 +1,7 @@
 const verify = require('./verify')
 const Errors = require('./errors')
 
-async function providerVerify (httpMethod, uri, headers = {}) {
+async function toolVerify (httpMethod, uri, headers = {}) {
   if (!httpMethod) {
     throw new Errors().missingHttpMethod()
   }
@@ -17,4 +17,4 @@ async function providerVerify (httpMethod, uri, headers = {}) {
   return verify(httpMethod, uri, headers)
 }
 
-module.exports = providerVerify
+module.exports = toolVerify

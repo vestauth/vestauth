@@ -1,9 +1,12 @@
 const agent = require('./agent')
-const provider = require('./provider')
+const tool = require('./tool')
 const primitives = require('./primitives')
 
 module.exports = {
   agent,
-  provider,
-  primitives
+  tool,
+  primitives,
+
+  // deprecate: synonym
+  provider: tool
 }
