@@ -1,7 +1,7 @@
 const headers = require('./headers')
 const identity = require('./identity')
 
-async function agentHeaders (httpMethod, uri, uid = null, privateJwk = null, tag = 'web-bot-auth', nonce = null) {
+async function agentHeaders (httpMethod, uri, uid = null, privateJwk = null, tag = 'web-bot-auth', nonce = null, hostname = null) {
   if (!privateJwk) {
     privateJwk = identity().privateJwk
   }
@@ -10,7 +10,7 @@ async function agentHeaders (httpMethod, uri, uid = null, privateJwk = null, tag
     uid = identity().uid
   }
 
-  return await headers(httpMethod, uri, uid, privateJwk, tag, nonce)
+  return await headers(httpMethod, uri, uid, privateJwk, tag, nonce, hostname)
 }
 
 module.exports = agentHeaders

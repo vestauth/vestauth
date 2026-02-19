@@ -212,6 +212,7 @@ $ vestauth agent init
 <details><summary>`agent init --hostname`</summary><br>
 
 Use `--hostname` to override the agent API hostname (defaults to `AGENT_HOSTNAME`, then `api.vestauth.com`):
+When no scheme is provided, `https://` is assumed. For local non-TLS endpoints, pass `http://...` explicitly.
 
 ```sh
 $ vestauth agent init --hostname https://vestauth.yoursite.com
@@ -372,7 +373,16 @@ Use vestauth directly in code.
 Verify and authenticate an agent's cryptographic identity.
 
 ```js
-const agent = await vestauth.tool.verify(req.method, url, req.headers)
+const agent = await vestauth.tool.verify(httpMethod, url, headers)
+```
+
+</details>
+<details><summary>`primitives.verify()`</summary><br>
+
+Verify and authenticate a signed http request.
+
+```js
+await vestauth.primitives.verify(httpMethod, url, headers, publicJwk)
 ```
 
 </details>

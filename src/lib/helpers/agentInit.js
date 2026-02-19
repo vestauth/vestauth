@@ -22,7 +22,7 @@ async function agentInit (hostname = null) {
   dotenvx.set('AGENT_PUBLIC_JWK', JSON.stringify(kp.publicJwk), { path: envPath, plain: true, quiet: true })
   dotenvx.set('AGENT_PRIVATE_JWK', JSON.stringify(kp.privateJwk), { path: envPath, plain: true, quiet: true })
   if (shouldPersistHostname) {
-    dotenvx.set('AGENT_HOSTNAME', new URL(normalizedHostname).host, { path: envPath, plain: true, quiet: true })
+    dotenvx.set('AGENT_HOSTNAME', normalizedHostname, { path: envPath, plain: true, quiet: true })
   }
 
   return {
