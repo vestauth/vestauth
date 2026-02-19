@@ -34,6 +34,13 @@ t.test('normalizeAgentHostname normalizes plain hostname to https origin', async
   t.equal(normalizeAgentHostname('api.example.com'), 'https://api.example.com')
 })
 
+t.test('normalizeAgentHostname preserves explicit http scheme', async t => {
+  delete process.env.AGENT_HOSTNAME
+
+  const normalizeAgentHostname = loadNormalizeAgentHostname()
+  t.equal(normalizeAgentHostname('http://localhost:3000'), 'http://localhost:3000')
+})
+
 t.test('normalizeAgentHostname uses AGENT_HOSTNAME when arg is not provided', async t => {
   process.env.AGENT_HOSTNAME = 'api.from-env.com'
   require.cache[envPath] = {
