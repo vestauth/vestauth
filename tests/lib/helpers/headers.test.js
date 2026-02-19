@@ -105,3 +105,21 @@ t.test('#headers - derives Signature-Agent domain from AGENT_HOSTNAME', async t 
 
   t.equal(result['Signature-Agent'], 'sig1=agent-123.api.example.internal')
 })
+
+t.test('#headers - uses explicit hostname when passed', async t => {
+  process.env.AGENT_HOSTNAME = 'api.from-env.internal'
+  const { privateJwk } = keypair()
+  const privateJwkString = JSON.stringify(privateJwk)
+
+  const result = await headers(
+    'GET',
+    'https://example.com/resource',
+    'agent-123',
+    privateJwkString,
+    undefined,
+    null,
+    'https://api.from-arg.internal'
+  )
+
+  t.equal(result['Signature-Agent'], 'sig1=agent-123.api.from-arg.internal')
+})
