@@ -10,12 +10,13 @@ class PostRegister {
   }
 
   async run () {
-    const url = `${this.hostname}/register`
+    const hostname = this.hostname
+    const url = `${hostname}/register`
     const publicJwk = this.publicJwk
     const privateJwk = this.privateJwk
 
     const httpMethod = 'POST'
-    const headers = await agentHeaders(httpMethod, url, 'REGISTERING', JSON.stringify(privateJwk))
+    const headers = await agentHeaders(httpMethod, url, 'REGISTERING', JSON.stringify(privateJwk), null, null, hostname)
     headers['Content-Type'] = 'application/json'
 
     const resp = await http(url, {

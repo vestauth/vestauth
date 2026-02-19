@@ -72,6 +72,7 @@ async function verify (httpMethod, uri, headers = {}, publicJwk) {
     throw new Errors().missingPublicJwk()
   }
 
+
   const signatureParams = stripDictionaryKey(signatureInput)
   const sig = stripDictionaryKey(signature)
   const message = authorityMessage(uri, signatureParams)
