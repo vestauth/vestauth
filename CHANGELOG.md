@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-[Unreleased](https://github.com/vestauth/vestauth/compare/v0.14.1...main)
+[Unreleased](https://github.com/vestauth/vestauth/compare/v0.15.0...main)
+
+## [0.15.0](https://github.com/vestauth/vestauth/compare/v0.14.1...v0.15.0) (2026-02-19)
+
+### Added
+
+* Add support for http localhost ([#23](https://github.com/vestauth/vestauth/pull/23))
 
 ## [0.14.1](https://github.com/vestauth/vestauth/compare/v0.14.0...v0.14.1) (2026-02-18)
 
