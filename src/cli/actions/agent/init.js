@@ -9,6 +9,7 @@ async function init () {
     logger.debug(`options: ${JSON.stringify(options)}`)
 
     const output = await agent.init(options.hostname)
+    console.log(output)
 
     if (output.isNew) {
       logger.success(`✔ agent created (${output.path}/AGENT_UID=${output.AGENT_UID})`)
@@ -16,7 +17,7 @@ async function init () {
       logger.info(`• agent exists (${output.path}/AGENT_UID=${output.AGENT_UID})`)
     }
 
-    logger.help('⮕ next run: [vestauth agent curl https://api.vestauth.com/whoami]')
+    logger.help(`⮕ next run: [vestauth agent curl ${output.AGENT_HOSTNAME}/whoami]`)
   } catch (error) {
     catchAndLog(error)
     process.exit(1)
