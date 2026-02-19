@@ -16,7 +16,6 @@ function parseSignatureAgentHeader (signatureAgentHeader) {
   } catch {
     throw new Errors().invalidSignatureAgent()
   }
-
   const entry = dictionary.entries().next()
   if (entry.done) throw new Errors().invalidSignatureAgent()
   const [key, member] = entry.value
