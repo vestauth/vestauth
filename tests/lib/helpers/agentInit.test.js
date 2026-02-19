@@ -111,7 +111,7 @@ t.test('agentInit normalizes hostname arg when provided', async t => {
   const hasPublicJwkSet = dotenvSetCalls.some((call) => call[0] === 'AGENT_PUBLIC_JWK')
   const hasPrivateJwkSet = dotenvSetCalls.some((call) => call[0] === 'AGENT_PRIVATE_JWK')
   const hasUidSet = dotenvSetCalls.some((call) => call[0] === 'AGENT_UID')
-  const hasAgentHostnameSet = dotenvSetCalls.some((call) => call[0] === 'AGENT_HOSTNAME' && call[1] === 'api.from-flag.com')
+  const hasAgentHostnameSet = dotenvSetCalls.some((call) => call[0] === 'AGENT_HOSTNAME' && call[1] === 'https://api.from-flag.com')
   t.equal(hasPublicJwkSet, true)
   t.equal(hasPrivateJwkSet, true)
   t.equal(hasUidSet, true)
@@ -127,7 +127,20 @@ t.test('agentInit uses AGENT_HOSTNAME when arg is not provided', async t => {
   await agentInit()
 
   t.equal(constructorArgs[0].hostname, 'https://api.from-env.com')
-  const hasAgentHostnameSet = dotenvSetCalls.some((call) => call[0] === 'AGENT_HOSTNAME' && call[1] === 'api.from-env.com')
+  const hasAgentHostnameSet = dotenvSetCalls.some((call) => call[0] === 'AGENT_HOSTNAME' && call[1] === 'https://api.from-env.com')
+  t.equal(hasAgentHostnameSet, true)
+})
+
+t.test('agentInit preserves http scheme when explicitly provided', async t => {
+  delete process.env.AGENT_HOSTNAME
+
+  mockAgentInitDeps()
+
+  const agentInit = require('../../../src/lib/helpers/agentInit')
+  await agentInit('http://localhost:3000')
+
+  t.equal(constructorArgs[0].hostname, 'http://localhost:3000')
+  const hasAgentHostnameSet = dotenvSetCalls.some((call) => call[0] === 'AGENT_HOSTNAME' && call[1] === 'http://localhost:3000')
   t.equal(hasAgentHostnameSet, true)
 })
 

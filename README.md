@@ -212,6 +212,7 @@ $ vestauth agent init
 <details><summary>`agent init --hostname`</summary><br>
 
 Use `--hostname` to override the agent API hostname (defaults to `AGENT_HOSTNAME`, then `api.vestauth.com`):
+When no scheme is provided, `https://` is assumed. For local non-TLS endpoints, pass `http://...` explicitly.
 
 ```sh
 $ vestauth agent init --hostname https://vestauth.yoursite.com
