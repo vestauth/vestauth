@@ -373,7 +373,16 @@ Use vestauth directly in code.
 Verify and authenticate an agent's cryptographic identity.
 
 ```js
-const agent = await vestauth.tool.verify(req.method, url, req.headers)
+const agent = await vestauth.tool.verify(httpMethod, url, headers)
+```
+
+</details>
+<details><summary>`primitives.verify()`</summary><br>
+
+Verify and authenticate a signed http request.
+
+```js
+await vestauth.primitives.verify(httpMethod, url, headers, publicJwk)
 ```
 
 </details>
