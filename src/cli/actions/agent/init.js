@@ -9,7 +9,6 @@ async function init () {
     logger.debug(`options: ${JSON.stringify(options)}`)
 
     const output = await agent.init(options.hostname)
-    console.log(output)
 
     if (output.isNew) {
       logger.success(`✔ agent created (${output.path}/AGENT_UID=${output.AGENT_UID})`)
