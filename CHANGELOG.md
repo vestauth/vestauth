@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-[Unreleased](https://github.com/vestauth/vestauth/compare/v0.15.0...main)
+[Unreleased](https://github.com/vestauth/vestauth/compare/v0.16.0...main)
+
+## [0.16.0](https://github.com/vestauth/vestauth/compare/v0.15.0...v0.16.0) (2026-02-20)
+
+### Added
+
+* Add support for localhost public key discovery ([#24](https://github.com/vestauth/vestauth/pull/24))
 
 ## [0.15.0](https://github.com/vestauth/vestauth/compare/v0.14.1...v0.15.0) (2026-02-19)
 
