@@ -9,6 +9,7 @@ const authorityMessage = require('./authorityMessage')
 const publicJwkObject = require('./publicJwkObject')
 const verifyAgentFqdn = require('./verifyAgentFqdn')
 const Errors = require('./errors')
+const isLocalhost = require('./isLocalhost')
 
 async function resolvePublicJwk ({ signatureInput, signatureAgent, publicJwk }) {
   let uid
@@ -19,10 +20,13 @@ async function resolvePublicJwk ({ signatureInput, signatureAgent, publicJwk }) 
 
   if (signatureAgent) {
     const { value } = parseSignatureAgentHeader(signatureAgent)
-    const fqdn = value
-    verifyAgentFqdn(fqdn)
-    const origin = `https://${fqdn}`
-    uid = fqdn.split('.')[0]
+    const isUri = /^https?:\/\//i.test(value)
+    const origin = isUri ? new URL(value).origin : `https://${value}`
+    const hostname = new URL(origin).hostname
+    if (!isLocalhost(origin)) {
+      verifyAgentFqdn(hostname)
+    }
+    uid = hostname.split('.')[0]
     wellKnownUrl = `${origin}/.well-known/http-message-signatures-directory`
   }
 
@@ -33,7 +37,22 @@ async function resolvePublicJwk ({ signatureInput, signatureAgent, publicJwk }) 
     return { publicJwk: null }
   }
 
-  const resp = await http(wellKnownUrl, { method: 'GET', headers: { 'Content-Type': 'application/json' } })
+  let requestUrl = wellKnownUrl
+  const requestHeaders = {}
+
+  const url = new URL(requestUrl)
+  if (isLocalhost(wellKnownUrl)) {
+    const port = url.port || '80'
+    requestUrl = `http://127.0.0.1:${port}${url.pathname}`
+    requestHeaders.host = url.host
+  }
+
+  const opts = { method: 'GET' }
+  if (Object.keys(requestHeaders).length > 0) {
+    opts.headers = requestHeaders
+  }
+
+  const resp = await http(requestUrl, opts)
   if (resp.statusCode >= 400) {
     const json = await resp.body.json()
     throw buildApiError(resp.statusCode, json)

@@ -26,8 +26,9 @@ async function agentInit (hostname = null) {
   }
 
   return {
-    AGENT_PUBLIC_JWK: kp.publicJwk,
     AGENT_UID: agent.uid,
+    AGENT_PUBLIC_JWK: kp.publicJwk,
+    AGENT_HOSTNAME: normalizedHostname,
     path: envPath,
     isNew: agent.is_new
   }

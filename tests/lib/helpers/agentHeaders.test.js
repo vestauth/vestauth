@@ -25,7 +25,7 @@ t.test('#agentHeaders - uses explicit hostname when passed', async t => {
     'https://api.from-arg.internal'
   )
 
-  t.equal(result['Signature-Agent'], 'sig1=agent-123.api.from-arg.internal')
+  t.equal(result['Signature-Agent'], 'sig1="https://agent-123.api.from-arg.internal"')
 })
 
 t.test('#agentHeaders - explicit hostname overrides AGENT_HOSTNAME', async t => {
@@ -43,5 +43,15 @@ t.test('#agentHeaders - explicit hostname overrides AGENT_HOSTNAME', async t => 
     'https://api.from-arg.internal'
   )
 
-  t.equal(result['Signature-Agent'], 'sig1=agent-123.api.from-arg.internal')
+  t.equal(result['Signature-Agent'], 'sig1="https://agent-123.api.from-arg.internal"')
+})
+
+t.test('#agentHeaders - uses AGENT_HOSTNAME scheme when set to http', async t => {
+  process.env.AGENT_HOSTNAME = 'http://localhost:3000'
+  const { privateJwk } = keypair()
+  const privateJwkString = JSON.stringify(privateJwk)
+
+  const result = await agentHeaders('GET', 'https://example.com/resource', 'agent-123', privateJwkString)
+
+  t.equal(result['Signature-Agent'], 'sig1="http://agent-123.localhost:3000"')
 })

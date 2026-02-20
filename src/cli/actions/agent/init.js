@@ -16,7 +16,7 @@ async function init () {
       logger.info(`• agent exists (${output.path}/AGENT_UID=${output.AGENT_UID})`)
     }
 
-    logger.help('⮕ next run: [vestauth agent curl https://api.vestauth.com/whoami]')
+    logger.help(`⮕ next run: [vestauth agent curl ${output.AGENT_HOSTNAME}/whoami]`)
   } catch (error) {
     catchAndLog(error)
     process.exit(1)
