@@ -9,8 +9,7 @@ const authorityMessage = require('./authorityMessage')
 const publicJwkObject = require('./publicJwkObject')
 const verifyAgentFqdn = require('./verifyAgentFqdn')
 const Errors = require('./errors')
-
-const { logger } = require('./../../shared/logger')
+const isLocalhost = require('./isLocalhost')
 
 async function resolvePublicJwk ({ signatureInput, signatureAgent, publicJwk }) {
   let uid
@@ -24,8 +23,9 @@ async function resolvePublicJwk ({ signatureInput, signatureAgent, publicJwk }) 
     const isUri = /^https?:\/\//i.test(value)
     const origin = isUri ? new URL(value).origin : `https://${value}`
     const hostname = new URL(origin).hostname
-
-    verifyAgentFqdn(hostname)
+    if (!isLocalhost(origin)) {
+      verifyAgentFqdn(hostname)
+    }
     uid = hostname.split('.')[0]
     wellKnownUrl = `${origin}/.well-known/http-message-signatures-directory`
   }
@@ -37,25 +37,27 @@ async function resolvePublicJwk ({ signatureInput, signatureAgent, publicJwk }) 
     return { publicJwk: null }
   }
 
-  console.log('wellKnownUrl', wellKnownUrl)
+  let requestUrl = wellKnownUrl
+  const requestHeaders = {}
 
-  // const agentHost = `agent-${agentId}.localhost:3000`
-  // await http(
-  //   'http://127.0.0.1:3000/.well-known/http-message-signatures-directory',
-  //   {
-  //     method: 'GET',
-  //     headers: { host: agentHost }
-  //   }
-  // )
+  const url = new URL(requestUrl)
+  if (isLocalhost(wellKnownUrl)) {
+    const port = url.port || '80'
+    requestUrl = `http://127.0.0.1:${port}${url.pathname}`
+    requestHeaders.host = url.host
+  }
 
-  const resp = await http('http://127.0.0.1:3000/.well-known/http-message-signatures-directory', { method: 'GET', headers: { 'host': 'agent.localhost:3000', 'Content-Type': 'application/json' } })
+  const opts = { method: 'GET' }
+  if (Object.keys(requestHeaders).length > 0) {
+    opts.headers = requestHeaders
+  }
+
+  const resp = await http(requestUrl, opts)
   if (resp.statusCode >= 400) {
-    console.log('WHATTTTTTT', resp.statusCode)
     const json = await resp.body.json()
     throw buildApiError(resp.statusCode, json)
   }
   const json = await resp.body.json()
-  console.log('json', json)
 
   let resolvedPublicJwk = json.keys[0]
   if (kid) {
