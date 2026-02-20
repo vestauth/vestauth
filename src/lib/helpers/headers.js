@@ -4,13 +4,13 @@ const signatureParams = require('./signatureParams')
 const webBotAuthSignature = require('./webBotAuthSignature')
 const env = require('./env')
 
-function getAgentDiscoveryDomain (hostname = null) {
+function getAgentDiscoveryOrigin (hostname = null) {
   if (!hostname) {
-    hostname = (env('AGENT_HOSTNAME') || process.env.AGENT_HOSTNAME || 'api.vestauth.com').trim().toLowerCase()
+    hostname = (env('AGENT_HOSTNAME') || process.env.AGENT_HOSTNAME || 'api.vestauth.com').trim()
   }
 
-  // this is NOT set yet on the very first init call
-  return hostname.replace(/^https?:\/\//, '').split('/')[0]
+  const candidate = /^https?:\/\//i.test(hostname) ? hostname : `https://${hostname}`
+  return new URL(candidate).origin
 }
 
 async function headers (httpMethod, uri, uid, privateJwk, tag = 'web-bot-auth', nonce = null, hostname = null) {
@@ -31,12 +31,14 @@ async function headers (httpMethod, uri, uid, privateJwk, tag = 'web-bot-auth', 
 
   const signatureInput = signatureParams(privateJwk.kid, tag, nonce)
   const signature = webBotAuthSignature(httpMethod, uri, signatureInput, privateJwk)
-  const signatureAgent = `${uid}.${getAgentDiscoveryDomain(hostname)}` // no scheme; fqdn only
+  const discoveryOrigin = getAgentDiscoveryOrigin(hostname)
+  const discoveryUrl = new URL(discoveryOrigin)
+  const signatureAgent = `${discoveryUrl.protocol}//${uid}.${discoveryUrl.host}`
 
   return {
     Signature: `sig1=:${signature}:`,
     'Signature-Input': `sig1=${signatureInput}`,
-    'Signature-Agent': `sig1=${signatureAgent}`
+    'Signature-Agent': `sig1="${signatureAgent}"`
   }
 }
 

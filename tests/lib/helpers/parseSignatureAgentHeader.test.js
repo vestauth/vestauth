@@ -26,6 +26,14 @@ t.test('#parseSignatureAgentHeader - array header value', async t => {
   })
 })
 
+t.test('#parseSignatureAgentHeader - parses quoted uri item', async t => {
+  const result = parseSignatureAgentHeader('sig1="https://agent-9aa52a556ca85ee195866c0b.api.vestauth.com"')
+  t.same(result, {
+    key: 'sig1',
+    value: 'https://agent-9aa52a556ca85ee195866c0b.api.vestauth.com'
+  })
+})
+
 t.test('#parseSignatureAgentHeader - missing header', async t => {
   t.throws(
     () => parseSignatureAgentHeader(undefined),

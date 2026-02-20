@@ -28,7 +28,7 @@ t.test('#headers - deterministic signature input and format', async t => {
   t.equal(Object.keys(result).length, 3)
   t.ok(result.Signature, 'Signature header exists')
   t.ok(result['Signature-Input'], 'Signature-Input header exists')
-  t.equal(result['Signature-Agent'], 'sig1=agent-123.api.vestauth.com')
+  t.equal(result['Signature-Agent'], 'sig1="https://agent-123.api.vestauth.com"')
   t.match(result.Signature, /^sig1=:[A-Za-z0-9+/=]+:$/)
   t.equal(
     result['Signature-Input'],
@@ -77,7 +77,7 @@ t.test('#headers - matches web-bot-auth signatureHeaders', async t => {
 
   t.equal(ours.Signature, theirs.Signature)
   t.equal(ours['Signature-Input'], theirs['Signature-Input'])
-  t.equal(ours['Signature-Agent'], 'sig1=agent-123.api.vestauth.com')
+  t.equal(ours['Signature-Agent'], 'sig1="https://agent-123.api.vestauth.com"')
 
   Date.now = originalNow
 })
@@ -103,7 +103,7 @@ t.test('#headers - derives Signature-Agent domain from AGENT_HOSTNAME', async t 
 
   const result = await headers('GET', 'https://example.com/resource', 'agent-123', privateJwkString)
 
-  t.equal(result['Signature-Agent'], 'sig1=agent-123.api.example.internal')
+  t.equal(result['Signature-Agent'], 'sig1="https://agent-123.api.example.internal"')
 })
 
 t.test('#headers - uses explicit hostname when passed', async t => {
@@ -121,5 +121,15 @@ t.test('#headers - uses explicit hostname when passed', async t => {
     'https://api.from-arg.internal'
   )
 
-  t.equal(result['Signature-Agent'], 'sig1=agent-123.api.from-arg.internal')
+  t.equal(result['Signature-Agent'], 'sig1="https://agent-123.api.from-arg.internal"')
+})
+
+t.test('#headers - uses AGENT_HOSTNAME scheme when set to http', async t => {
+  process.env.AGENT_HOSTNAME = 'http://localhost:3000'
+  const { privateJwk } = keypair()
+  const privateJwkString = JSON.stringify(privateJwk)
+
+  const result = await headers('GET', 'https://example.com/resource', 'agent-123', privateJwkString)
+
+  t.equal(result['Signature-Agent'], 'sig1="http://agent-123.localhost:3000"')
 })
