@@ -81,9 +81,6 @@ t.test('#toolVerify - accepts legacy bare Signature-Agent value', async t => {
 })
 
 t.test('#toolVerify - accepts Signature-Agent uri with http scheme', async t => {
-  const originalToolFqdnRegex = process.env.TOOL_FQDN_REGEX
-  process.env.TOOL_FQDN_REGEX = '^[A-Za-z0-9-]+\\.localhost$'
-
   const { publicJwk, privateJwk } = keypair()
   const uri = 'https://example.com/resource'
   const signedHeaders = await headers('GET', uri, 'agent-123', JSON.stringify(privateJwk))
@@ -92,8 +89,6 @@ t.test('#toolVerify - accepts Signature-Agent uri with http scheme', async t => 
   const httpMock = mockHttp({ keys: [publicJwk] })
   t.teardown(() => {
     httpMock.restore()
-    if (originalToolFqdnRegex === undefined) delete process.env.TOOL_FQDN_REGEX
-    else process.env.TOOL_FQDN_REGEX = originalToolFqdnRegex
   })
 
   const toolVerify = require('../../../src/lib/helpers/toolVerify')
@@ -101,5 +96,25 @@ t.test('#toolVerify - accepts Signature-Agent uri with http scheme', async t => 
 
   t.equal(output.uid, 'agent-123')
   t.equal(output.well_known_url, 'http://agent-123.localhost:3000/.well-known/http-message-signatures-directory')
-  t.equal(httpMock.calls[0].url, 'http://agent-123.localhost:3000/.well-known/http-message-signatures-directory')
+  t.equal(httpMock.calls[0].url, 'http://127.0.0.1:3000/.well-known/http-message-signatures-directory')
+})
+
+t.test('#toolVerify - sends host header for localhost Signature-Agent', async t => {
+  const { publicJwk, privateJwk } = keypair()
+  const uri = 'https://example.com/resource'
+  const signedHeaders = await headers('GET', uri, 'agent-123', JSON.stringify(privateJwk))
+  signedHeaders['Signature-Agent'] = 'sig1="http://agent-123.localhost:3000"'
+
+  const httpMock = mockHttp({ keys: [publicJwk] })
+  t.teardown(httpMock.restore)
+
+  const toolVerify = require('../../../src/lib/helpers/toolVerify')
+  await toolVerify('GET', uri, signedHeaders)
+
+  t.same(httpMock.calls[0].opts, {
+    method: 'GET',
+    headers: {
+      host: 'agent-123.localhost:3000'
+    }
+  })
 })
