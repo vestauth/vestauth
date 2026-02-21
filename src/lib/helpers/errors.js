@@ -59,6 +59,15 @@ class Errors {
     return e
   }
 
+  missingSignatureInput () {
+    const code = 'MISSING_SIGNATURE_INPUT'
+    const message = `[${code}] missing --signature-input`
+
+    const e = new Error(message)
+    e.code = code
+    return e
+  }
+
   missingSignatureAgent () {
     const code = 'MISSING_SIGNATURE_AGENT'
     const message = `[${code}] missing --signature-agent`
