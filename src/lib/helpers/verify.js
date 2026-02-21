@@ -81,6 +81,10 @@ async function verify (httpMethod, uri, headers = {}, publicJwk) {
   const signatureAgent = headers['Signature-Agent'] || headers['signature-agent']
 
   const { values } = parseSignatureInputHeader(signatureInput)
+  if (!Object.keys(values).length) {
+    throw new Errors().missingSignatureInput()
+  }
+
   const { expires } = values
   if (expires && expires < (Math.floor(Date.now() / 1000))) {
     throw new Errors().expiredSignature()
