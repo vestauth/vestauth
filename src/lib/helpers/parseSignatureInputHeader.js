@@ -8,8 +8,8 @@ function parseSignatureInputHeader (signatureInputHeader) {
 
   const dictionary = parseDictionary(signatureInputHeader)
   const entry = dictionary.entries().next()
-  const [key, innerlist] = entry.value
-  const [cwp, params] = innerlist
+  const [, innerlist] = entry.value
+  const [, params] = innerlist
   const values = Object.fromEntries(params)
 
   return values
