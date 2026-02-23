@@ -314,7 +314,26 @@ $ vestauth tool verify GET https://api.vestauth.com/whoami --signature "sig1=:H1
 ```
 
 </details>
+<details><summary>`server start`</summary><br>
 
+Start vestauth server.
+
+```sh
+$ vestauth server start 
+vestauth server listening on http://localhost:3000
+```
+
+</details>
+<details><summary>`server start --port`</summary><br>
+
+Start vestauth server on specific port.
+
+```sh
+$ vestauth server start --port 4567
+vestauth server listening on http://localhost:4567
+```
+
+</details>
 <details><summary>`primitives keypair`</summary><br>
 
 Generate public/private keypair.
