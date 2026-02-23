@@ -1,6 +1,5 @@
 const { logger } = require('./../../../shared/logger')
 const catchAndLog = require('./../../../lib/helpers/catchAndLog')
-const databaseUrl = require('./../../../lib/helpers/databaseUrl')
 
 const server = require('./../../../lib/server')
 
@@ -11,7 +10,7 @@ async function start () {
 
     await server.start({
       port: options.port,
-      databaseUrl: databaseUrl(options.databaseUrl)
+      databaseUrl: options.databaseUrl
     })
   } catch (error) {
     catchAndLog(error)
