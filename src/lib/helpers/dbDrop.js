@@ -21,7 +21,7 @@ function parseConnectionUrl (value) {
 }
 
 async function dbDrop ({ databaseUrl } = {}) {
-  const targetUrl = databaseUrl || process.env.DATABASE_URL || 'postgres://localhost/vestauth_production'
+  const targetUrl = databaseUrl
   const { url, database } = parseConnectionUrl(targetUrl)
 
   // Connect to the maintenance DB (`postgres`) to drop the target DB.

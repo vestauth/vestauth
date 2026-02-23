@@ -1,7 +1,7 @@
 const serverIndex = require('./../server/index')
 
-function serverStart ({ port }) {
-  serverIndex.start({ port })
+function serverStart ({ port, databaseUrl }) {
+  return serverIndex.start({ port, databaseUrl })
 }
 
 module.exports = serverStart
