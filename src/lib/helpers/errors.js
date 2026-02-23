@@ -121,6 +121,17 @@ class Errors {
     return e
   }
 
+  missingDatabaseUrl () {
+    const code = 'MISSING_DATABASE_URL'
+    const message = `[${code}] missing DATABASE_URL`
+    const help = `[${code}] pass --database-url or set DATABASE_URL`
+
+    const e = new Error(message)
+    e.code = code
+    e.help = help
+    return e
+  }
+
   commandFailed () {
     const code = 'COMMAND_FAILED'
     const message = `[${code}] command failed with exit code ${this.exitCode}`

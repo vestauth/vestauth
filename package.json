@@ -48,8 +48,10 @@
   "dependencies": {
     "@dotenvx/dotenvx": "^1.52.0",
     "commander": "^11.1.0",
-    "express": "^4.21.2",
     "execa": "^5.1.1",
+    "express": "^4.21.2",
+    "knex": "^3.1.0",
+    "pg": "^8.18.0",
     "structured-headers": "^2.0.2",
     "undici": "7.11.0"
   },
