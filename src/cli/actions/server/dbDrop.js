@@ -1,6 +1,5 @@
 const { logger } = require('./../../../shared/logger')
 const catchAndLog = require('./../../../lib/helpers/catchAndLog')
-const databaseUrl = require('./../../../lib/helpers/databaseUrl')
 
 const server = require('./../../../lib/server')
 
@@ -9,7 +8,7 @@ async function dbDrop () {
     const options = this.opts()
     logger.debug(`options: ${JSON.stringify(options)}`)
 
-    await server.db.drop({ databaseUrl: databaseUrl(options.databaseUrl) })
+    await server.db.drop({ databaseUrl: options.databaseUrl })
   } catch (error) {
     catchAndLog(error)
     process.exit(1)
