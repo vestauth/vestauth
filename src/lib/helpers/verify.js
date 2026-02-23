@@ -15,7 +15,11 @@ async function resolvePublicJwk ({ signatureInput, signatureAgent, publicJwk }) 
   let uid
   let wellKnownUrl
 
-  const { values } = parseSignatureInputHeader(signatureInput)
+  const values = parseSignatureInputHeader(signatureInput)
+  if (!values) {
+    throw new Errors().missingSignatureInput()
+  }
+
   const kid = values.keyid
 
   if (signatureAgent) {
@@ -80,8 +84,8 @@ async function verify (httpMethod, uri, headers = {}, publicJwk) {
   const signatureInput = headers['Signature-Input'] || headers['signature-input']
   const signatureAgent = headers['Signature-Agent'] || headers['signature-agent']
 
-  const { values } = parseSignatureInputHeader(signatureInput)
-  if (!Object.keys(values).length) {
+  const values = parseSignatureInputHeader(signatureInput)
+  if (!values) {
     throw new Errors().missingSignatureInput()
   }
 
