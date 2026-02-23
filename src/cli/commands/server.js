@@ -12,24 +12,28 @@ const startAction = require('./../actions/server/start')
 server.command('start')
   .description('start vestauth server')
   .option('--port <port>', 'port', env('PORT'))
+  .option('--database-url <databaseUrl>', 'DATABASE_URL', env('DATABASE_URL'))
   .action(startAction)
 
 // vestauth server db:create
 const dbCreateAction = require('./../actions/server/dbCreate')
 server.command('db:create')
   .description('create vestauth database')
+  .option('--database-url <databaseUrl>', 'DATABASE_URL', env('DATABASE_URL'))
   .action(dbCreateAction)
 
 // vestauth server db:migrate
 const dbMigrateAction = require('./../actions/server/dbMigrate')
 server.command('db:migrate')
   .description('run db migrations')
+  .option('--database-url <databaseUrl>', 'DATABASE_URL', env('DATABASE_URL'))
   .action(dbMigrateAction)
 
 // vestauth server db:drop
 const dbDropAction = require('./../actions/server/dbDrop')
 server.command('db:drop')
   .description('delete vestauth database')
+  .option('--database-url <databaseUrl>', 'DATABASE_URL', env('DATABASE_URL'))
   .action(dbDropAction)
 
 module.exports = server

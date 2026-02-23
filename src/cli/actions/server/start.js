@@ -1,5 +1,6 @@
 const { logger } = require('./../../../shared/logger')
 const catchAndLog = require('./../../../lib/helpers/catchAndLog')
+const databaseUrl = require('./../../../lib/helpers/databaseUrl')
 
 const server = require('./../../../lib/server')
 
@@ -8,7 +9,10 @@ async function start () {
     const options = this.opts()
     logger.debug(`options: ${JSON.stringify(options)}`)
 
-    await server.start({ port: options.port })
+    await server.start({
+      port: options.port,
+      databaseUrl: databaseUrl(options.databaseUrl)
+    })
   } catch (error) {
     catchAndLog(error)
     process.exit(1)

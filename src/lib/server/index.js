@@ -85,7 +85,7 @@ app.get('/whoami', async (req, res) => {
   }
 })
 
-function start ({ port } = {}) {
+function start ({ port, databaseUrl: _databaseUrl } = {}) {
   const PORT = port || '3000'
 
   return app.listen(PORT, () => {

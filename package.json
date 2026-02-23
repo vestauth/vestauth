@@ -38,8 +38,6 @@
   "author": "@motdotla",
   "type": "commonjs",
   "scripts": {
-    "db:migrate": "node scripts/db/migrate-latest.js",
-    "db:migrate:make": "node scripts/db/migrate-make.js",
     "standard": "standard",
     "standard:fix": "standard --fix",
     "test": "tap run --allow-empty-coverage --disable-coverage --timeout=60000",
