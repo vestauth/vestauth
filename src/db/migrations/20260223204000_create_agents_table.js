@@ -3,7 +3,7 @@
  */
 exports.up = async function (knex) {
   await knex.schema.createTable('agents', function (table) {
-    table.increments('id').primary()
+    table.bigIncrements('id').primary()
     table.string('uid')
     table.datetime('created_at').notNullable()
     table.datetime('updated_at').notNullable()
