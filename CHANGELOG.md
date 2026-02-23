@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-[Unreleased](https://github.com/vestauth/vestauth/compare/v0.16.0...main)
+[Unreleased](https://github.com/vestauth/vestauth/compare/v0.17.0...main)
+
+## [0.17.0](https://github.com/vestauth/vestauth/compare/v0.16.0...v0.17.0) (2026-02-23)
+
+### Added
+
+* Add `db:*` scripts ([#32](https://github.com/vestauth/vestauth/pull/32))
 
 ## [0.16.0](https://github.com/vestauth/vestauth/compare/v0.15.1...v0.16.0) (2026-02-23)
 
