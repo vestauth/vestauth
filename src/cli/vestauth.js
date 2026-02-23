@@ -40,6 +40,7 @@ program
 
 program.addCommand(require('./commands/agent'))
 program.addCommand(require('./commands/tool'))
+program.addCommand(require('./commands/server'))
 program.addCommand(require('./commands/provider'), { hidden: true })
 program.addCommand(require('./commands/primitives'))
 
