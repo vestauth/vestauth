@@ -10,12 +10,17 @@ const publicJwkObject = require('./publicJwkObject')
 const verifyAgentFqdn = require('./verifyAgentFqdn')
 const Errors = require('./errors')
 const isLocalhost = require('./isLocalhost')
+const isEmptyObject = require('./isEmptyObject')
 
 async function resolvePublicJwk ({ signatureInput, signatureAgent, publicJwk }) {
   let uid
   let wellKnownUrl
 
-  const { values } = parseSignatureInputHeader(signatureInput)
+  const values = parseSignatureInputHeader(signatureInput)
+  if (!values || isEmptyObject(values)) {
+    throw new Errors().missingSignatureInput()
+  }
+
   const kid = values.keyid
 
   if (signatureAgent) {
@@ -80,7 +85,11 @@ async function verify (httpMethod, uri, headers = {}, publicJwk) {
   const signatureInput = headers['Signature-Input'] || headers['signature-input']
   const signatureAgent = headers['Signature-Agent'] || headers['signature-agent']
 
-  const { values } = parseSignatureInputHeader(signatureInput)
+  const values = parseSignatureInputHeader(signatureInput)
+  if (!values || isEmptyObject(values)) {
+    throw new Errors().missingSignatureInput()
+  }
+
   const { expires } = values
   if (expires && expires < (Math.floor(Date.now() / 1000))) {
     throw new Errors().expiredSignature()
