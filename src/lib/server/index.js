@@ -89,7 +89,7 @@ function start ({ port } = {}) {
   const PORT = port || '3000'
 
   return app.listen(PORT, () => {
-    logger.success(`🖥️  vestauth server listening on http://localhost:${PORT}`)
+    logger.success(`vestauth server listening on http://localhost:${PORT}`)
   })
 }
 
