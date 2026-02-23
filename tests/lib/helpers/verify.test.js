@@ -100,3 +100,17 @@ t.test('#verify - expired signature', async t => {
     { code: 'EXPIRED_SIGNATURE' }
   )
 })
+
+t.test('#verify - missing signature input (whitespace header)', async t => {
+  const { publicJwk, privateJwk } = keypair()
+  const uri = 'https://example.com/resource'
+  const signedHeaders = await headers('GET', uri, 'agent-123', JSON.stringify(privateJwk))
+
+  await t.rejects(
+    verify('GET', uri, {
+      ...signedHeaders,
+      'Signature-Input': '   '
+    }, publicJwk),
+    { code: 'MISSING_SIGNATURE_INPUT' }
+  )
+})
