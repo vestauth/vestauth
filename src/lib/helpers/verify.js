@@ -7,6 +7,7 @@ const parseSignatureInputHeader = require('./parseSignatureInputHeader')
 const stripDictionaryKey = require('./stripDictionaryKey')
 const authorityMessage = require('./authorityMessage')
 const publicJwkObject = require('./publicJwkObject')
+const thumbprint = require('./thumbprint')
 const verifyAgentFqdn = require('./verifyAgentFqdn')
 const Errors = require('./errors')
 const isLocalhost = require('./isLocalhost')
@@ -31,10 +32,10 @@ async function resolvePublicJwk ({ signatureInput, signatureAgent, publicJwk }) 
   }
 
   if (publicJwk) {
-    return { uid, kid, publicJwk, wellKnownUrl }
+    return { uid, kid, publicJwks: [publicJwk], wellKnownUrl }
   }
   if (!signatureAgent) {
-    return { publicJwk: null }
+    return { publicJwks: null }
   }
 
   let requestUrl = wellKnownUrl
@@ -59,18 +60,20 @@ async function resolvePublicJwk ({ signatureInput, signatureAgent, publicJwk }) 
   }
   const json = await resp.body.json()
 
-  let resolvedPublicJwk = json.keys[0]
-  if (kid) {
-    resolvedPublicJwk = json.keys.find((key) => key.kid === kid)
-    if (!resolvedPublicJwk) {
-      throw new Errors().invalidSignature()
-    }
+  const resolvedPublicJwks = kid
+    ? json.keys
+      .filter((key) => key.kid === kid || thumbprint(key) === kid)
+      .map((key) => (key.kid ? key : { ...key, kid }))
+    : json.keys
+
+  if (kid && resolvedPublicJwks.length === 0) {
+    throw new Errors().invalidSignature()
   }
 
   return {
     uid,
     kid,
-    publicJwk: resolvedPublicJwk,
+    publicJwks: resolvedPublicJwks,
     wellKnownUrl
   }
 }
@@ -87,7 +90,7 @@ async function verify (httpMethod, uri, headers = {}, publicJwk) {
   }
 
   const resolved = await resolvePublicJwk({ signatureInput, signatureAgent, publicJwk })
-  if (!resolved.publicJwk) {
+  if (!Array.isArray(resolved.publicJwks) || resolved.publicJwks.length === 0) {
     throw new Errors().missingPublicJwk()
   }
 
@@ -95,21 +98,29 @@ async function verify (httpMethod, uri, headers = {}, publicJwk) {
   const sig = stripDictionaryKey(signature)
   const message = authorityMessage(uri, signatureParams)
 
-  const success = crypto.verify(
+  const verifyWithPublicJwk = (candidatePublicJwk) => crypto.verify(
     null,
     Buffer.from(message, 'utf8'),
-    publicJwkObject(resolved.publicJwk),
+    publicJwkObject(candidatePublicJwk),
     Buffer.from(sig, 'base64')
   )
 
-  if (!success) {
-    throw new Errors().invalidSignature()
+  let matchedPublicJwk
+  for (const candidatePublicJwk of resolved.publicJwks) {
+    if (verifyWithPublicJwk(candidatePublicJwk)) {
+      matchedPublicJwk = candidatePublicJwk
+      break
+    }
   }
+  if (!matchedPublicJwk) throw new Errors().invalidSignature()
+
+  const resolvedKid = resolved.kid || matchedPublicJwk.kid || thumbprint(matchedPublicJwk)
+  const resolvedPublicJwk = { ...matchedPublicJwk, kid: resolvedKid }
 
   const output = {}
   if (resolved.uid) output.uid = resolved.uid
-  if (resolved.kid) output.kid = resolved.kid
-  if (resolved.publicJwk) output.public_jwk = resolved.publicJwk
+  if (resolvedKid) output.kid = resolvedKid
+  output.public_jwk = resolvedPublicJwk
   if (resolved.wellKnownUrl) output.well_known_url = resolved.wellKnownUrl
 
   return output

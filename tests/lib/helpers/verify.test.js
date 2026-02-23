@@ -1,12 +1,47 @@
 const t = require('tap')
+t.jobs = 1
 
 const headers = require('../../../src/lib/helpers/headers')
 const keypair = require('../../../src/lib/helpers/keypair')
 const verify = require('../../../src/lib/helpers/verify')
+const epoch = require('../../../src/lib/helpers/epoch')
 const webBotAuthSignature = require('../../../src/lib/helpers/webBotAuthSignature')
 const { verify: webBotAuthVerify } = require('web-bot-auth')
 const { verifierFromJWK } = require('web-bot-auth/crypto')
 const { Request } = require('undici')
+
+const httpPath = require.resolve('../../../src/lib/helpers/http')
+const verifyPath = require.resolve('../../../src/lib/helpers/verify')
+
+function mockHttp (responseJson) {
+  const calls = []
+  const mock = async () => ({
+    statusCode: 200,
+    body: {
+      json: async () => responseJson
+    }
+  })
+
+  const mockWithCapture = async (url, opts) => {
+    calls.push({ url, opts })
+    return mock(url, opts)
+  }
+
+  const original = require.cache[httpPath]
+  require.cache[httpPath] = { exports: { http: mockWithCapture } }
+
+  return {
+    calls,
+    restore: () => {
+      if (original) {
+        require.cache[httpPath] = original
+      } else {
+        delete require.cache[httpPath]
+      }
+      delete require.cache[verifyPath]
+    }
+  }
+}
 
 t.test('#verify - valid signature', async t => {
   const { publicJwk, privateJwk } = keypair()
@@ -99,4 +134,95 @@ t.test('#verify - expired signature', async t => {
     }, publicJwk),
     { code: 'EXPIRED_SIGNATURE' }
   )
+})
+
+t.test('#verify - selects kid from well-known JWKS when Signature-Input omits keyid', async t => {
+  const { publicJwk, privateJwk } = keypair()
+  const { publicJwk: otherPublicJwk } = keypair()
+
+  const uri = 'https://example.com/resource'
+  const { created, expires } = epoch()
+  const signatureInput = '("@authority");created=' + created + ';alg="ed25519";expires=' + expires + ';nonce="n";tag="web-bot-auth"'
+  const signature = webBotAuthSignature('GET', uri, signatureInput, privateJwk)
+
+  const httpMock = mockHttp({
+    keys: [otherPublicJwk, publicJwk]
+  })
+  t.teardown(httpMock.restore)
+
+  delete require.cache[verifyPath]
+  const freshVerify = require('../../../src/lib/helpers/verify')
+  const output = await freshVerify('GET', uri, {
+    Signature: `sig1=:${signature}:`,
+    'Signature-Input': `sig1=${signatureInput}`,
+    'Signature-Agent': 'sig1=agent-123.api.vestauth.com'
+  })
+
+  t.equal(output.uid, 'agent-123')
+  t.equal(output.kid, publicJwk.kid)
+  t.same(output.public_jwk, publicJwk)
+})
+
+t.test('#verify - rejects when no well-known JWKS key verifies signature (no keyid)', async t => {
+  const { privateJwk } = keypair()
+  const { publicJwk: otherPublicJwk } = keypair()
+
+  const uri = 'https://example.com/resource'
+  const { created, expires } = epoch()
+  const signatureInput = '("@authority");created=' + created + ';alg="ed25519";expires=' + expires + ';nonce="n";tag="web-bot-auth"'
+  const signature = webBotAuthSignature('GET', uri, signatureInput, privateJwk)
+
+  const httpMock = mockHttp({
+    keys: [otherPublicJwk]
+  })
+  t.teardown(httpMock.restore)
+
+  delete require.cache[verifyPath]
+  const freshVerify = require('../../../src/lib/helpers/verify')
+
+  await t.rejects(
+    freshVerify('GET', uri, {
+      Signature: `sig1=:${signature}:`,
+      'Signature-Input': `sig1=${signatureInput}`,
+      'Signature-Agent': 'sig1=agent-123.api.vestauth.com'
+    }),
+    { code: 'INVALID_SIGNATURE' }
+  )
+})
+
+t.test('#verify - selects kid from well-known JWKS even when keys omit kid', async t => {
+  const { publicJwk, privateJwk } = keypair()
+  const { publicJwk: otherPublicJwk } = keypair()
+
+  const uri = 'https://example.com/resource'
+  const signedHeaders = await headers('GET', uri, 'agent-123', JSON.stringify(privateJwk))
+  signedHeaders['Signature-Agent'] = 'sig1="http://agent-123.localhost:3000"'
+
+  const publicJwkNoKid = { ...publicJwk }
+  const otherPublicJwkNoKid = { ...otherPublicJwk }
+  delete publicJwkNoKid.kid
+  delete otherPublicJwkNoKid.kid
+
+  const httpMock = mockHttp({
+    keys: [otherPublicJwkNoKid, publicJwkNoKid]
+  })
+  t.teardown(httpMock.restore)
+
+  delete require.cache[verifyPath]
+  const freshVerify = require('../../../src/lib/helpers/verify')
+  const output = await freshVerify('GET', uri, signedHeaders)
+
+  t.equal(output.uid, 'agent-123')
+  t.equal(output.kid, publicJwk.kid)
+  t.equal(output.public_jwk.kty, publicJwk.kty)
+  t.equal(output.public_jwk.crv, publicJwk.crv)
+  t.equal(output.public_jwk.x, publicJwk.x)
+  t.equal(output.public_jwk.kid, publicJwk.kid)
+  t.equal(httpMock.calls[0].url, 'http://127.0.0.1:3000/.well-known/http-message-signatures-directory')
+  t.same(httpMock.calls[0].opts, {
+    method: 'GET',
+    headers: {
+      host: 'agent-123.localhost:3000'
+    }
+  })
 })
