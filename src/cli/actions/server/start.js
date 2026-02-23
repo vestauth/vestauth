@@ -8,7 +8,7 @@ async function start () {
     const options = this.opts()
     logger.debug(`options: ${JSON.stringify(options)}`)
 
-    await server.start()
+    await server.start({ port: options.port })
   } catch (error) {
     catchAndLog(error)
     process.exit(1)

@@ -1,7 +1,7 @@
-const server = require('./../server/index')
+const serverIndex = require('./../server/index')
 
-function serverStart () {
-  server.start()
+function serverStart ({ port }) {
+  serverIndex.start({ port })
 }
 
 module.exports = serverStart

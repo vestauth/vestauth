@@ -5,7 +5,6 @@ const primitives = require('./../primitives')
 const express = require('express')
 const crypto = require('crypto')
 
-const PORT = process.env.VESTAUTH_PORT || '3000'
 const AGENTS = []
 const PUBLIC_JWKS = []
 
@@ -61,6 +60,7 @@ app.post('/register', async (req, res) => {
 
     res.json(json)
   } catch (err) {
+    logger.error(err)
     res.status(401).json({ error: { status: 401, code: 401, message: err.message } })
   }
 })
@@ -80,17 +80,16 @@ app.get('/whoami', async (req, res) => {
 
     res.json(verified)
   } catch (err) {
-    console.log(err)
-
+    logger.error(err)
     res.status(401).json({ error: { status: 401, code: 401, message: err.message } })
   }
 })
 
 function start ({ port } = {}) {
-  const usePort = port || PORT
+  const PORT = port || '3000'
 
-  return app.listen(usePort, () => {
-    logger.success(`🖥️  vestauth server listening on http://localhost:${usePort}`)
+  return app.listen(PORT, () => {
+    logger.success(`🖥️  vestauth server listening on http://localhost:${PORT}`)
   })
 }
 
