@@ -20,6 +20,12 @@ server.command('db:create')
   .description('create vestauth database')
   .action(dbCreateAction)
 
+// vestauth server db:migrate
+const dbMigrateAction = require('./../actions/server/dbMigrate')
+server.command('db:migrate')
+  .description('run db migrations')
+  .action(dbMigrateAction)
+
 // vestauth server db:drop
 const dbDropAction = require('./../actions/server/dbDrop')
 server.command('db:drop')
