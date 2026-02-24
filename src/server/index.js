@@ -96,8 +96,8 @@ async function start ({ port, databaseUrl } = {}) {
   if (HTTP_SERVER) return HTTP_SERVER
 
   try {
-    const { sql, models } = connectOrm({ databaseUrl })
-    DB = sql
+    const { db, models } = connectOrm({ databaseUrl })
+    DB = db
     app.models = models
 
     HTTP_SERVER = await new Promise((resolve, reject) => {

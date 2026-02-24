@@ -4,16 +4,16 @@ const Agent = require('./agent')
 const PublicJwk = require('./publicJwk')
 
 function connectOrm ({ databaseUrl }) {
-  const sql = knex({
+  const db = knex({
     client: 'pg',
     connection: databaseUrl
   })
 
   return {
-    sql,
+    db,
     models: {
-      agent: new Agent({ db: sql }),
-      public_jwk: new PublicJwk({ db: sql })
+      agent: new Agent({ db }),
+      public_jwk: new PublicJwk({ db })
     }
   }
 }
