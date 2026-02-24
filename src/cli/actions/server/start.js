@@ -10,6 +10,7 @@ async function start () {
 
     await server.start({
       port: options.port,
+      hostname: options.hostname,
       databaseUrl: options.databaseUrl
     })
   } catch (error) {

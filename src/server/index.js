@@ -1,25 +1,31 @@
 const { logger } = require('./../shared/logger')
 const tool = require('./../lib/tool')
+const resolvePortAndHostname = require('./../lib/helpers/resolvePortAndHostname')
+const subdomainBaseHost = require('./../lib/helpers/subdomainBaseHost')
 const { connectOrm } = require('./models/index')
 const RegisterService = require('./services/registerService')
 const RegisterSerializer = require('./serializers/registerSerializer')
 
 const express = require('express')
 
-const app = express()
 let DB = null
 let HTTP_SERVER = null
 let CLOSE_PROMISE = null
 let SIGNAL_HANDLERS_INSTALLED = false
 let SIGNAL_HANDLERS = null
+let PORT = null
+let HOSTNAME = null
+
+const app = express()
 app.use(express.json())
 
 app.use((req, res, next) => {
   const hostNoPort = (req.headers.host || '').split(':')[0].toLowerCase()
+  const baseHost = subdomainBaseHost(HOSTNAME)
 
-  // agent-c235... .localhost
-  if (hostNoPort.endsWith('.localhost')) {
-    let sub = hostNoPort.slice(0, -'.localhost'.length) // "agent-c235..."
+  // agent-c235... .localhost or agent-c235... .example.com
+  if (baseHost && hostNoPort.endsWith(`.${baseHost}`)) {
+    let sub = hostNoPort.slice(0, -`.${baseHost}`.length) // "agent-c235..."
 
     // remove "agent-" prefix if present
     if (sub.startsWith('agent-')) {
@@ -90,8 +96,8 @@ app.get('/whoami', async (req, res) => {
   }
 })
 
-async function start ({ port, databaseUrl } = {}) {
-  const PORT = port || '3000'
+async function start ({ port, hostname, databaseUrl } = {}) {
+  ({ PORT, HOSTNAME } = resolvePortAndHostname({ port, hostname }))
 
   if (HTTP_SERVER) return HTTP_SERVER
 
@@ -102,7 +108,7 @@ async function start ({ port, databaseUrl } = {}) {
 
     HTTP_SERVER = await new Promise((resolve, reject) => {
       const server = app.listen(PORT, () => {
-        logger.success(`vestauth server listening on http://localhost:${PORT}`)
+        logger.success(`vestauth server listening on ${HOSTNAME}`)
         resolve(server)
       })
 
@@ -183,5 +189,6 @@ function removeSignalHandlers () {
 module.exports = {
   app,
   start,
-  close
+  close,
+  resolvePortAndHostname
 }
