@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-[Unreleased](https://github.com/vestauth/vestauth/compare/v0.18.0...main)
+[Unreleased](https://github.com/vestauth/vestauth/compare/v0.18.1...main)
+
+## [0.18.1](https://github.com/vestauth/vestauth/compare/v0.18.0...v0.18.1) (2026-02-24)
+
+### Changed
+
+* Move register logic to service ([#34](https://github.com/vestauth/vestauth/pull/34))
 
 ## [0.18.0](https://github.com/vestauth/vestauth/compare/v0.17.0...v0.18.0) (2026-02-24)
 
