@@ -1,8 +1,5 @@
 const Waterline = require('waterline')
 
-const protocol = require('./../../lib/helpers/protocol')
-const hostname = require('./../../lib/helpers/hostname')
-
 const PublicJwk = Waterline.Collection.extend({
   identity: 'public_jwk',
   tableName: 'public_jwks',
@@ -25,7 +22,7 @@ const PublicJwk = Waterline.Collection.extend({
       self.state = 'active' // default state
     }
     next()
-  },
+  }
 
   // customToJSON () {
   //   const self = this

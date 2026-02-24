@@ -4,7 +4,6 @@ const primitives = require('./../lib/primitives')
 const { connectOrm } = require('./models/index')
 
 const express = require('express')
-const crypto = require('crypto')
 
 const app = express()
 app.use(express.json())
