@@ -1,4 +1,5 @@
 const knex = require('knex')
+const { logger } = require('../../shared/logger')
 
 function quoteIdentifier (value) {
   return `"${String(value).replace(/"/g, '""')}"`
@@ -41,6 +42,7 @@ async function dbDrop ({ databaseUrl } = {}) {
     const exists = Array.isArray(result.rows) && result.rows.length > 0
 
     if (!exists) {
+      logger.info(`Database '${database}' does not exist`)
       return { dropped: false, database }
     }
 
@@ -51,6 +53,7 @@ async function dbDrop ({ databaseUrl } = {}) {
     )
 
     await db.raw(`drop database ${quoteIdentifier(database)}`)
+    logger.info(`Dropped database '${database}'`)
     return { dropped: true, database }
   } finally {
     await db.destroy()
