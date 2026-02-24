@@ -1,12 +1,13 @@
 const { logger } = require('./../../shared/logger')
 const tool = require('./../tool')
 const primitives = require('./../primitives')
+const { connectOrm } = require('./models/index')
 
 const express = require('express')
 const crypto = require('crypto')
 
-const AGENTS = []
 const PUBLIC_JWKS = []
+let ORM = null
 
 const app = express()
 app.use(express.json())
@@ -37,12 +38,8 @@ app.post('/register', async (req, res) => {
     const url = `${req.protocol}://${req.get('host')}${req.originalUrl}`
     const verified = await primitives.verify(req.method, url, req.headers, req.body.public_jwk)
 
-    // insert agent
-    const uid = `agent-${crypto.randomBytes(12).toString('hex')}`
-    const agent = { uid }
-    AGENTS.push(agent)
+    const agent = await app.models.agent.create().fetch()
 
-    // insert public_jwk
     const publicJwk = {
       agent_uid: agent.uid,
       kid: verified.kid,
@@ -50,15 +47,12 @@ app.post('/register', async (req, res) => {
     }
     PUBLIC_JWKS.push(publicJwk)
 
-    // response must be this format
-    const json = {
-      uid: agent.uid,
+    res.json({
+      uid: agent.uidFormatted,
       kid: publicJwk.kid,
       public_jwk: verified.public_jwk,
       is_new: true
-    }
-
-    res.json(json)
+    })
   } catch (err) {
     logger.error(err)
     res.status(401).json({ error: { status: 401, code: 401, message: err.message } })
@@ -70,7 +64,7 @@ app.get('/.well-known/http-message-signatures-directory', (req, res) => {
     .filter(jwk => jwk.agent_uid === req.agentUid)
     .map(jwk => jwk.value)
 
-  res.json({ keys })
+  return res.json({ keys })
 })
 
 app.get('/whoami', async (req, res) => {
@@ -85,8 +79,20 @@ app.get('/whoami', async (req, res) => {
   }
 })
 
-function start ({ port, databaseUrl: _databaseUrl } = {}) {
+async function start ({ port, databaseUrl } = {}) {
   const PORT = port || '3000'
+
+  const { orm, config } = connectOrm({ databaseUrl })
+
+  // promisify initialize
+  const db = await new Promise((resolve, reject) => {
+    orm.initialize(config, (err, ontology) => {
+      if (err) return reject(err)
+      resolve(ontology)
+    })
+  })
+
+  app.models = db.collections
 
   return app.listen(PORT, () => {
     logger.success(`vestauth server listening on http://localhost:${PORT}`)
