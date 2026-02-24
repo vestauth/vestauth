@@ -1,10 +1,12 @@
 const { logger } = require('./../shared/logger')
-const tool = require('./../lib/tool')
+const { version } = require('./../lib/helpers/packageJson')
 const resolvePortAndHostname = require('./../lib/helpers/resolvePortAndHostname')
 const subdomainBaseHost = require('./../lib/helpers/subdomainBaseHost')
 const { connectOrm } = require('./models/index')
 const RegisterService = require('./services/registerService')
 const RegisterSerializer = require('./serializers/registerSerializer')
+const WhoamiService = require('./services/whoamiService')
+const WhoamiSerializer = require('./serializers/whoamiSerializer')
 
 const express = require('express')
 
@@ -44,7 +46,11 @@ app.get('/', (req, res) => {
   if (req.agentUid) {
     res.json({ uid: req.agentUid })
   } else {
-    res.json({ hello: 'vestauth' })
+    res.json({
+      service: 'vestauth',
+      status: 'ok',
+      version
+    })
   }
 })
 
@@ -52,17 +58,14 @@ app.post('/register', async (req, res) => {
   try {
     const url = `${req.protocol}://${req.get('host')}${req.originalUrl}`
 
-    const {
-      agent,
-      publicJwk,
-      isNew
-    } = await new RegisterService({
+    const attrs = {
       models: app.models,
       httpMethod: req.method,
       uri: url,
       headers: req.headers,
       publicJwk: req.body.public_jwk
-    }).run()
+    }
+    const { agent, publicJwk, isNew } = await new RegisterService(attrs).run()
 
     const json = new RegisterSerializer({ agent, publicJwk, isNew }).run()
     res.json(json)
@@ -87,9 +90,15 @@ app.get('/.well-known/http-message-signatures-directory', async (req, res) => {
 app.get('/whoami', async (req, res) => {
   try {
     const url = `${req.protocol}://${req.get('host')}${req.originalUrl}`
-    const verified = await tool.verify(req.method, url, req.headers)
+    const attrs = {
+      httpMethod: req.method,
+      uri: url,
+      headers: req.headers
+    }
+    const agent = await new WhoamiService(attrs).run()
 
-    res.json(verified)
+    const json = new WhoamiSerializer({ agent }).run()
+    res.json(json)
   } catch (err) {
     logger.error(err)
     res.status(401).json({ error: { status: 401, code: 401, message: err.message } })
