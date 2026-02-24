@@ -7,7 +7,7 @@ const RegisterSerializer = require('./serializers/registerSerializer')
 const express = require('express')
 
 const app = express()
-let ORM = null
+let DB = null
 let HTTP_SERVER = null
 let CLOSE_PROMISE = null
 let SIGNAL_HANDLERS_INSTALLED = false
@@ -45,15 +45,20 @@ app.get('/', (req, res) => {
 app.post('/register', async (req, res) => {
   try {
     const url = `${req.protocol}://${req.get('host')}${req.originalUrl}`
-    const result = await new RegisterService({
+
+    const {
+      agent,
+      publicJwk,
+      isNew
+    } = await new RegisterService({
       models: app.models,
       httpMethod: req.method,
       uri: url,
       headers: req.headers,
       publicJwk: req.body.public_jwk
     }).run()
-    const json = new RegisterSerializer(result).run()
 
+    const json = new RegisterSerializer({ agent, publicJwk, isNew }).run()
     res.json(json)
   } catch (err) {
     logger.error(err)
@@ -91,18 +96,9 @@ async function start ({ port, databaseUrl } = {}) {
   if (HTTP_SERVER) return HTTP_SERVER
 
   try {
-    const { orm, config } = connectOrm({ databaseUrl })
-
-    // promisify initialize
-    const db = await new Promise((resolve, reject) => {
-      orm.initialize(config, (err, ontology) => {
-        if (err) return reject(err)
-        resolve(ontology)
-      })
-    })
-
-    ORM = orm
-    app.models = db.collections
+    const { sql, models } = connectOrm({ databaseUrl })
+    DB = sql
+    app.models = models
 
     HTTP_SERVER = await new Promise((resolve, reject) => {
       const server = app.listen(PORT, () => {
@@ -138,14 +134,9 @@ async function close () {
       HTTP_SERVER = null
     }
 
-    if (ORM) {
-      await new Promise((resolve, reject) => {
-        ORM.teardown((err) => {
-          if (err) return reject(err)
-          resolve()
-        })
-      })
-      ORM = null
+    if (DB) {
+      await DB.destroy()
+      DB = null
     }
 
     delete app.models
