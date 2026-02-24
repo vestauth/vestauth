@@ -1,12 +1,13 @@
 const { logger } = require('./../shared/logger')
 const tool = require('./../lib/tool')
-const primitives = require('./../lib/primitives')
 const { connectOrm } = require('./models/index')
+const RegisterService = require('./services/registerService')
+const RegisterSerializer = require('./serializers/registerSerializer')
 
 const express = require('express')
 
 const app = express()
-let ORM = null
+let DB = null
 let HTTP_SERVER = null
 let CLOSE_PROMISE = null
 let SIGNAL_HANDLERS_INSTALLED = false
@@ -44,24 +45,21 @@ app.get('/', (req, res) => {
 app.post('/register', async (req, res) => {
   try {
     const url = `${req.protocol}://${req.get('host')}${req.originalUrl}`
-    const verified = await primitives.verify(req.method, url, req.headers, req.body.public_jwk)
 
-    const agent = await app.models.agent.create().fetch()
+    const {
+      agent,
+      publicJwk,
+      isNew
+    } = await new RegisterService({
+      models: app.models,
+      httpMethod: req.method,
+      uri: url,
+      headers: req.headers,
+      publicJwk: req.body.public_jwk
+    }).run()
 
-    const attrs = {
-      agent: agent.id,
-      kid: verified.kid,
-      value: verified.public_jwk
-    }
-    const publicJwk = await app.models.public_jwk.create(attrs).fetch()
-    const agentFormatted = agent.toJSON()
-
-    res.json({
-      uid: agentFormatted.uidFormatted,
-      kid: publicJwk.kid,
-      public_jwk: verified.public_jwk,
-      is_new: true
-    })
+    const json = new RegisterSerializer({ agent, publicJwk, isNew }).run()
+    res.json(json)
   } catch (err) {
     logger.error(err)
     res.status(401).json({ error: { status: 401, code: 401, message: err.message } })
@@ -98,18 +96,9 @@ async function start ({ port, databaseUrl } = {}) {
   if (HTTP_SERVER) return HTTP_SERVER
 
   try {
-    const { orm, config } = connectOrm({ databaseUrl })
-
-    // promisify initialize
-    const db = await new Promise((resolve, reject) => {
-      orm.initialize(config, (err, ontology) => {
-        if (err) return reject(err)
-        resolve(ontology)
-      })
-    })
-
-    ORM = orm
-    app.models = db.collections
+    const { db, models } = connectOrm({ databaseUrl })
+    DB = db
+    app.models = models
 
     HTTP_SERVER = await new Promise((resolve, reject) => {
       const server = app.listen(PORT, () => {
@@ -145,14 +134,9 @@ async function close () {
       HTTP_SERVER = null
     }
 
-    if (ORM) {
-      await new Promise((resolve, reject) => {
-        ORM.teardown((err) => {
-          if (err) return reject(err)
-          resolve()
-        })
-      })
-      ORM = null
+    if (DB) {
+      await DB.destroy()
+      DB = null
     }
 
     delete app.models
