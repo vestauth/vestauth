@@ -31,7 +31,7 @@ async function dbMigrate ({ databaseUrl } = {}) {
     connection,
     ssl: { rejectUnauthorized: false },
     migrations: {
-      directory: path.resolve(__dirname, '../../db/migrations')
+      directory: path.resolve(__dirname, '../../server/db/migration')
     }
   })
 
