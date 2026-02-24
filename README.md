@@ -342,6 +342,7 @@ $ vestauth server db:migrate
 Drop `vestauth_production` table.
 
 ```sh
+$ vestauth server db:drop
 Dropped database 'vestauth_production'
 ```
 
