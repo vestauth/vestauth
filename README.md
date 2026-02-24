@@ -314,6 +314,38 @@ $ vestauth tool verify GET https://api.vestauth.com/whoami --signature "sig1=:H1
 ```
 
 </details>
+<details><summary>`server db:create`</summary><br>
+
+Create `vestauth_production` database.
+
+```sh
+$ vestauth server db:create 
+Created database 'vestauth_production'
+```
+
+</details>
+<details><summary>`server db:migrate`</summary><br>
+
+Run `vestauth_production` migrations.
+
+```sh
+$ vestauth server db:migrate 
+== 20260223204000 CreateAgentsTable: migrating ================================================
+== 20260223204000 CreateAgentsTable: migrated (0.0160s) ===========================
+== 20260223205500 CreatePublicJwksTable: migrating ================================================
+== 20260223205500 CreatePublicJwksTable: migrated (0.0100s) ===========================
+```
+
+</details>
+<details><summary>`server db:drop`</summary><br>
+
+Drop `vestauth_production` table.
+
+```sh
+Dropped database 'vestauth_production'
+```
+
+</details>
 <details><summary>`server start`</summary><br>
 
 Start vestauth server.
@@ -331,6 +363,26 @@ Start vestauth server on specific port.
 ```sh
 $ vestauth server start --port 4567
 vestauth server listening on http://localhost:4567
+```
+
+</details>
+<details><summary>`server start --hostname`</summary><br>
+
+Specify hostname for vestauth server (default: localhost:3000).
+
+```sh
+$ vestauth server start --hostname vestauth.yoursite.com
+vestauth server listening on https://vestauth.yoursite.com
+```
+
+</details>
+<details><summary>`server start --database-url`</summary><br>
+
+Specify database url for vestauth server (default: localhost/vestauth_production).
+
+```sh
+$ vestauth server start --database-url postgresql://USER:PASS@aws-1-us-east-1.pooler.supabase.com:5432/postgres
+vestauth server listening on http://localhost:3000
 ```
 
 </details>
