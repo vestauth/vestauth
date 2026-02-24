@@ -588,6 +588,24 @@ Vestauth follows these specifications to ensure interoperability between agents 
 &nbsp;
 
 </details>
+<details><summary>Can I host my own Vestauth server?</summary><br>
+
+> Yes.
+>
+> To host your own Vestauth server create the database, run the migrations, and start the server.
+>
+> ```
+> $ vestauth server db:create
+> $ vestauth server db:migrate
+> $ vestauth server start
+> vestauth server listening on http://localhost:3000
+> ```
+>
+
+&nbsp;
+
+</details>
+
 
 <details><summary>Why does Vestauth use Ed25519 keys?</summary><br>
 
