@@ -97,31 +97,36 @@ async function start ({ port, databaseUrl } = {}) {
 
   if (HTTP_SERVER) return HTTP_SERVER
 
-  const { orm, config } = connectOrm({ databaseUrl })
+  try {
+    const { orm, config } = connectOrm({ databaseUrl })
 
-  // promisify initialize
-  const db = await new Promise((resolve, reject) => {
-    orm.initialize(config, (err, ontology) => {
-      if (err) return reject(err)
-      resolve(ontology)
-    })
-  })
-
-  ORM = orm
-  app.models = db.collections
-
-  HTTP_SERVER = await new Promise((resolve, reject) => {
-    const server = app.listen(PORT, () => {
-      logger.success(`vestauth server listening on http://localhost:${PORT}`)
-      resolve(server)
+    // promisify initialize
+    const db = await new Promise((resolve, reject) => {
+      orm.initialize(config, (err, ontology) => {
+        if (err) return reject(err)
+        resolve(ontology)
+      })
     })
 
-    server.once('error', reject)
-  })
+    ORM = orm
+    app.models = db.collections
 
-  installSignalHandlers()
+    HTTP_SERVER = await new Promise((resolve, reject) => {
+      const server = app.listen(PORT, () => {
+        logger.success(`vestauth server listening on http://localhost:${PORT}`)
+        resolve(server)
+      })
 
-  return HTTP_SERVER
+      server.once('error', reject)
+    })
+
+    installSignalHandlers()
+
+    return HTTP_SERVER
+  } catch (error) {
+    await close().catch(() => {})
+    throw error
+  }
 }
 
 async function close () {
