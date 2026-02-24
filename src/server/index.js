@@ -6,6 +6,11 @@ const { connectOrm } = require('./models/index')
 const express = require('express')
 
 const app = express()
+let ORM = null
+let HTTP_SERVER = null
+let CLOSE_PROMISE = null
+let SIGNAL_HANDLERS_INSTALLED = false
+let SIGNAL_HANDLERS = null
 app.use(express.json())
 
 app.use((req, res, next) => {
@@ -90,6 +95,8 @@ app.get('/whoami', async (req, res) => {
 async function start ({ port, databaseUrl } = {}) {
   const PORT = port || '3000'
 
+  if (HTTP_SERVER) return HTTP_SERVER
+
   const { orm, config } = connectOrm({ databaseUrl })
 
   // promisify initialize
@@ -100,14 +107,92 @@ async function start ({ port, databaseUrl } = {}) {
     })
   })
 
+  ORM = orm
   app.models = db.collections
 
-  return app.listen(PORT, () => {
-    logger.success(`vestauth server listening on http://localhost:${PORT}`)
+  HTTP_SERVER = await new Promise((resolve, reject) => {
+    const server = app.listen(PORT, () => {
+      logger.success(`vestauth server listening on http://localhost:${PORT}`)
+      resolve(server)
+    })
+
+    server.once('error', reject)
   })
+
+  installSignalHandlers()
+
+  return HTTP_SERVER
+}
+
+async function close () {
+  if (CLOSE_PROMISE) return CLOSE_PROMISE
+
+  CLOSE_PROMISE = (async () => {
+    removeSignalHandlers()
+
+    if (HTTP_SERVER) {
+      await new Promise((resolve, reject) => {
+        HTTP_SERVER.close((err) => {
+          if (err) return reject(err)
+          resolve()
+        })
+      })
+      HTTP_SERVER = null
+    }
+
+    if (ORM) {
+      await new Promise((resolve, reject) => {
+        ORM.teardown((err) => {
+          if (err) return reject(err)
+          resolve()
+        })
+      })
+      ORM = null
+    }
+
+    delete app.models
+  })()
+
+  try {
+    await CLOSE_PROMISE
+  } finally {
+    CLOSE_PROMISE = null
+  }
+}
+
+function installSignalHandlers () {
+  if (SIGNAL_HANDLERS_INSTALLED) return
+
+  const shutdown = () => {
+    close()
+      .then(() => process.exit(0))
+      .catch((err) => {
+        logger.error(err)
+        process.exit(1)
+      })
+  }
+
+  SIGNAL_HANDLERS = {
+    SIGINT: () => shutdown('SIGINT'),
+    SIGTERM: () => shutdown('SIGTERM')
+  }
+
+  process.once('SIGINT', SIGNAL_HANDLERS.SIGINT)
+  process.once('SIGTERM', SIGNAL_HANDLERS.SIGTERM)
+  SIGNAL_HANDLERS_INSTALLED = true
+}
+
+function removeSignalHandlers () {
+  if (!SIGNAL_HANDLERS_INSTALLED || !SIGNAL_HANDLERS) return
+
+  process.removeListener('SIGINT', SIGNAL_HANDLERS.SIGINT)
+  process.removeListener('SIGTERM', SIGNAL_HANDLERS.SIGTERM)
+  SIGNAL_HANDLERS = null
+  SIGNAL_HANDLERS_INSTALLED = false
 }
 
 module.exports = {
   app,
-  start
+  start,
+  close
 }
