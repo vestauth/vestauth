@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-[Unreleased](https://github.com/vestauth/vestauth/compare/v0.20.0...main)
+[Unreleased](https://github.com/vestauth/vestauth/compare/v0.20.1...main)
+
+## [0.20.1](https://github.com/vestauth/vestauth/compare/v0.20.0...v0.20.1) (2026-02-24)
+
+### Changed
+
+* Respect preset env ([#38](https://github.com/vestauth/vestauth/pull/38))
 
 ## [0.20.0](https://github.com/vestauth/vestauth/compare/v0.19.0...v0.20.0) (2026-02-24)
 
