@@ -22,6 +22,22 @@ let HOSTNAME = null
 
 const app = express()
 app.use(express.json())
+app.use((req, res, next) => {
+  const startedAt = Date.now()
+
+  res.on('finish', () => {
+    const durationMs = Date.now() - startedAt
+    const host = req.get('host') || '-'
+    const contentLength = res.getHeader('content-length') || '-'
+
+    logger.info(
+      `at=info method=${req.method} path="${req.originalUrl}" status=${res.statusCode} ` +
+      `host="${host}" duration_ms=${durationMs} bytes=${contentLength}`
+    )
+  })
+
+  next()
+})
 
 app.use((req, res, next) => {
   const hostNoPort = (req.headers.host || '').split(':')[0].toLowerCase()
