@@ -1,8 +1,7 @@
 class RegisterSerializer {
-  constructor ({ agent, publicJwk, verifiedPublicJwk, isNew }) {
+  constructor ({ agent, publicJwk, isNew }) {
     this.agent = agent
     this.publicJwk = publicJwk
-    this.verifiedPublicJwk = verifiedPublicJwk
     this.isNew = isNew
   }
 
@@ -12,7 +11,7 @@ class RegisterSerializer {
     return {
       uid: agentFormatted.uidFormatted,
       kid: this.publicJwk.kid,
-      public_jwk: this.verifiedPublicJwk,
+      public_jwk: this.publicJwk,
       is_new: Boolean(this.isNew)
     }
   }

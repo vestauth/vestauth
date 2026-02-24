@@ -10,25 +10,37 @@ class RegisterService {
   }
 
   async run () {
-    const verified = await primitives.verify(
+    this.verified = await primitives.verify(
       this.httpMethod,
       this.uri,
       this.headers,
       this.publicJwk
     )
 
-    const agent = await this.models.agent.create().fetch()
+    const existingPublicJwk = await this.models.public_jwk.findOne({ kid: this.verified.kid })
+    if (existingPublicJwk) {
+      const agent = await this.models.agent.findOne({ id: existingPublicJwk.agent })
+      if (!agent) {
+        throw new Error('agent not found for public_jwk')
+      }
 
-    const publicJwk = await this.models.public_jwk.create({
+      return {
+        agent,
+        publicJwk: existingPublicJwk.value,
+        isNew: false
+      }
+    }
+
+    const agent = await this.models.agent.create()
+    const createdPublicJwk = await this.models.public_jwk.create({
       agent: agent.id,
-      kid: verified.kid,
-      value: verified.public_jwk
-    }).fetch()
+      kid: this.verified.kid,
+      value: this.verified.public_jwk
+    })
 
     return {
       agent,
-      publicJwk,
-      verifiedPublicJwk: verified.public_jwk,
+      publicJwk: createdPublicJwk.value,
       isNew: true
     }
   }
