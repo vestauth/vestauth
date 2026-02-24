@@ -77,27 +77,6 @@ app.post('/register', async (req, res) => {
   }
 })
 
-app.post('/rotate', async (req, res) => {
-  try {
-    const url = `${req.protocol}://${req.get('host')}${req.originalUrl}`
-
-    const attrs = {
-      models: app.models,
-      httpMethod: req.method,
-      uri: url,
-      headers: req.headers,
-      publicJwk: req.body.public_jwk
-    }
-    const { agent, publicJwk } = await new RotateService(attrs).run()
-
-    const json = new RotateSerializer({ agent, publicJwk }).run()
-    res.json(json)
-  } catch (err) {
-    logger.error(err)
-    res.status(401).json({ error: { status: 401, code: 401, message: err.message } })
-  }
-})
-
 app.get('/.well-known/http-message-signatures-directory', async (req, res) => {
   const agent = await app.models.agent.findOne({ uid: req.agentUid })
   if (!agent) {
@@ -121,6 +100,27 @@ app.get('/whoami', async (req, res) => {
     const agent = await new WhoamiService(attrs).run()
 
     const json = new WhoamiSerializer({ agent }).run()
+    res.json(json)
+  } catch (err) {
+    logger.error(err)
+    res.status(401).json({ error: { status: 401, code: 401, message: err.message } })
+  }
+})
+
+app.post('/rotate', async (req, res) => {
+  try {
+    const url = `${req.protocol}://${req.get('host')}${req.originalUrl}`
+
+    const attrs = {
+      models: app.models,
+      httpMethod: req.method,
+      uri: url,
+      headers: req.headers,
+      publicJwk: req.body.public_jwk
+    }
+    const { agent, publicJwk } = await new RotateService(attrs).run()
+
+    const json = new RotateSerializer({ agent, publicJwk }).run()
     res.json(json)
   } catch (err) {
     logger.error(err)
