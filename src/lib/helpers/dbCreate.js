@@ -1,4 +1,5 @@
 const knex = require('knex')
+const { logger } = require('../../shared/logger')
 
 function quoteIdentifier (value) {
   return `"${String(value).replace(/"/g, '""')}"`
@@ -41,10 +42,12 @@ async function dbCreate ({ databaseUrl } = {}) {
     const exists = Array.isArray(result.rows) && result.rows.length > 0
 
     if (exists) {
+      logger.info(`Database '${database}' already exists`)
       return { created: false, database }
     }
 
     await db.raw(`create database ${quoteIdentifier(database)}`)
+    logger.info(`Created database '${database}'`)
     return { created: true, database }
   } finally {
     await db.destroy()

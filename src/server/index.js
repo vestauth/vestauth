@@ -1,13 +1,10 @@
-const { logger } = require('./../../shared/logger')
-const tool = require('./../tool')
-const primitives = require('./../primitives')
+const { logger } = require('./../shared/logger')
+const tool = require('./../lib/tool')
+const primitives = require('./../lib/primitives')
 const { connectOrm } = require('./models/index')
 
 const express = require('express')
 const crypto = require('crypto')
-
-const PUBLIC_JWKS = []
-let ORM = null
 
 const app = express()
 app.use(express.json())
@@ -17,8 +14,15 @@ app.use((req, res, next) => {
 
   // agent-c235... .localhost
   if (hostNoPort.endsWith('.localhost')) {
-    const sub = hostNoPort.slice(0, -'.localhost'.length) // "agent-c235..."
+    let sub = hostNoPort.slice(0, -'.localhost'.length) // "agent-c235..."
+
+    // remove "agent-" prefix if present
+    if (sub.startsWith('agent-')) {
+      sub = sub.slice('agent-'.length)
+    }
+
     req.agentUid = sub
+
     return next()
   }
 
@@ -40,15 +44,16 @@ app.post('/register', async (req, res) => {
 
     const agent = await app.models.agent.create().fetch()
 
-    const publicJwk = {
-      agent_uid: agent.uid,
+    const attrs = {
+      agent: agent.id,
       kid: verified.kid,
       value: verified.public_jwk
     }
-    PUBLIC_JWKS.push(publicJwk)
+    const publicJwk = await app.models.public_jwk.create(attrs).fetch()
+    const agentFormatted = agent.toJSON()
 
     res.json({
-      uid: agent.uidFormatted,
+      uid: agentFormatted.uidFormatted,
       kid: publicJwk.kid,
       public_jwk: verified.public_jwk,
       is_new: true
@@ -59,10 +64,14 @@ app.post('/register', async (req, res) => {
   }
 })
 
-app.get('/.well-known/http-message-signatures-directory', (req, res) => {
-  const keys = PUBLIC_JWKS
-    .filter(jwk => jwk.agent_uid === req.agentUid)
-    .map(jwk => jwk.value)
+app.get('/.well-known/http-message-signatures-directory', async (req, res) => {
+  const agent = await app.models.agent.findOne({ uid: req.agentUid })
+  if (!agent) {
+    return res.status(404).json({ error: { status: 404, code: 404, message: 'not found' } })
+  }
+
+  const jwks = await app.models.public_jwk.find({ agent: agent.id, state: 'active' })
+  const keys = jwks.map(j => j.value)
 
   return res.json({ keys })
 })
