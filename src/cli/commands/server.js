@@ -2,6 +2,7 @@ const { Command } = require('commander')
 const env = require('./../../lib/helpers/env')
 const databaseUrl = require('./../../lib/helpers/databaseUrl')
 const protocol = require('./../../lib/helpers/protocol')
+const hostname = require('./../../lib/helpers/hostname')
 
 const server = new Command('server')
 
@@ -14,7 +15,8 @@ const startAction = require('./../actions/server/start')
 server.command('start')
   .description('start vestauth server')
   .option('--port <port>', 'port', env('PORT'))
-  .option('--protocol <protocol>', 'https or http', env('PROTOCOL'))
+  .option('--protocol <protocol>', 'https or http', protocol())
+  .option('--hostname <hostname>', 'localhost:3000', hostname())
   .option('--database-url <databaseUrl>', 'DATABASE_URL', databaseUrl())
   .action(startAction)
 
