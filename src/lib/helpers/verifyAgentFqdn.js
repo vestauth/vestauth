@@ -14,11 +14,11 @@ function getToolFqdnRegex () {
 
 function verifyAgentFqdn (fqdn) {
   if (!fqdn || typeof fqdn !== 'string') {
-    throw new Errors().invalidToolFqdn()
+    throw new Errors().invalidSignatureAgent()
   }
   const pattern = getToolFqdnRegex()
   if (!pattern.test(fqdn)) {
-    throw new Errors().invalidToolFqdn()
+    throw new Errors().invalidSignatureAgent()
   }
 
   return true
