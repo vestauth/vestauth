@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-[Unreleased](https://github.com/vestauth/vestauth/compare/v0.18.1...main)
+[Unreleased](https://github.com/vestauth/vestauth/compare/v0.18.2...main)
+
+## [0.18.2](https://github.com/vestauth/vestauth/compare/v0.18.1...v0.18.2) (2026-02-24)
+
+### Changed
+
+* Pass `--hostname` ([#35](https://github.com/vestauth/vestauth/pull/35))
 
 ## [0.18.1](https://github.com/vestauth/vestauth/compare/v0.18.0...v0.18.1) (2026-02-24)
 
