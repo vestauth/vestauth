@@ -48,7 +48,7 @@ t.test('rotates keys by verifying current key, creating new key, and revoking cu
     }
   }
 
-  let trxExistingNewPublicJwk = null
+  const trxExistingNewPublicJwk = null
   const trx = (table) => {
     const builder = {
       select (cols) {
@@ -123,7 +123,7 @@ t.test('rotates keys by verifying current key, creating new key, and revoking cu
     models,
     httpMethod: 'POST',
     uri: 'https://api.example.com/rotate',
-    headers: { 'signature-input': 'sig1=(\"@authority\");keyid=\"kid-current\"' },
+    headers: { 'signature-input': 'sig1=("@authority");keyid="kid-current"' },
     publicJwk: { kty: 'OKP', kid: 'kid-new', x: 'new' }
   }).run()
 
@@ -133,7 +133,7 @@ t.test('rotates keys by verifying current key, creating new key, and revoking cu
   t.same(verifyCalls, [[
     'POST',
     'https://api.example.com/rotate',
-    { 'signature-input': 'sig1=(\"@authority\");keyid=\"kid-current\"' },
+    { 'signature-input': 'sig1=("@authority");keyid="kid-current"' },
     { kty: 'OKP', kid: 'kid-current', x: 'old' }
   ]])
 
