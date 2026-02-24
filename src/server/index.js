@@ -1,7 +1,8 @@
 const { logger } = require('./../shared/logger')
 const tool = require('./../lib/tool')
-const primitives = require('./../lib/primitives')
 const { connectOrm } = require('./models/index')
+const RegisterService = require('./services/registerService')
+const RegisterSerializer = require('./serializers/registerSerializer')
 
 const express = require('express')
 
@@ -44,24 +45,16 @@ app.get('/', (req, res) => {
 app.post('/register', async (req, res) => {
   try {
     const url = `${req.protocol}://${req.get('host')}${req.originalUrl}`
-    const verified = await primitives.verify(req.method, url, req.headers, req.body.public_jwk)
+    const result = await new RegisterService({
+      models: app.models,
+      httpMethod: req.method,
+      uri: url,
+      headers: req.headers,
+      publicJwk: req.body.public_jwk
+    }).run()
+    const json = new RegisterSerializer(result).run()
 
-    const agent = await app.models.agent.create().fetch()
-
-    const attrs = {
-      agent: agent.id,
-      kid: verified.kid,
-      value: verified.public_jwk
-    }
-    const publicJwk = await app.models.public_jwk.create(attrs).fetch()
-    const agentFormatted = agent.toJSON()
-
-    res.json({
-      uid: agentFormatted.uidFormatted,
-      kid: publicJwk.kid,
-      public_jwk: verified.public_jwk,
-      is_new: true
-    })
+    res.json(json)
   } catch (err) {
     logger.error(err)
     res.status(401).json({ error: { status: 401, code: 401, message: err.message } })
