@@ -9,28 +9,28 @@ t.test('#verifyAgentFqdn - valid fqdn', async t => {
 t.test('#verifyAgentFqdn - scheme not allowed', async t => {
   t.throws(
     () => verifyAgentFqdn('http://agent-123.api.vestauth.com'),
-    new Error('[INVALID_SIGNATURE_AGENT] invalid --signature-agent')
+    new Error('[INVALID_TOOL_FQDN] invalid tool fqdn')
   )
 })
 
 t.test('#verifyAgentFqdn - path not allowed', async t => {
   t.throws(
     () => verifyAgentFqdn('agent-123.api.vestauth.com/.well-known'),
-    new Error('[INVALID_SIGNATURE_AGENT] invalid --signature-agent')
+    new Error('[INVALID_TOOL_FQDN] invalid tool fqdn')
   )
 })
 
 t.test('#verifyAgentFqdn - wrong domain', async t => {
   t.throws(
     () => verifyAgentFqdn('agent-123.example.com'),
-    new Error('[INVALID_SIGNATURE_AGENT] invalid --signature-agent')
+    new Error('[INVALID_TOOL_FQDN] invalid tool fqdn')
   )
 })
 
 t.test('#verifyAgentFqdn - non-string', async t => {
   t.throws(
     () => verifyAgentFqdn(null),
-    new Error('[INVALID_SIGNATURE_AGENT] invalid --signature-agent')
+    new Error('[INVALID_TOOL_FQDN] invalid tool fqdn')
   )
 })
 
@@ -42,7 +42,7 @@ t.test('#verifyAgentFqdn - env override', async t => {
   t.equal(verifyAgentFqdn('custom-abc.api.vestauth.com'), true)
   t.throws(
     () => verifyAgentFqdn('agent-123.api.vestauth.com'),
-    new Error('[INVALID_SIGNATURE_AGENT] invalid --signature-agent')
+    new Error('[INVALID_TOOL_FQDN] invalid tool fqdn')
   )
 
   if (originalTool === undefined) {
@@ -67,7 +67,7 @@ t.test('#verifyAgentFqdn - legacy env override still works', async t => {
   t.equal(verifyAgentFqdn('legacy-abc.api.vestauth.com'), true)
   t.throws(
     () => verifyAgentFqdn('agent-123.api.vestauth.com'),
-    new Error('[INVALID_SIGNATURE_AGENT] invalid --signature-agent')
+    new Error('[INVALID_TOOL_FQDN] invalid tool fqdn')
   )
 
   if (originalTool === undefined) {
@@ -92,7 +92,7 @@ t.test('#verifyAgentFqdn - TOOL_FQDN_REGEX takes precedence over PROVIDER_FQDN_R
   t.equal(verifyAgentFqdn('tool-abc.api.vestauth.com'), true)
   t.throws(
     () => verifyAgentFqdn('provider-abc.api.vestauth.com'),
-    new Error('[INVALID_SIGNATURE_AGENT] invalid --signature-agent')
+    new Error('[INVALID_TOOL_FQDN] invalid tool fqdn')
   )
 
   if (originalTool === undefined) {

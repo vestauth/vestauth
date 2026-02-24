@@ -99,6 +99,17 @@ class Errors {
     return e
   }
 
+  invalidToolFqdn () {
+    const code = 'INVALID_TOOL_FQDN'
+    const message = `[${code}] invalid tool fqdn`
+    const help = `[${code}] https://github.com/vestauth/vestauth/issues/39`
+
+    const e = new Error(message)
+    e.code = code
+    e.help = help
+    return e
+  }
+
   missingHttpMethod () {
     const code = 'MISSING_HTTP_METHOD'
     const message = `[${code}] missing httpMethod`
