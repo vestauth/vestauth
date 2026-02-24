@@ -55,7 +55,7 @@ t.test('runs pending migrations and returns batch/log', async t => {
   t.same(result, { batchNo: 3, migrations: ['001_init.js', '002_public_jwks.js'] })
   t.equal(knexConfig.client, 'pg')
   t.equal(knexConfig.connection, 'postgres://localhost/vestauth_production')
-  t.match(knexConfig.migrations.directory, /src[/\\]db[/\\]migrations$/)
+  t.match(knexConfig.migrations.directory, /src[/\\]server[/\\]db[/\\]migration$/)
   t.equal(latestCalls, 1)
   t.equal(destroyCalls, 1)
 })
