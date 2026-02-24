@@ -5,6 +5,8 @@ const subdomainBaseHost = require('./../lib/helpers/subdomainBaseHost')
 const { connectOrm } = require('./models/index')
 const RegisterService = require('./services/registerService')
 const RegisterSerializer = require('./serializers/registerSerializer')
+const RotateService = require('./services/rotateService')
+const RotateSerializer = require('./serializers/rotateSerializer')
 const WhoamiService = require('./services/whoamiService')
 const WhoamiSerializer = require('./serializers/whoamiSerializer')
 
@@ -68,6 +70,27 @@ app.post('/register', async (req, res) => {
     const { agent, publicJwk, isNew } = await new RegisterService(attrs).run()
 
     const json = new RegisterSerializer({ agent, publicJwk, isNew }).run()
+    res.json(json)
+  } catch (err) {
+    logger.error(err)
+    res.status(401).json({ error: { status: 401, code: 401, message: err.message } })
+  }
+})
+
+app.post('/rotate', async (req, res) => {
+  try {
+    const url = `${req.protocol}://${req.get('host')}${req.originalUrl}`
+
+    const attrs = {
+      models: app.models,
+      httpMethod: req.method,
+      uri: url,
+      headers: req.headers,
+      publicJwk: req.body.public_jwk
+    }
+    const { agent, publicJwk } = await new RotateService(attrs).run()
+
+    const json = new RotateSerializer({ agent, publicJwk }).run()
     res.json(json)
   } catch (err) {
     logger.error(err)
