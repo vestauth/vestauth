@@ -543,7 +543,7 @@ $ vestauth agent init --hostname http://localhost:3000
 
 That's it!
 
-> [!TIP]
+> [!NOTE]
 > Edit the `.env` file to configure your server.
 > ```
 > PORT="3000"
