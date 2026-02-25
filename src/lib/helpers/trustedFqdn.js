@@ -12,10 +12,11 @@ function trustedFqdn (fqdn, hostname = null) {
   // self .HOSTNAME trusted
   if (hostname) {
     const { host } = extractHostAndHostname(hostname)
-    const HOSTNAME_REGEX = new RegExp(`^[A-Za-z0-9-]+\.${escapeRegex(host)}$`)
+    const HOSTNAME_REGEX = new RegExp(`^[A-Za-z0-9-]+.${escapeRegex(host)}$`)
     if (HOSTNAME_REGEX.test(fqdn)) return true
   }
 
+  // user sets TOOL_FQDN_REGEX in environment (.env)
   const override = process.env.TOOL_FQDN_REGEX || process.env.PROVIDER_FQDN_REGEX
   if (override) {
     const OVERRIDE_REGEX = new RegExp(`${escapeRegex(override)}`)
