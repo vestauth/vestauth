@@ -502,10 +502,10 @@ Edit this for your own self-hosting needs. For example, in production:
 
 > [!IMPORTANT]
 > In production (non-localhost) add a wildcard domain for `*.${HOSTNAME}`.
-> 
 > For example, if your `HOSTNAME` is set to `vestauth.yourapp.com` then you must have a wildcard DNS record at `*.vestauth.yourapp.com`. 
-> 
 > This is necessary for the `.well-known` endpoints to resolve according to [web-bot-auth standard](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture).
+
+&nbps;
 
 </details>
 
