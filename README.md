@@ -86,7 +86,7 @@ AGENT_PUBLIC_JWK="{"crv":"Ed25519","x":"py2xNaAfjKZiau-jtmJls6h_3n8xJ1Ur0ie-n9b8
 AGENT_PRIVATE_JWK="{"crv":"Ed25519","d":"Z9vbwN-3eiFMVv_TPWXOxqSMJAT21kZvejWi72yiAaQ","x":"py2xNaAfjKZiau-jtmJls6h_3n8xJ1Ur0ie-n9b8zWg","kty":"OKP","kid":"B0u80Gw28W9U2Jl5t_EBiWeBajO2104kOYZ9Ikucl5I"}"
 ```
 
-[Ask ChatGPT: Are HTTP message signatures more secure than API keys?](https://chat.openai.com/?q=Are%20HTTP%20message%20signatures%20more%20secure%20than%20API%20keys%3F)
+[💬 Ask ChatGPT: Are HTTP message signatures more secure than API keys?](https://chat.openai.com/?q=Are%20HTTP%20message%20signatures%20more%20secure%20than%20API%20keys%3F)
 
 </details>
 
