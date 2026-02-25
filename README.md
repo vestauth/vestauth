@@ -314,6 +314,17 @@ $ vestauth tool verify GET https://api.vestauth.com/whoami --signature "sig1=:H1
 ```
 
 </details>
+<details><summary>`server init`</summary><br>
+
+Create/update server `.env` for self-hosting (`PORT`, `HOSTNAME`, `DATABASE_URL`).
+
+```sh
+$ vestauth server init
+✔ ready (.env/HOSTNAME=http://localhost:3000)
+⮕ next run: [vestauth server start]
+```
+
+</details>
 <details><summary>`server db:create`</summary><br>
 
 Create `vestauth_production` database.
