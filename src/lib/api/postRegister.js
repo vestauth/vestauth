@@ -19,6 +19,7 @@ class PostRegister {
     const headers = await agentHeaders(httpMethod, url, 'REGISTERING', JSON.stringify(privateJwk), null, null, hostname)
     headers['Content-Type'] = 'application/json'
     delete headers['Signature-Agent'] // don't send Signature-Agent on registration. nothing to discover yet.
+    delete headers['signature-agent']
 
     const resp = await http(url, {
       method: httpMethod,
