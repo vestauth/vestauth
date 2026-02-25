@@ -524,9 +524,6 @@ $ vestauth server init
 $ vestauth server db:create
 $ vestauth server db:migrate
 ```
-> [!TIP]
-> Use the `.env` for configuration - like changing `localhost:3000` to `vestauth.yoursite.com`.
-
 Then start the server.
 
 ```sh
@@ -545,6 +542,14 @@ $ vestauth agent init --hostname http://localhost:3000
 ```
 
 That's it!
+
+> [!TIP]
+> Edit the `.env` file to configure your server.
+> ```
+> PORT="3000"
+> HOSTNAME="http://localhost:3000"
+> DATABASE_URL="postgres://localhost/vestauth_production"
+> ```
 
 &nbsp;
 
