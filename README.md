@@ -469,47 +469,6 @@ await vestauth.primitives.verify(httpMethod, url, headers, publicJwk)
 
 &nbsp;
 
-## Compare
-
-**Agent + Tool Matrix** – Compare Vestauth vs existing auth.
-
-| Capability | Vestauth | API Keys | OAuth | Cookies |
-|---|---|---|---|---|
-| **Agent: no browser required** | ✅ | ✅ | ⚠️ (depends on flow) | ❌ |
-| **Agent: easy to automate** | ✅ | ✅ | ⚠️ | ❌ |
-| **Agent: no shared secret** | ✅ | ❌ | ⚠️ (bearer tokens) | ❌ |
-| **Agent: per‑request identity proof** | ✅ | ❌ | ⚠️ (token‑based) | ❌ |
-| **Agent: easy key/token rotation** | ✅ | ⚠️ | ⚠️ | ⚠️ |
-| **Tool: no secret storage** | ✅ (public keys only) | ❌ | ❌ | ❌ |
-| **Tool: strong attribution to agent** | ✅ | ⚠️ | ⚠️ | ❌ |
-| **Tool: stateless verification** | ✅ | ✅ | ✅ | ❌ |
-| **Tool: simple to implement** | ⚠️ (sig verification) | ✅ | ❌ | ✅ |
-| **Tool: revocation control** | ✅ | ⚠️ | ✅ | ⚠️ |
-
-Legend: ✅ strong fit, ⚠️ partial/conditional, ❌ poor fit
-
-#### How It Works
-
-1. An agent generates a public/private keypair.
-2. The agent signs each HTTP request with its private key.
-3. The tool verifies the signature using the agent’s public key.
-4. Requests are attributable, auditable, and do not require shared secrets or browser sessions.
-
-&nbsp;
-
-## Standards
-
-Vestauth builds on open internet standards for agent authentication.
-
-| Specification | Purpose |
-|------------|------------|
-| **[RFC 9421 – HTTP Message Signatures](https://datatracker.ietf.org/doc/rfc9421/)** | Defines how requests are cryptographically signed and verified |
-| **[Web-Bot-Auth Draft](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture)** | Defines headers and authentication architecture for autonomous agents |
-
-Vestauth follows these specifications to ensure interoperability between agents and tools while avoiding vendor lock-in. Vestauth focuses on developer ergonomics while staying compliant with these emerging standards.
-
-&nbsp;
-
 ## Self-hosting
 
 > Run your own Vestauth server.
@@ -568,6 +527,47 @@ $ vestauth agent init --hostname http://localhost:3000
 ```
 
 That's it! You now own your own vestauth ([web-bot-auth](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture)) infrastructure.
+
+&nbsp;
+
+## Standards
+
+> Vestauth builds on open internet standards for agent authentication.
+
+| Specification | Purpose |
+|------------|------------|
+| **[RFC 9421 – HTTP Message Signatures](https://datatracker.ietf.org/doc/rfc9421/)** | Defines how requests are cryptographically signed and verified |
+| **[Web-Bot-Auth Draft](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture)** | Defines headers and authentication architecture for autonomous agents |
+
+Vestauth follows these specifications to ensure interoperability between agents and tools while avoiding vendor lock-in. Vestauth focuses on developer ergonomics while staying compliant with these emerging standards.
+
+&nbsp;
+
+## Compare
+
+**Agent + Tool Matrix** – Compare Vestauth vs existing auth.
+
+| Capability | Vestauth | API Keys | OAuth | Cookies |
+|---|---|---|---|---|
+| **Agent: no browser required** | ✅ | ✅ | ⚠️ (depends on flow) | ❌ |
+| **Agent: easy to automate** | ✅ | ✅ | ⚠️ | ❌ |
+| **Agent: no shared secret** | ✅ | ❌ | ⚠️ (bearer tokens) | ❌ |
+| **Agent: per‑request identity proof** | ✅ | ❌ | ⚠️ (token‑based) | ❌ |
+| **Agent: easy key/token rotation** | ✅ | ⚠️ | ⚠️ | ⚠️ |
+| **Tool: no secret storage** | ✅ (public keys only) | ❌ | ❌ | ❌ |
+| **Tool: strong attribution to agent** | ✅ | ⚠️ | ⚠️ | ❌ |
+| **Tool: stateless verification** | ✅ | ✅ | ✅ | ❌ |
+| **Tool: simple to implement** | ⚠️ (sig verification) | ✅ | ❌ | ✅ |
+| **Tool: revocation control** | ✅ | ⚠️ | ✅ | ⚠️ |
+
+Legend: ✅ strong fit, ⚠️ partial/conditional, ❌ poor fit
+
+#### How It Works
+
+1. An agent generates a public/private keypair.
+2. The agent signs each HTTP request with its private key.
+3. The tool verifies the signature using the agent’s public key.
+4. Requests are attributable, auditable, and do not require shared secrets or browser sessions.
 
 &nbsp;
 
