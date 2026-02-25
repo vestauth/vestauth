@@ -24,7 +24,7 @@ FORCE=""
 #  |  ## Install                                                                                     |
 #  |                                                                                                 |
 #  |  ```sh                                                                                          |
-#  |  curl -sfS https://vstauth.sh | sh                                                              |
+#  |  curl -sfS https://vestauth.sh | sh                                                             |
 #  |  ```                                                                                            |
 #  |                                                                                                 |
 #  |  or self-execute this file:                                                                     |
