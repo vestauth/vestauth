@@ -2,12 +2,12 @@ const crypto = require('crypto')
 
 const { http } = require('./http')
 const buildApiError = require('./buildApiError')
+const extractHostAndHostname = require('./extractHostAndHostname')
 const parseSignatureAgentHeader = require('./parseSignatureAgentHeader')
 const parseSignatureInputHeader = require('./parseSignatureInputHeader')
 const stripDictionaryKey = require('./stripDictionaryKey')
 const authorityMessage = require('./authorityMessage')
 const publicJwkObject = require('./publicJwkObject')
-const verifyAgentFqdn = require('./verifyAgentFqdn')
 const Errors = require('./errors')
 const isLocalhost = require('./isLocalhost')
 const isEmptyObject = require('./isEmptyObject')
@@ -25,13 +25,10 @@ async function resolvePublicJwk ({ signatureInput, signatureAgent, publicJwk }) 
 
   if (signatureAgent) {
     const { value } = parseSignatureAgentHeader(signatureAgent)
-    const isUri = /^https?:\/\//i.test(value)
-    const origin = isUri ? new URL(value).origin : `https://${value}`
-    const hostname = new URL(origin).hostname
-    if (!isLocalhost(origin)) {
-      verifyAgentFqdn(hostname)
-    }
-    uid = hostname.split('.')[0]
+    const { host, origin } = extractHostAndHostname(value)
+    const fqdn = host
+
+    uid = fqdn.split('.')[0]
     wellKnownUrl = `${origin}/.well-known/http-message-signatures-directory`
   }
 

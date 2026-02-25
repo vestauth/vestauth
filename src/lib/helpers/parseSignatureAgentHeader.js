@@ -29,7 +29,6 @@ function parseSignatureAgentHeader (signatureAgentHeader) {
   } else if (Array.isArray(member) && member[0] && typeof member[0] === 'object' && 'value' in member[0]) {
     value = member[0].value
   }
-  if (!value) throw new Errors().invalidSignatureAgent()
 
   return {
     key,

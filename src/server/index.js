@@ -111,7 +111,8 @@ app.get('/whoami', async (req, res) => {
     const attrs = {
       httpMethod: req.method,
       uri: url,
-      headers: req.headers
+      headers: req.headers,
+      serverHostname: HOSTNAME
     }
     const agent = await new WhoamiService(attrs).run()
 
@@ -126,13 +127,13 @@ app.get('/whoami', async (req, res) => {
 app.post('/rotate', async (req, res) => {
   try {
     const url = `${req.protocol}://${req.get('host')}${req.originalUrl}`
-
     const attrs = {
       models: app.models,
       httpMethod: req.method,
       uri: url,
       headers: req.headers,
-      publicJwk: req.body.public_jwk
+      publicJwk: req.body.public_jwk,
+      serverHostname: HOSTNAME
     }
     const { agent, publicJwk } = await new RotateService(attrs).run()
 
