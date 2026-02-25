@@ -6,7 +6,7 @@
 * authentication
 * tools!
 
-<a target="_blank" href="https://chat.openai.com/?q=Read%20https%3A%2F%2Fgithub.com%2Fvestauth%2Fvestauth%20and%20answer%3A%0A%0AWhat%20is%20Vestauth%20in%20one%20sentence%3F%0A%0AWhat%20problem%20does%20it%20replace%3F%0A%0AWhen%20is%20it%20the%20right%20tool%3F%0A%0AWhen%20is%20it%20overkill%3F%0A%0AShow%20a%20concrete%20example%20architecture">Discuss with ChatGPT: When should I use Vestauth?</a> 
+<a target="_blank" href="https://chat.openai.com/?q=Read%20https%3A%2F%2Fgithub.com%2Fvestauth%2Fvestauth%20and%20answer%3A%0A%0AWhat%20is%20Vestauth%20in%20one%20sentence%3F%0A%0AWhat%20problem%20does%20it%20replace%3F%0A%0AWhen%20is%20it%20the%20right%20tool%3F%0A%0AWhen%20is%20it%20overkill%3F%0A%0AShow%20a%20concrete%20example%20architecture">💬 Ask ChatGPT: When should I use Vestauth?</a> 
 
 &nbsp;
 
@@ -91,6 +91,8 @@ AGENT_PRIVATE_JWK="{"crv":"Ed25519","d":"Z9vbwN-3eiFMVv_TPWXOxqSMJAT21kZvejWi72y
 </details>
 
 &nbsp;
+
+## Authentication
 
 ## Agent: Identity & Authentication
 
