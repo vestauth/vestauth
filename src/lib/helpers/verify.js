@@ -27,11 +27,11 @@ async function resolvePublicJwk ({ signatureInput, signatureAgent, publicJwk }) 
     const { value } = parseSignatureAgentHeader(signatureAgent)
     const isUri = /^https?:\/\//i.test(value)
     const origin = isUri ? new URL(value).origin : `https://${value}`
-    const hostname = new URL(origin).hostname
+    const fqdn = new URL(origin).hostname
     if (!isLocalhost(origin)) {
-      verifyAgentFqdn(hostname)
+      verifyAgentFqdn(fqdn)
     }
-    uid = hostname.split('.')[0]
+    uid = fqdn.split('.')[0]
     wellKnownUrl = `${origin}/.well-known/http-message-signatures-directory`
   }
 
