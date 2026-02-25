@@ -2,24 +2,18 @@ const t = require('tap')
 t.jobs = 1
 
 const servicePath = require.resolve('../../../src/server/services/rotateService')
-const primitivesPath = require.resolve('../../../src/lib/primitives')
-const parseSignatureInputHeaderPath = require.resolve('../../../src/lib/helpers/parseSignatureInputHeader')
+const toolPath = require.resolve('../../../src/lib/tool')
 
-let originalPrimitivesModule
-let originalParseSignatureInputHeaderModule
+let originalToolModule
 
 t.beforeEach(() => {
-  originalPrimitivesModule = require.cache[primitivesPath]
-  originalParseSignatureInputHeaderModule = require.cache[parseSignatureInputHeaderPath]
+  originalToolModule = require.cache[toolPath]
   delete require.cache[servicePath]
 })
 
 t.afterEach(() => {
-  if (originalPrimitivesModule) require.cache[primitivesPath] = originalPrimitivesModule
-  else delete require.cache[primitivesPath]
-
-  if (originalParseSignatureInputHeaderModule) require.cache[parseSignatureInputHeaderPath] = originalParseSignatureInputHeaderModule
-  else delete require.cache[parseSignatureInputHeaderPath]
+  if (originalToolModule) require.cache[toolPath] = originalToolModule
+  else delete require.cache[toolPath]
 
   delete require.cache[servicePath]
 })
@@ -35,15 +29,11 @@ t.test('rotates keys by verifying current key, creating new key, and revoking cu
   const publicJwkFindOneCalls = []
   const agentFindOneCalls = []
 
-  require.cache[parseSignatureInputHeaderPath] = {
-    exports: () => ({ keyid: 'kid-current' })
-  }
-
-  require.cache[primitivesPath] = {
+  require.cache[toolPath] = {
     exports: {
       verify: async (...args) => {
         verifyCalls.push(args)
-        return { ok: true }
+        return { kid: 'kid-current' }
       }
     }
   }
@@ -134,7 +124,7 @@ t.test('rotates keys by verifying current key, creating new key, and revoking cu
     'POST',
     'https://api.example.com/rotate',
     { 'signature-input': 'sig1=("@authority");keyid="kid-current"' },
-    { kty: 'OKP', kid: 'kid-current', x: 'old' }
+    undefined
   ]])
 
   t.equal(selectCalls.length, 1)
@@ -160,16 +150,13 @@ t.test('rotates keys by verifying current key, creating new key, and revoking cu
   t.same(result.publicJwk.value, { kty: 'OKP', kid: 'kid-new', x: 'new' })
 })
 
-t.test('throws when current kid is missing from signature-input', async t => {
-  require.cache[parseSignatureInputHeaderPath] = {
-    exports: () => ({})
-  }
-
+t.test('throws when current kid is missing from verified agent identity', async t => {
   let verifyCalled = false
-  require.cache[primitivesPath] = {
+  require.cache[toolPath] = {
     exports: {
       verify: async () => {
         verifyCalled = true
+        return {}
       }
     }
   }
@@ -178,28 +165,28 @@ t.test('throws when current kid is missing from signature-input', async t => {
 
   await t.rejects(
     () => new RotateService({
-      models: { public_jwk: {}, agent: {} },
+      models: {
+        public_jwk: { findOne: async () => null },
+        agent: {}
+      },
       httpMethod: 'POST',
       uri: 'https://api.example.com/rotate',
       headers: { 'signature-input': 'sig1=()' },
       publicJwk: { kid: 'kid-new' }
     }).run(),
-    /kid missing/
+    /public_jwk not found/
   )
 
-  t.equal(verifyCalled, false)
+  t.equal(verifyCalled, true)
 })
 
 t.test('throws when new kid is missing from request public_jwk', async t => {
-  require.cache[parseSignatureInputHeaderPath] = {
-    exports: () => ({ keyid: 'kid-current' })
-  }
-
   let verifyCalled = false
-  require.cache[primitivesPath] = {
+  require.cache[toolPath] = {
     exports: {
       verify: async () => {
         verifyCalled = true
+        return { kid: 'kid-current' }
       }
     }
   }
@@ -217,5 +204,5 @@ t.test('throws when new kid is missing from request public_jwk', async t => {
     /new kid missing/
   )
 
-  t.equal(verifyCalled, false)
+  t.equal(verifyCalled, true)
 })

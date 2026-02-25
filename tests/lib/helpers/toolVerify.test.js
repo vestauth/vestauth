@@ -52,7 +52,7 @@ t.test('#toolVerify - returns agent info', async t => {
   t.teardown(httpMock.restore)
 
   const toolVerify = require('../../../src/lib/helpers/toolVerify')
-  const output = await toolVerify('GET', uri, signedHeaders)
+  const output = await toolVerify('GET', uri, signedHeaders, 'localhost:3000')
 
   t.equal(output.uid, 'agent-123')
   t.equal(output.kid, publicJwk.kid)
@@ -73,7 +73,7 @@ t.test('#toolVerify - accepts legacy bare Signature-Agent value', async t => {
   t.teardown(httpMock.restore)
 
   const toolVerify = require('../../../src/lib/helpers/toolVerify')
-  const output = await toolVerify('GET', uri, signedHeaders)
+  const output = await toolVerify('GET', uri, signedHeaders, 'localhost:3000')
 
   t.equal(output.uid, 'agent-123')
   t.equal(output.well_known_url, 'https://agent-123.api.vestauth.com/.well-known/http-message-signatures-directory')
@@ -92,7 +92,7 @@ t.test('#toolVerify - accepts Signature-Agent uri with http scheme', async t => 
   })
 
   const toolVerify = require('../../../src/lib/helpers/toolVerify')
-  const output = await toolVerify('GET', uri, signedHeaders)
+  const output = await toolVerify('GET', uri, signedHeaders, 'localhost:3000')
 
   t.equal(output.uid, 'agent-123')
   t.equal(output.well_known_url, 'http://agent-123.localhost:3000/.well-known/http-message-signatures-directory')
@@ -109,7 +109,7 @@ t.test('#toolVerify - sends host header for localhost Signature-Agent', async t 
   t.teardown(httpMock.restore)
 
   const toolVerify = require('../../../src/lib/helpers/toolVerify')
-  await toolVerify('GET', uri, signedHeaders)
+  await toolVerify('GET', uri, signedHeaders, 'localhost:3000')
 
   t.same(httpMock.calls[0].opts, {
     method: 'GET',
