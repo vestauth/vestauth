@@ -514,7 +514,9 @@ Vestauth follows these specifications to ensure interoperability between agents 
 
 > Run your own Vestauth server.
 
-<a target="_blank" href="https://github.com/user-attachments/assets/b05ba917-c37a-4a53-9ec7-c5c8d78ad1c7"><img src="https://github.com/user-attachments/assets/b05ba917-c37a-4a53-9ec7-c5c8d78ad1c7" alt="self-hosting vestauth" width="480" style="border:1px solid #ddd; border-radius:6px;"></a>
+| |
+|---|
+| <a target="_blank" href="https://github.com/user-attachments/assets/b05ba917-c37a-4a53-9ec7-c5c8d78ad1c7"><img src="https://github.com/user-attachments/assets/b05ba917-c37a-4a53-9ec7-c5c8d78ad1c7" alt="self-hosting vestauth" width="480"></a> |
 
 Initialize the server and run migrations (postgres).
 
@@ -548,14 +550,14 @@ Edit this for your own self-hosting needs. For example, in production:
 
 </details>
 
-Then start the server.
+Start the server.
 
 ```sh
 $ vestauth server start
 vestauth server listening on http://localhost:3000
 ```
 
-Use your server's hostname when creating agents.
+And use your server's hostname when creating agents.
 
 ```sh
 $ mkdir your-agent
@@ -565,7 +567,7 @@ $ vestauth agent init --hostname http://localhost:3000
 ✔ agent created (.env/AGENT_UID=agent-4b94ccd425e939fac5016b6b)
 ```
 
-That's it!
+That's it! You now own your own vestauth ([web-bot-auth](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture)) infrastructure.
 
 &nbsp;
 
