@@ -510,10 +510,19 @@ Vestauth follows these specifications to ensure interoperability between agents 
 
 &nbsp;
 
-## Demo
+## Self-hosting
 
-[![vestauth:ping](https://vestauth.com/demo.png)](https://ping.vestauth.com)
-> [https://ping.vestauth.com](https://ping.vestauth.com)
+I've made self-hosting vestauth as easy as possible.
+
+```sh
+curl -sSf https://vestauth.sh | sh
+vestauth server init
+vestauth server db:create
+vestauth server db:migrate
+vestauth server server start
+```
+
+Modify the `.env` file to configure it to your hosting environment. That's it!
 
 &nbsp;
 
