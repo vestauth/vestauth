@@ -512,17 +512,37 @@ Vestauth follows these specifications to ensure interoperability between agents 
 
 ## Self-hosting
 
-I've made self-hosting vestauth as easy as possible.
+Run your own Vestauth server.
+
+Install, init, and run migrations.
 
 ```sh
-curl -sSf https://vestauth.sh | sh
-vestauth server init
-vestauth server db:create
-vestauth server db:migrate
-vestauth server server start
+$ curl -sSf https://vestauth.sh | sh
+$ vestauth server init
+$ vestauth server db:create
+$ vestauth server db:migrate
+```
+> [!TIP]
+> Modify the created `.env` to configure for your environment. For example, change `localhost:3000` to `vestauth.yoursite.com`.
+
+Then start the server.
+
+```sh
+$ vestauth server server start
+vestauth server listening on http://localhost:3000
 ```
 
-Modify the `.env` file to configure it to your hosting environment. That's it!
+Use your server's hostname when creating agents.
+
+```sh
+$ mkdir your-agent
+$ cd your-agent
+
+$ vestauth agent init --hostname http://localhost:3000
+✔ agent created (.env/AGENT_UID=agent-4b94ccd425e939fac5016b6b)
+```
+
+That's it!
 
 &nbsp;
 
