@@ -514,6 +514,8 @@ Vestauth follows these specifications to ensure interoperability between agents 
 
 > Run your own Vestauth server.
 
+![](https://github.com/user-attachments/assets/b05ba917-c37a-4a53-9ec7-c5c8d78ad1c7)
+
 Initialize the server and run migrations (postgres).
 
 ```sh
