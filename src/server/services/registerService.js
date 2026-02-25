@@ -10,8 +10,6 @@ class RegisterService {
   }
 
   async run () {
-    // this is a special case where this is NOT a tool
-    // don't send the signature-agent header on register?
     this.verified = await primitives.verify(
       this.httpMethod,
       this.uri,
