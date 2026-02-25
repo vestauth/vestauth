@@ -512,9 +512,9 @@ Vestauth follows these specifications to ensure interoperability between agents 
 
 ## Self-hosting
 
-Run your own Vestauth server.
+> Run your own Vestauth server.
 
-Install, init, and run migrations.
+Initialize the server and run migrations (postgres).
 
 ```sh
 $ curl -sSf https://vestauth.sh | sh
@@ -523,7 +523,7 @@ $ vestauth server db:create
 $ vestauth server db:migrate
 ```
 > [!TIP]
-> Modify the created `.env` to configure for your environment. For example, change `localhost:3000` to `vestauth.yoursite.com`.
+> Use the `.env` for configuration - like changing `localhost:3000` to `vestauth.yoursite.com`.
 
 Then start the server.
 
