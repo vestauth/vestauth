@@ -189,6 +189,76 @@ Vestauth intentionally separates identity discovery from verification to support
 
 &nbsp;
 
+## Available Tools
+
+> List of tools. We're actively building tools and looking for others to help grow the vestauth ecosystem with calls for tools like sending email, sms, uploading files and more. Vestauth agents need more tools. A tool is just a sharp API call. Add your tool here.
+
+* AS2 (Agentic Secret Storage) - https://as2.dotenvx.com
+
+&nbsp;
+
+## Self-hosting
+
+> Run your own Vestauth server.
+
+| |
+|---|
+| <a target="_blank" href="https://github.com/user-attachments/assets/b05ba917-c37a-4a53-9ec7-c5c8d78ad1c7"><img src="https://github.com/user-attachments/assets/b05ba917-c37a-4a53-9ec7-c5c8d78ad1c7" alt="self-hosting vestauth" width="480"></a> |
+
+Initialize the server and run migrations (postgres).
+
+```sh
+$ curl -sSf https://vestauth.sh | sh
+$ vestauth server init
+$ vestauth server db:create
+$ vestauth server db:migrate
+```
+<details><summary>config</summary><br>
+
+Edit the `.env` file to configure your server.
+
+```ini
+PORT="3000"
+HOSTNAME="http://localhost:3000"
+DATABASE_URL="postgres://localhost/vestauth_production"
+```
+
+For example, in production:
+
+* Change `HOSTNAME` to its production url - e.g. `vestauth.yoursite.com`
+* Change `DATABASE_URL` to a managed postgres - e.g. `postgresql://USER:PASS@aws-1-us-east-1.pooler.supabase.com:5432/postgres`
+
+</details>
+
+Start the server.
+
+```sh
+$ vestauth server start
+vestauth server listening on http://localhost:3000
+```
+
+And use your server's hostname when creating agents.
+
+```sh
+$ mkdir your-agent
+$ cd your-agent
+
+$ vestauth agent init --hostname http://localhost:3000
+✔ agent created (.env/AGENT_UID=agent-4b94ccd425e939fac5016b6b)
+```
+
+That's it. Your Vestauth ([web-bot-auth](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture)) infrastructure is now running under your control.
+
+> [!WARNING]
+>
+> **Production note:** Configure a wildcard DNS record for `*.${HOSTNAME}`.
+> 
+> Example: if `HOSTNAME=vestauth.yourapp.com`, add `*.vestauth.yourapp.com`.
+> 
+> Required for `.well-known` discovery per the [web-bot-auth](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture) spec.
+
+&nbsp;
+
 ## Advanced
 
 > Become a `vestauth` power user.
@@ -469,76 +539,6 @@ await vestauth.primitives.verify(httpMethod, url, headers, publicJwk)
 ```
 
 </details>
-
-&nbsp;
-
-## Available Tools
-
-> List of tools. We're actively building tools and looking for others to help grow the vestauth ecosystem with calls for tools like sending email, sms, uploading files and more. Vestauth agents need more tools. A tool is just a sharp API call. Add your tool here.
-
-* AS2 (Agentic Secret Storage) - https://as2.dotenvx.com
-
-&nbsp;
-
-## Self-hosting
-
-> Run your own Vestauth server.
-
-| |
-|---|
-| <a target="_blank" href="https://github.com/user-attachments/assets/b05ba917-c37a-4a53-9ec7-c5c8d78ad1c7"><img src="https://github.com/user-attachments/assets/b05ba917-c37a-4a53-9ec7-c5c8d78ad1c7" alt="self-hosting vestauth" width="480"></a> |
-
-Initialize the server and run migrations (postgres).
-
-```sh
-$ curl -sSf https://vestauth.sh | sh
-$ vestauth server init
-$ vestauth server db:create
-$ vestauth server db:migrate
-```
-<details><summary>config</summary><br>
-
-Edit the `.env` file to configure your server.
-
-```ini
-PORT="3000"
-HOSTNAME="http://localhost:3000"
-DATABASE_URL="postgres://localhost/vestauth_production"
-```
-
-For example, in production:
-
-* Change `HOSTNAME` to its production url - e.g. `vestauth.yoursite.com`
-* Change `DATABASE_URL` to a managed postgres - e.g. `postgresql://USER:PASS@aws-1-us-east-1.pooler.supabase.com:5432/postgres`
-
-</details>
-
-Start the server.
-
-```sh
-$ vestauth server start
-vestauth server listening on http://localhost:3000
-```
-
-And use your server's hostname when creating agents.
-
-```sh
-$ mkdir your-agent
-$ cd your-agent
-
-$ vestauth agent init --hostname http://localhost:3000
-✔ agent created (.env/AGENT_UID=agent-4b94ccd425e939fac5016b6b)
-```
-
-That's it. Your Vestauth ([web-bot-auth](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture)) infrastructure is now running under your control.
-
-> [!WARNING]
->
-> **Production note:** Configure a wildcard DNS record for `*.${HOSTNAME}`.
-> 
-> Example: if `HOSTNAME=vestauth.yourapp.com`, add `*.vestauth.yourapp.com`.
-> 
-> Required for `.well-known` discovery per the [web-bot-auth](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture) spec.
 
 &nbsp;
 
