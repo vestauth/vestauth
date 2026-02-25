@@ -2,17 +2,17 @@
 
 *web-bot-auth for agents*–from the creator of [`dotenv`](https://github.com/motdotla/dotenv) and [`dotenvx`](https://github.com/dotenvx/dotenvx).
 
-> [1 minute demo 📺](https://www.youtube.com/watch?v=cHARyULr_qk)
->
-> Vestauth gives agents a cryptographic identity and a simple way to authenticate HTTP requests. Most agent systems rely on API keys, bearer tokens, or username/passwords. These approaches are difficult to rotate, easy to leak, and hard to attribute to a specific agent. Vestauth replaces shared secrets with public/private key cryptography. Agents sign requests using a private key, and tools verify those requests using the agent's public key. It's elegant and the future. [[1](#compare)]
-> 
-> *Scott Motte–creator of `dotenv` and `dotenvx`*
+* identity ([web-bot-auth](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture))
+* authentication
+* tools!
+
+[Watch the demo](https://www.youtube.com/watch?v=cHARyULr_qk)
 
 &nbsp;
 
 ### Quickstart [![npm version](https://img.shields.io/npm/v/vestauth.svg)](https://www.npmjs.com/package/vestauth) [![downloads](https://img.shields.io/npm/dm/vestauth)](https://www.npmjs.com/package/vestauth) [![RFC 9421 Compatible](https://img.shields.io/badge/RFC%209421-Compatible-0A7F5A)](https://datatracker.ietf.org/doc/rfc9421/) [![Web-Bot-Auth Draft Compatible](https://img.shields.io/badge/Web--Bot--Auth-Draft%20Compatible-0A7F5A)](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture) 
 
-Install vestauth, give your agent an identity ([web-bot-auth](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture)), and call tools!
+Install vestauth, give your agents identities, and call tools!
 
 ```sh
 npm i -g vestauth
@@ -544,7 +544,7 @@ await vestauth.primitives.verify(httpMethod, url, headers, publicJwk)
 
 ## Standards
 
-> Vestauth builds on open internet standards for agent authentication.
+> Vestauth gives agents a cryptographic identity and a simple way to authenticate HTTP requests. Most agent systems rely on API keys, bearer tokens, or username/passwords. These approaches are difficult to rotate, easy to leak, and hard to attribute to a specific agent. Vestauth replaces shared secrets with public/private key cryptography. Agents sign requests using a private key, and tools verify those requests using the agent's public key. All built on open internet standards. It's elegant and the future.
 
 | Specification | Purpose |
 |------------|------------|
