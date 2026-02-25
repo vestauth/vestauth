@@ -99,10 +99,10 @@ class Errors {
     return e
   }
 
-  invalidToolFqdn () {
-    const code = 'INVALID_TOOL_FQDN'
-    const message = `[${code}] invalid tool fqdn`
-    const help = `[${code}] https://github.com/vestauth/vestauth/issues/39`
+  untrustedSignatureAgent () {
+    const code = 'UNTRUSTED_SIGNATURE_AGENT'
+    const message = `[${code}] untrusted --signature-agent`
+    const help = `[${code}] https://github.com/vestauth/vestauth/issues/42`
 
     const e = new Error(message)
     e.code = code
