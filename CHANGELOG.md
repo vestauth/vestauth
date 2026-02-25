@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-[Unreleased](https://github.com/vestauth/vestauth/compare/v0.20.1...main)
+[Unreleased](https://github.com/vestauth/vestauth/compare/v0.21.0...main)
+
+## [0.21.0](https://github.com/vestauth/vestauth/compare/v0.20.1...v0.21.0) (2026-02-25)
+
+### Added
+
+* Add `server init` ([#41](https://github.com/vestauth/vestauth/pull/41))
 
 ## [0.20.1](https://github.com/vestauth/vestauth/compare/v0.20.0...v0.20.1) (2026-02-24)
 
