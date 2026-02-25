@@ -18,9 +18,9 @@ async function serverInit ({ port, hostname, databaseUrl }) {
   touch(envPath, headerComment)
 
   // init server
-  dotenvx.set('PORT', port, { path: envPath, plain: false, quiet: true })
-  dotenvx.set('HOSTNAME', hostname, { path: envPath, plain: false, quiet: true })
-  dotenvx.set('DATABASE_URL', databaseUrl, { path: envPath, plain: false, quiet: true })
+  dotenvx.set('PORT', port, { path: envPath, plain: true, quiet: true })
+  dotenvx.set('HOSTNAME', hostname, { path: envPath, plain: true, quiet: true })
+  dotenvx.set('DATABASE_URL', databaseUrl, { path: envPath, plain: true, quiet: true })
 
   return {
     PORT: port,
