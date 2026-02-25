@@ -96,7 +96,7 @@ AGENT_PRIVATE_JWK="{"crv":"Ed25519","d":"Z9vbwN-3eiFMVv_TPWXOxqSMJAT21kZvejWi72y
 
 ## Authentication
 
-> Authenticate them using cryptographic signatures.
+> Authenticate agents by cryptographically verifying their signed requests.
 
 ```js
 ...
@@ -115,7 +115,7 @@ app.get('/whoami', async (req, res) => {
 ...
 ```
 
-> Agents automatically sign their `curl` requests with cryptographic signatures - authenticating themselves.
+> Agents sign requests by simply wrapping `curl`.
 
 ```sh
 > SIGNED - 200
