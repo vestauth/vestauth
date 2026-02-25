@@ -67,6 +67,8 @@ Download [the windows executable](https://github.com/vestauth/vestauth/releases)
 
 ## Identity
 
+> Give agents cryptographic identities…
+
 ```sh
 $ mkdir your-agent
 $ cd your-agent
@@ -94,9 +96,36 @@ AGENT_PRIVATE_JWK="{"crv":"Ed25519","d":"Z9vbwN-3eiFMVv_TPWXOxqSMJAT21kZvejWi72y
 
 ## Authentication
 
-## Agent: Identity & Authentication
+> Authenticate them using cryptographic signatures.
 
-> Give agents cryptographic identities…
+```js
+...
+const vestauth = require('vestauth')
+
+app.get('/whoami', async (req, res) => {
+  try {
+    const url = `${req.protocol}://${req.get('host')}${req.originalUrl}`
+    const agent = await vestauth.tool.verify(req.method, url, req.headers)
+
+    res.json(agent)
+  } catch (err) {
+    res.status(401).json({ code: 401, error: { message: err.message }})
+  }
+})
+...
+```
+
+> Agents automatically sign their `curl` requests with cryptographic signatures - authenticating themselves.
+
+```sh
+> SIGNED - 200
+$ vestauth agent curl https://api.vestauth.com/whoami
+{"uid":"agent-4b94ccd425e939fac5016b6b",...}
+```
+
+&nbsp;
+
+## Agent: Identity & Authentication
 
 ```sh
 $ mkdir your-agent
