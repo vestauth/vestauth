@@ -4,7 +4,7 @@ const extractHostAndHostname = require('./extractHostAndHostname')
 const trustedFqdn = require('./trustedFqdn')
 const Errors = require('./errors')
 
-async function toolVerify (httpMethod, uri, headers = {}) {
+async function toolVerify (httpMethod, uri, headers = {}, serverHostname = null) {
   if (!httpMethod) {
     throw new Errors().missingHttpMethod()
   }
@@ -28,8 +28,7 @@ async function toolVerify (httpMethod, uri, headers = {}) {
     throw new Errors().invalidSignatureAgent()
   }
 
-  // handles .api.vestauth.com, .HOSTNAME, and TOOL_FQDN_REGEX override
-  const serverHostname = 'http://localhost:3000'
+  // handles .api.vestauth.com, .HOSTNAME (if serverHostname passed), and TOOL_FQDN_REGEX override
   if (!trustedFqdn(fqdn, serverHostname)) {
     throw new Errors().untrustedSignatureAgent()
   }
