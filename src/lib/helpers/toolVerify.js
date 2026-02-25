@@ -4,7 +4,6 @@ const extractHostAndHostname = require('./extractHostAndHostname')
 const trustedFqdn = require('./trustedFqdn')
 const Errors = require('./errors')
 
-
 async function toolVerify (httpMethod, uri, headers = {}) {
   if (!httpMethod) {
     throw new Errors().missingHttpMethod()
