@@ -6,7 +6,7 @@
 * authentication
 * tools!
 
-[Watch the demo](https://www.youtube.com/watch?v=cHARyULr_qk)
+[Ask ChatGPT: When should I use Vestauth?](https://chat.openai.com/?q=Read%20https%3A%2F%2Fgithub.com%2Fvestauth%2Fvestauth%20and%20answer%3A%0A%0AWhat%20is%20Vestauth%20in%20one%20sentence%3F%0A%0AWhat%20problem%20does%20it%20replace%3F%0A%0AWhen%20is%20it%20the%20right%20tool%3F%0A%0AWhen%20is%20it%20overkill%3F%0A%0AShow%20a%20concrete%20example%20architecture.) [Watch the demo](https://www.youtube.com/watch?v=cHARyULr_qk)
 
 &nbsp;
 
