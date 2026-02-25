@@ -67,6 +67,29 @@ Download [the windows executable](https://github.com/vestauth/vestauth/releases)
 
 ## Identity
 
+```sh
+$ mkdir your-agent
+$ cd your-agent
+
+$ vestauth agent init
+✔ agent created (.env/AGENT_UID=agent-4b94ccd425e939fac5016b6b)
+```
+
+<details><summary>learn more</summary><br>
+
+`vestauth agent init` populates a `.env` file with `AGENT_UID`, `AGENT_PUBLIC_JWK`, and `AGENT_PRIVATE_JWK`.
+
+```ini
+# .env
+AGENT_UID="agent-4b94ccd425e939fac5016b6b"
+AGENT_PUBLIC_JWK="{"crv":"Ed25519","x":"py2xNaAfjKZiau-jtmJls6h_3n8xJ1Ur0ie-n9b8zWg","kty":"OKP","kid":"B0u80Gw28W9U2Jl5t_EBiWeBajO2104kOYZ9Ikucl5I"}"
+AGENT_PRIVATE_JWK="{"crv":"Ed25519","d":"Z9vbwN-3eiFMVv_TPWXOxqSMJAT21kZvejWi72yiAaQ","x":"py2xNaAfjKZiau-jtmJls6h_3n8xJ1Ur0ie-n9b8zWg","kty":"OKP","kid":"B0u80Gw28W9U2Jl5t_EBiWeBajO2104kOYZ9Ikucl5I"}"
+```
+
+</details>
+
+&nbsp;
+
 ## Agent: Identity & Authentication
 
 > Give agents cryptographic identities…
