@@ -548,7 +548,7 @@ That's it. Your Vestauth ([web-bot-auth](https://datatracker.ietf.org/doc/html/d
 
 | Specification | Purpose |
 |------------|------------|
-| **[RFC 9421 – HTTP Message Signatures](https://datatracker.ietf.org/doc/rfc9421/)** | Defines how requests are cryptographically signed and verified |
+| **[RFC 9421](https://datatracker.ietf.org/doc/rfc9421/)** | Defines how requests are cryptographically signed and verified |
 | **[Web-Bot-Auth Draft](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture)** | Defines headers and authentication architecture for autonomous agents |
 
 Vestauth follows these specifications to ensure interoperability between agents and tools while avoiding vendor lock-in. Vestauth focuses on developer ergonomics while staying compliant with these emerging standards.
