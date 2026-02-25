@@ -514,7 +514,7 @@ Vestauth follows these specifications to ensure interoperability between agents 
 
 > Run your own Vestauth server.
 
-<a target="_blank" href="https://github.com/user-attachments/assets/b05ba917-c37a-4a53-9ec7-c5c8d78ad1c7"><img src="https://github.com/user-attachments/assets/b05ba917-c37a-4a53-9ec7-c5c8d78ad1c7" alt="self-hosting vestauth" width="400"></a>
+<a target="_blank" href="https://github.com/user-attachments/assets/b05ba917-c37a-4a53-9ec7-c5c8d78ad1c7"><img src="https://github.com/user-attachments/assets/b05ba917-c37a-4a53-9ec7-c5c8d78ad1c7" alt="self-hosting vestauth" width="480"></a>
 
 Initialize the server and run migrations (postgres).
 
@@ -524,6 +524,30 @@ $ vestauth server init
 $ vestauth server db:create
 $ vestauth server db:migrate
 ```
+<details><summary>learn more</summary><br>
+
+Running `vestauth server init` creates a `.env` file with localhost defaults.
+
+```ini
+PORT="3000"
+HOSTNAME="http://localhost:3000"
+DATABASE_URL="postgres://localhost/vestauth_production"
+```
+
+Edit this for your own self-hosting needs. For example, in production:
+
+* Change `HOSTNAME` to its production url - e.g. `vestauth.yoursite.com`
+* Change `DATABASE_URL` to a managed postgres - e.g. `postgresql://USER:PASS@aws-1-us-east-1.pooler.supabase.com:5432/postgres`
+
+> [!IMPORTANT]
+> In production (non-localhost) add a wildcard domain for `*.${HOSTNAME}`.
+> 
+> For example, if your `HOSTNAME` is set to `vestauth.yourapp.com` then you must have a wildcard DNS record at `*.vestauth.yourapp.com`. 
+> 
+> This is necessary for the `.well-known` endpoints to resolve according to [web-bot-auth standard](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture).
+
+</details>
+
 Then start the server.
 
 ```sh
@@ -542,14 +566,6 @@ $ vestauth agent init --hostname http://localhost:3000
 ```
 
 That's it!
-
-> [!NOTE]
-> Edit the `.env` file to configure your server.
-> ```
-> PORT="3000"
-> HOSTNAME="http://localhost:3000"
-> DATABASE_URL="postgres://localhost/vestauth_production"
-> ```
 
 &nbsp;
 
