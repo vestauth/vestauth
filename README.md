@@ -6,7 +6,7 @@
 * authentication
 * tools!
 
-[Ask ChatGPT: When should I use Vestauth?](https://chat.openai.com/?q=Read%20https%3A%2F%2Fgithub.com%2Fvestauth%2Fvestauth%20and%20answer%3A%0A%0AWhat%20is%20Vestauth%20in%20one%20sentence%3F%0A%0AWhat%20problem%20does%20it%20replace%3F%0A%0AWhen%20is%20it%20the%20right%20tool%3F%0A%0AWhen%20is%20it%20overkill%3F%0A%0AShow%20a%20concrete%20example%20architecture.) [Watch the demo](https://www.youtube.com/watch?v=cHARyULr_qk)
+<a href="https://chat.openai.com/?q=Read%20https%3A%2F%2Fgithub.com%2Fvestauth%2Fvestauth%20and%20answer%3A%0A%0AWhat%20is%20Vestauth%20in%20one%20sentence%3F%0A%0AWhat%20problem%20does%20it%20replace%3F%0A%0AWhen%20is%20it%20the%20right%20tool%3F%0A%0AWhen%20is%20it%20overkill%3F%0A%0AShow%20a%20concrete%20example%20architecture">[Open ChatGPT]: When should I use Vestauth?</a> 
 
 &nbsp;
 
@@ -623,7 +623,15 @@ Legend: ✅ strong fit, ⚠️ partial/conditional, ❌ poor fit
 &nbsp;
 
 </details>
+<details><summary>Is there a demo video?</summary><br>
 
+> Yes
+>
+> [Watch the demo](https://www.youtube.com/watch?v=cHARyULr_qk)
+
+&nbsp;
+
+</details>
 <details><summary>Why not just use API keys?</summary><br>
 
 > API keys are shared secrets. Anyone who obtains the key can impersonate the client, and keys are difficult to rotate safely.
