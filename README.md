@@ -500,7 +500,11 @@ Edit this for your own self-hosting needs. For example, in production:
 * Change `HOSTNAME` to its production url - e.g. `vestauth.yoursite.com`
 * Change `DATABASE_URL` to a managed postgres - e.g. `postgresql://USER:PASS@aws-1-us-east-1.pooler.supabase.com:5432/postgres`
 
-> [!IMPORTANT]
+> [!TIP]
+> Optional information to help a user be more successful.
+
+> [!TIP]
+>
 > In production (non-localhost) add a wildcard domain for `*.${HOSTNAME}`.
 > For example, if your `HOSTNAME` is set to `vestauth.yourapp.com` then you must have a wildcard DNS record at `*.vestauth.yourapp.com`. 
 > This is necessary for the `.well-known` endpoints to resolve according to [web-bot-auth standard](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture).
