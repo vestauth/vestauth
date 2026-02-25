@@ -521,13 +521,13 @@ $ vestauth agent init --hostname http://localhost:3000
 
 That's it. Your Vestauth ([web-bot-auth](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture)) infrastructure is now running under your control.
 
-> [!IMPORTANT]
+> [!WARNING]
 >
-> In production (non-localhost) add a wildcard domain for `*.${HOSTNAME}`.
->
-> For example, if your `HOSTNAME` is set to `vestauth.yourapp.com` then you must have a wildcard DNS record at `*.vestauth.yourapp.com`. 
->
-> This is necessary for the `.well-known` endpoints to resolve according to [web-bot-auth standard](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture).
+> **Production note:** Configure a wildcard DNS record for *.${HOSTNAME}.
+> 
+> Example: if `HOSTNAME=vestauth.yourapp.com`, add `*.vestauth.yourapp.com`.
+> 
+> Required for `.well-known` discovery per the [web-bot-auth](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture) spec.
 
 &nbsp;
 
