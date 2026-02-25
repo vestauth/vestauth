@@ -77,7 +77,7 @@ $ vestauth agent init
 
 <details><summary>learn more</summary><br>
 
-`vestauth agent init` populates a `.env` file with `AGENT_UID`, `AGENT_PUBLIC_JWK`, and `AGENT_PRIVATE_JWK`.
+Your agent's identity lives in a simple `.env` file.
 
 ```ini
 # .env
