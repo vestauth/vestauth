@@ -530,7 +530,7 @@ $ vestauth server db:migrate
 Then start the server.
 
 ```sh
-$ vestauth server server start
+$ vestauth server start
 vestauth server listening on http://localhost:3000
 ```
 
