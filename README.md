@@ -523,7 +523,7 @@ That's it. Your Vestauth ([web-bot-auth](https://datatracker.ietf.org/doc/html/d
 
 > [!WARNING]
 >
-> **Production note:** Configure a wildcard DNS record for *.${HOSTNAME}.
+> **Production note:** Configure a wildcard DNS record for `*.${HOSTNAME}`.
 > 
 > Example: if `HOSTNAME=vestauth.yourapp.com`, add `*.vestauth.yourapp.com`.
 > 
