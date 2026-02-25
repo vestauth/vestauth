@@ -12,7 +12,7 @@
 
 ### Quickstart [![npm version](https://img.shields.io/npm/v/vestauth.svg)](https://www.npmjs.com/package/vestauth) [![downloads](https://img.shields.io/npm/dm/vestauth)](https://www.npmjs.com/package/vestauth) [![RFC 9421 Compatible](https://img.shields.io/badge/RFC%209421-Compatible-0A7F5A)](https://datatracker.ietf.org/doc/rfc9421/) [![Web-Bot-Auth Draft Compatible](https://img.shields.io/badge/Web--Bot--Auth-Draft%20Compatible-0A7F5A)](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture) 
 
-Install vestauth, give your agents identities, and **call tools**!
+Give your agents identities and **call tools**!
 
 ```sh
 npm i -g vestauth
@@ -64,6 +64,8 @@ Download [the windows executable](https://github.com/vestauth/vestauth/releases)
 </details>
 
 &nbsp;
+
+## Identity
 
 ## Agent: Identity & Authentication
 
