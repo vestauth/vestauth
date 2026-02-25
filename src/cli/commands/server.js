@@ -8,6 +8,15 @@ server
   .description('🖥️  server')
   .allowUnknownOption()
 
+// vestauth server init
+const initAction = require('./../actions/server/init')
+server.command('init')
+  .description('create/update vestauth server .env')
+  .option('--port <port>', 'port', env('PORT'))
+  .option('--hostname <hostname>', 'HOSTNAME', env('HOSTNAME'))
+  .option('--database-url <databaseUrl>', 'DATABASE_URL', databaseUrl())
+  .action(initAction)
+
 // vestauth server start
 const startAction = require('./../actions/server/start')
 server.command('start')
@@ -27,7 +36,7 @@ server.command('db:create')
 // vestauth server db:migrate
 const dbMigrateAction = require('./../actions/server/dbMigrate')
 server.command('db:migrate')
-  .description('run db migrations')
+  .description('run database migrations')
   .option('--database-url <databaseUrl>', 'DATABASE_URL', databaseUrl())
   .action(dbMigrateAction)
 
