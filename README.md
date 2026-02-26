@@ -191,6 +191,8 @@ $ vestauth agent init --hostname http://localhost:3000
 
 That's it. Your Vestauth ([web-bot-auth](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture)) infrastructure is now running under your control.
 
+More details
+
 <details><summary>config</summary><br>
 
 Edit the `.env` file to configure your server.
