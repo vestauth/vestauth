@@ -96,7 +96,7 @@ AGENT_PRIVATE_JWK="{"crv":"Ed25519","d":"Z9vbwN-3eiFMVv_TPWXOxqSMJAT21kZvejWi72y
 
 ## Authentication
 
-> …and authenticate them cryptographically (verify signed request).
+> …and authenticate them (verify signed request).
 
 ```js
 ...
