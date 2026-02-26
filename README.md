@@ -151,7 +151,7 @@ $ vestauth agent curl https://as2.dotenvx.com/get
 
 #### List of tools
 
-* AS2 (Agentic Secret Storage) - https://as2.dotenvx.com
+* Agentic Secret Storage - https://as2.dotenvx.com
 
 &nbsp;
 
