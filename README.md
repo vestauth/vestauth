@@ -171,22 +171,6 @@ $ vestauth server init
 $ vestauth server db:create
 $ vestauth server db:migrate
 ```
-<details><summary>config</summary><br>
-
-Edit the `.env` file to configure your server.
-
-```ini
-PORT="3000"
-HOSTNAME="http://localhost:3000"
-DATABASE_URL="postgres://localhost/vestauth_production"
-```
-
-For example, in production:
-
-* Change `HOSTNAME` to its production url - e.g. `vestauth.yoursite.com`
-* Change `DATABASE_URL` to a managed postgres - e.g. `postgresql://USER:PASS@aws-1-us-east-1.pooler.supabase.com:5432/postgres`
-
-</details>
 
 Start the server.
 
@@ -207,6 +191,24 @@ $ vestauth agent init --hostname http://localhost:3000
 
 That's it. Your Vestauth ([web-bot-auth](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture)) infrastructure is now running under your control.
 
+<details><summary>config</summary><br>
+
+Edit the `.env` file to configure your server.
+
+```ini
+PORT="3000"
+HOSTNAME="http://localhost:3000"
+DATABASE_URL="postgres://localhost/vestauth_production"
+```
+
+For example, in production:
+
+* Change `HOSTNAME` to its production url - e.g. `vestauth.yoursite.com`
+* Change `DATABASE_URL` to a managed postgres - e.g. `postgresql://USER:PASS@aws-1-us-east-1.pooler.supabase.com:5432/postgres`
+
+</details>
+<details><summary>production note</summary><br>
+
 > [!WARNING]
 >
 > **Production note:** Configure a wildcard DNS record for `*.${HOSTNAME}`.
@@ -214,6 +216,8 @@ That's it. Your Vestauth ([web-bot-auth](https://datatracker.ietf.org/doc/html/d
 > Example: if `HOSTNAME=vestauth.yourapp.com`, add `*.vestauth.yourapp.com`.
 > 
 > Required for `.well-known` discovery per the [web-bot-auth](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture) spec.
+
+</details>
 
 &nbsp;
 
