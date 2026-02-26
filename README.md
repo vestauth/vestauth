@@ -115,7 +115,7 @@ app.get('/whoami', async (req, res) => {
 ...
 ```
 
-> Sign requests easily by wrapping `curl`.
+> `Curl` that proves who you are.
 
 ```sh
 > SIGNED - 200
