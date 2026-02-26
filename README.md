@@ -153,8 +153,6 @@ $ vestauth agent curl https://as2.dotenvx.com/get
 
 * AS2 (Agentic Secret Storage) - https://as2.dotenvx.com
 
-&nbps;
-
 &nbsp;
 
 ## Self-hosting
