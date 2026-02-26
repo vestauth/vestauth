@@ -140,133 +140,20 @@ $ vestauth primitives headers GET https://api.vestauth.com/whoami --pp
 
 &nbsp;
 
-## Agent: Identity & Authentication
+## Tools
+
+> Call tools!
 
 ```sh
-$ mkdir your-agent
-$ cd your-agent
-
-$ vestauth agent init
-✔ agent created (.env/AGENT_UID=agent-4b94ccd425e939fac5016b6b)
+$ vestauth agent curl -X POST https://as2.dotenvx.com/set -d '{"KEY":"value"}'
+$ vestauth agent curl https://as2.dotenvx.com/get
 ```
 
-> …and sign their `curl` requests with cryptographic authentication.
-
-```sh
-> SIGNED - 200
-$ vestauth agent curl https://api.vestauth.com/whoami
-{"uid":"agent-4b94ccd425e939fac5016b6b",...}
-
-> UNSIGNED - 400
-$ curl https://api.vestauth.com/whoami
-{"error":{"status":400,"code":null,"message":"bad_request","help":null,"meta":null}}
-```
-
-<details><summary>learn more</summary><br>
-
-First `vestauth agent init` populates a `.env` file with an `AGENT_PUBLIC_JWK`, `AGENT_PRIVATE_JWK`, and `AGENT_UID`.
-
-```ini
-# .env
-AGENT_PUBLIC_JWK="{"crv":"Ed25519","x":"py2xNaAfjKZiau-jtmJls6h_3n8xJ1Ur0ie-n9b8zWg","kty":"OKP","kid":"B0u80Gw28W9U2Jl5t_EBiWeBajO2104kOYZ9Ikucl5I"}"
-AGENT_PRIVATE_JWK="{"crv":"Ed25519","d":"Z9vbwN-3eiFMVv_TPWXOxqSMJAT21kZvejWi72yiAaQ","x":"py2xNaAfjKZiau-jtmJls6h_3n8xJ1Ur0ie-n9b8zWg","kty":"OKP","kid":"B0u80Gw28W9U2Jl5t_EBiWeBajO2104kOYZ9Ikucl5I"}"
-AGENT_UID="agent-4b94ccd425e939fac5016b6b"
-```
-
-| Variable | Role | Usage |
-|----------|------------|------------|
-| `AGENT_PUBLIC_JWK` | Verification | Published for tool signature validation |
-| `AGENT_PRIVATE_JWK` | Signing | Used locally to sign HTTP requests |
-| `AGENT_UID` | Identity | Builds discovery FQDN and identifies the agent |
-
-Then `vestauth agent curl` autosigns `curl` requests – injecting valid signed headers according to the [web-bot-auth draft](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture). You can peek these with the built-in `headers` primitive.
-
-```sh
-$ vestauth primitives headers GET https://api.vestauth.com/whoami --pp
-{
-  "Signature": "sig1=:d4Id5SXhUExsf1XyruD8eBmlDtWzt/vezoCS+SKf0M8CxSkhKBtdHH7KkYyMN6E0hmxmNHsYus11u32nhvpWBQ==:",
-  "Signature-Input": "sig1=(\"@authority\");created=1770247189;keyid=\"B0u80Gw28W9U2Jl5t_EBiWeBajO2104kOYZ9Ikucl5I\";alg=\"ed25519\";expires=1770247489;nonce=\"NURxn28X7zyKJ9k5bHxuOyO5qdvF9L5s2qHmhTrGUzbwGSIoUCHmwSlwiiCRgTDGuum83yyWMHJU4jmrVI_XPg\";tag=\"web-bot-auth\"",
-  "Signature-Agent": "sig1=agent-4b94ccd425e939fac5016b6b.api.vestauth.com"
-}
-```
-
-Vestauth turns `curl` into a powerful primitive for tool-side agent identity, verification, and authentication. See the next section.
-
-</details>
-
-&nbsp;
-
-## Tool: Verification 
-
-> Verify requests and safely trust agent identity using cryptographic proof.
-
-```js
-// index.js
-const express = require('express')
-const vestauth = require('vestauth')
-const app = express()
-
-// vestauth agent curl http://localhost:3000/whoami
-app.get('/whoami', async (req, res) => {
-  try {
-    const url = `${req.protocol}://${req.get('host')}${req.originalUrl}`
-
-    // --------------------------------------------------------------------------------
-    // 🪪 Reveal the agent's cryptographic identity.                                 //
-    // The `tool.verify` method turns your endpoint into a cryptographically     //
-    // authenticated tool — verifying signatures, keys, and returning the agent. //
-    // --------------------------------------------------------------------------------
-    const agent = await vestauth.tool.verify(req.method, url, req.headers)
-
-    res.json(agent)
-  } catch (err) {
-    res.status(401).json({ code: 401, error: { message: err.message }})
-  }
-})
-
-app.listen(3000, () => { console.log('listening on http://localhost:3000') })
-```
-
-```sh
-$ npm install express vestauth --save
-$ node index.js
-listening on http://localhost:3000
-```
-
-```sh
-$ vestauth agent curl http://localhost:3000/whoami
-{"uid":"agent-4b94ccd425e939fac5016b6b",...}
-```
-
-<details><summary>learn more</summary><br>
-
-```sh
-Agent → Signs Request → Tool → Discovers Keys → Verifies Signature → Trusted Agent
-```
-
-Vestauth verifies requests using public key discovery and HTTP Message Signature validation.
-
-When a signed request is received, Vestauth:
-
-1. Extracts the agent identity from the `Signature-Agent` header.
-2. Resolves the agent's discovery endpoint.
-3. Fetches the agent's public keys from its `.well-known/http-message-signatures-directory`.
-4. Verifies the request signature using RFC 9421.
-5. Validates timestamps and nonce protections to prevent replay attacks.
-
-If verification succeeds, the tool can safely trust the agent's cryptographic identity.
-
-Vestauth intentionally separates identity discovery from verification to support key rotation and distributed agent infrastructure.
-
-</details>
-
-&nbsp;
-
-## Available Tools
-
-> List of tools. We're actively building tools and looking for others to help grow the vestauth ecosystem with calls for tools like sending email, sms, uploading files and more. Vestauth agents need more tools. A tool is just a sharp API call. Add your tool here.
+#### List of tools
 
 * AS2 (Agentic Secret Storage) - https://as2.dotenvx.com
+
+&nbps;
 
 &nbsp;
 
