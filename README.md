@@ -153,8 +153,8 @@ $ vestauth agent curl https://as2.dotenvx.com/get
 
 * Ping - https://ping.vestauth.com
 * Agentic Secret Storage - https://as2.dotenvx.com
+* Simple File System - coming soon
 * Geo IP - coming soon
-* Filesystem - coming soon
 * Send/Receive Email - coming
 * Send/Receive SMS - coming
 * Send/Receive Telegram - coming
