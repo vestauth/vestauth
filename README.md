@@ -151,7 +151,18 @@ $ vestauth agent curl https://as2.dotenvx.com/get
 
 #### List of tools
 
+* Ping - https://ping.vestauth.com
 * Agentic Secret Storage - https://as2.dotenvx.com
+* Geo IP - coming soon
+* Filesystem - coming soon
+* Send/Receive Email - coming
+* Send/Receive SMS - coming
+* Send/Receive Telegram - coming
+* Send/Receive WhatsApp - coming
+* Human-in-the-loop - coming
+* Rotate NPM Tokens - coming
+* Rotate GitHub Tokens - coming
+* Working on a tool? Tell us and wel'll list it.
 
 &nbsp;
 
