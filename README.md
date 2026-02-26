@@ -149,8 +149,6 @@ $ vestauth agent curl -X POST https://as2.dotenvx.com/set -d '{"KEY":"value"}'
 $ vestauth agent curl https://as2.dotenvx.com/get
 ```
 
-#### List of tools
-
 * Ping - https://ping.vestauth.com
 * Agentic Secret Storage - https://as2.dotenvx.com
 * Geo IP - coming soon
