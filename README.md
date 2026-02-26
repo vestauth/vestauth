@@ -115,7 +115,7 @@ app.get('/whoami', async (req, res) => {
 ...
 ```
 
-> `Curl` that proves who you are.
+> The agent signs HTTP requests with a drop-in curl wrapper.
 
 ```sh
 > SIGNED - 200
