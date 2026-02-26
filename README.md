@@ -123,6 +123,21 @@ $ vestauth agent curl https://api.vestauth.com/whoami
 {"uid":"agent-4b94ccd425e939fac5016b6b",...}
 ```
 
+<details><summary>learn more</summary><br>
+
+`vestauth agent curl` autosigns `curl` requests – injecting valid signed headers according to the [web-bot-auth draft](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture). You can peek these with the built-in `headers` primitive.
+
+```sh
+$ vestauth primitives headers GET https://api.vestauth.com/whoami --pp
+{
+  "Signature": "sig1=:d4Id5SXhUExsf1XyruD8eBmlDtWzt/vezoCS+SKf0M8CxSkhKBtdHH7KkYyMN6E0hmxmNHsYus11u32nhvpWBQ==:",
+  "Signature-Input": "sig1=(\"@authority\");created=1770247189;keyid=\"B0u80Gw28W9U2Jl5t_EBiWeBajO2104kOYZ9Ikucl5I\";alg=\"ed25519\";expires=1770247489;nonce=\"NURxn28X7zyKJ9k5bHxuOyO5qdvF9L5s2qHmhTrGUzbwGSIoUCHmwSlwiiCRgTDGuum83yyWMHJU4jmrVI_XPg\";tag=\"web-bot-auth\"",
+  "Signature-Agent": "sig1=agent-4b94ccd425e939fac5016b6b.api.vestauth.com"
+}
+```
+
+</details>
+
 &nbsp;
 
 ## Agent: Identity & Authentication
