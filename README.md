@@ -149,18 +149,9 @@ $ vestauth agent curl -X POST https://as2.dotenvx.com/set -d '{"KEY":"value"}'
 $ vestauth agent curl https://as2.dotenvx.com/get
 ```
 
-* Ping - https://ping.vestauth.com
+#### List of tools
+
 * Agentic Secret Storage - https://as2.dotenvx.com
-* Geo IP - coming soon
-* Filesystem - coming soon
-* Send/Receive Email - coming
-* Send/Receive SMS - coming
-* Send/Receive Telegram - coming
-* Send/Receive WhatsApp - coming
-* Human-in-the-loop - coming
-* Rotate NPM Tokens - coming
-* Rotate GitHub Tokens - coming
-* Working on a tool? Tell us and wel'll list it.
 
 &nbsp;
 
@@ -199,8 +190,6 @@ $ vestauth agent init --hostname http://localhost:3000
 ```
 
 That's it. Your Vestauth ([web-bot-auth](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture)) infrastructure is now running under your control.
-
-More details
 
 <details><summary>config</summary><br>
 
