@@ -67,7 +67,7 @@ Download [the windows executable](https://github.com/vestauth/vestauth/releases)
 
 ## Identity
 
-> Give agents cryptographic identities…
+> Give agents cryptographic identities.
 
 ```sh
 $ mkdir your-agent
@@ -96,7 +96,7 @@ AGENT_PRIVATE_JWK="{"crv":"Ed25519","d":"Z9vbwN-3eiFMVv_TPWXOxqSMJAT21kZvejWi72y
 
 ## Authentication
 
-> …and authenticate them – `vestauth.tool.verify`.
+> Authenticate agents – `vestauth.tool.verify`…
 
 ```js
 ...
@@ -115,7 +115,7 @@ app.get('/whoami', async (req, res) => {
 ...
 ```
 
-> The agent signs HTTP requests with a drop-in curl wrapper.
+> …the agents sign HTTP requests with a drop-in curl wrapper.
 
 ```sh
 > SIGNED - 200
