@@ -94,7 +94,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Changed
 
-* Move from `*.agents.vestauth.com` FQDN to `*.api.vestaut.com` to prepare way for custom `--hostname` for internal enterprise use cases.
+* Move from `*.agents.vestauth.com` FQDN to `*.api.vestauth.com` to prepare way for custom `--hostname` for internal enterprise use cases.
 
 ## [0.12.1](https://github.com/vestauth/vestauth/compare/v0.12.0...v0.12.1) (2026-02-17)
 
