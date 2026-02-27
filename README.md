@@ -151,7 +151,7 @@ $ vestauth agent curl https://as2.dotenvx.com/get
 
 #### List of tools
 
-<details><summary>`Docle.co` (Check if an email address is real)</summary><br>
+<details><summary>`Docle.co` Check if an email address is real</summary><br>
 
 > Check if an email address is real before you hit send. Verifies syntax, DNS, MX records, SMTP mailbox existence, and cross-references multiple providers. All in real time, no signup required.
 > 
@@ -170,7 +170,7 @@ vestauth agent curl https://docle.co/api/agent/usage
 &nbsp;
 
 </details>
-<details><summary>AS2 (Agentic Secret Storage)</summary><br/>
+<details><summary>`AS2` Agentic Secret Storage</summary><br/>
 
 > AS2 is a simple, agent-friendly secret storage.
 >
@@ -193,14 +193,14 @@ vestauth agent curl "https://as2.dotenvx.com/get?key=KEY,TWILIO"
 &nbsp;
 
 </details>
-<details><summary>SFS (Simple File System)</summary><br/>
+<details><summary>`SFS` Simple File System</summary><br/>
 
 > SFS is a simple file system for vestauth agents.
 
 COMING SOON
 
 </details>
-<details><summary>Ping (ping.vestauth.com)</summary><br/>
+<details><summary>`Ping` ping.vestauth.com</summary><br/>
 
 > Ping is a demonstration of vestauth.
 >
