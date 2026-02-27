@@ -151,8 +151,50 @@ $ vestauth agent curl https://as2.dotenvx.com/get
 
 #### List of tools
 
-* Ping - https://ping.vestauth.com
-* Agentic Secret Storage - https://as2.dotenvx.com
+<details><summary>docle.co: check if an email address is real</summary><br>
+
+```sh
+# verify an email
+vestauth agent curl -X POST https://docle.co/api/verify \
+  -H "Content-Type: application/json" \
+  -d '{"emails":["test@example.com"]}'
+
+# check your usage
+vestauth agent curl https://docle.co/api/agent/usage
+```
+
+[docle.co/docs &rarr;](https://github.com/treadiehq/docle?tab=readme-ov-file#docle)
+
+&nbsp;
+
+</details>
+<details><summary>ping.vestauth.com: make a ping</summary><br/>
+
+```sh
+# make a ping
+vestauth agent curl https://ping.vestauth.com/ping
+```
+
+</details>
+<details><summary>Agentic Secret Storage: store secrets</summary><br/>
+
+```sh
+# set a secret
+vestauth agent curl -X POST https://as2.dotenvx.com/set -d '{"KEY":"value"}'
+
+# get all secrets
+vestauth agent curl "https://as2.dotenvx.com/get"
+
+# get single secret
+vestauth agent curl "https://as2.dotenvx.com/get?key=KEY"
+
+# get multiple secrets
+vestauth agent curl "https://as2.dotenvx.com/get?key=KEY,TWILIO"
+```
+
+</details>
+<details><summary>coming soon</summary><br/>
+
 * Simple File System - coming soon
 * Geo IP - coming soon
 * Send/Receive Email - coming
@@ -163,6 +205,8 @@ $ vestauth agent curl https://as2.dotenvx.com/get
 * Rotate NPM Tokens - coming
 * Rotate GitHub Tokens - coming
 * Working on a tool? Tell us and wel'll list it.
+
+</details>
 
 &nbsp;
 
