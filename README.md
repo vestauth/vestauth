@@ -151,7 +151,7 @@ $ vestauth agent curl https://as2.dotenvx.com/get
 
 #### List of tools
 
-<details><summary>**Docle.co** (Check if an email address is real)</summary><br>
+<details><summary>`Docle.co` (Check if an email address is real)</summary><br>
 
 > Check if an email address is real before you hit send. Verifies syntax, DNS, MX records, SMTP mailbox existence, and cross-references multiple providers. All in real time, no signup required.
 > 
