@@ -151,7 +151,11 @@ $ vestauth agent curl https://as2.dotenvx.com/get
 
 #### List of tools
 
-<details><summary>docle.co: check if an email address is real</summary><br>
+<details><summary>**Docle.co** (Check if an email address is real)</summary><br>
+
+> Check if an email address is real before you hit send. Verifies syntax, DNS, MX records, SMTP mailbox existence, and cross-references multiple providers. All in real time, no signup required.
+> 
+> [learn more](https://github.com/treadiehq/docle) 
 
 ```sh
 # verify an email
@@ -163,20 +167,14 @@ vestauth agent curl -X POST https://docle.co/api/verify \
 vestauth agent curl https://docle.co/api/agent/usage
 ```
 
-[docle.co/docs &rarr;](https://github.com/treadiehq/docle?tab=readme-ov-file#docle)
-
 &nbsp;
 
 </details>
-<details><summary>ping.vestauth.com: make a ping</summary><br/>
+<details><summary>AS2 (Agentic Secret Storage)</summary><br/>
 
-```sh
-# make a ping
-vestauth agent curl https://ping.vestauth.com/ping
-```
-
-</details>
-<details><summary>Agentic Secret Storage: store secrets</summary><br/>
+> AS2 is a simple, agent-friendly secret storage.
+>
+> [learn more](https://as2.dotenvx.com)
 
 ```sh
 # set a secret
@@ -192,10 +190,32 @@ vestauth agent curl "https://as2.dotenvx.com/get?key=KEY"
 vestauth agent curl "https://as2.dotenvx.com/get?key=KEY,TWILIO"
 ```
 
-</details>
-<details><summary>coming soon</summary><br/>
+&nbsp;
 
-* Simple File System - coming soon
+</details>
+<details><summary>SFS (Simple File System)</summary><br/>
+
+> SFS is a simple file system for vestauth agents.
+
+COMING SOON
+
+</details>
+<details><summary>Ping (ping.vestauth.com)</summary><br/>
+
+> Ping is a demonstration of vestauth.
+>
+> [learn more](https://ping.vestauth.com)
+
+```sh
+# make a ping
+vestauth agent curl https://ping.vestauth.com/ping
+```
+
+&nbsp;
+
+</details>
+<details><summary>more coming soon</summary><br/>
+
 * Geo IP - coming soon
 * Send/Receive Email - coming
 * Send/Receive SMS - coming
