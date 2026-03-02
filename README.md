@@ -154,6 +154,7 @@ $ vestauth agent curl https://sfs.vestauth.com/list
 <details><summary>`SFS` Simple File System</summary><br/>
 
 > SFS is a simple file system for vestauth agents.
+> [sfs.vestauth.com](https://sfs.vestauth.com)
 
 ```sh
 # write a file
@@ -175,8 +176,7 @@ vestauth agent curl https://sfs.vestauth.com/read -d '{"filepath":"/hello.md"}'
 <details><summary>`Ping` ping.vestauth.com</summary><br/>
 
 > Ping is a demonstration of vestauth.
->
-> [learn more](https://ping.vestauth.com)
+> [ping.vestauth.com](https://ping.vestauth.com)
 
 ```sh
 # make a ping
@@ -192,8 +192,7 @@ vestauth agent curl https://ping.vestauth.com/ping
 <details><summary>`AS2` Agentic Secret Storage</summary><br/>
 
 > AS2 is a simple, agent-friendly secret storage.
->
-> [learn more](https://as2.dotenvx.com)
+> [as2.dotenvx.com](https://as2.dotenvx.com)
 
 ```sh
 # set a secret
