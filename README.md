@@ -145,8 +145,8 @@ $ vestauth primitives headers GET https://api.vestauth.com/whoami --pp
 > Call tools!
 
 ```sh
-$ vestauth agent curl -X POST https://as2.dotenvx.com/set -d '{"KEY":"value"}'
-$ vestauth agent curl https://as2.dotenvx.com/get
+$ vestauth agent curl https://sfs.vestauth.com/write -d '{"filepath":"/hello.md", "content":"hello"}'
+$ vestauth agent curl https://sfs.vestauth.com/list
 ```
 
 #### First Party Tools
@@ -157,16 +157,16 @@ $ vestauth agent curl https://as2.dotenvx.com/get
 
 ```sh
 # write a file
-vestauth agent curl -X POST https://sfs.vestauth.com/write -d '{"filepath":"/hello.md", "content":"hello"}'
+vestauth agent curl https://sfs.vestauth.com/write -d '{"filepath":"/hello.md", "content":"hello"}'
 
 # delete a file
-vestauth agent curl -X POST https://sfs.vestauth.com/delete -d '{"filepath":"/hello.md"}'
+vestauth agent curl https://sfs.vestauth.com/delete -d '{"filepath":"/hello.md"}'
 
 # list files
-vestauth agent curl -X POST https://sfs.vestauth.com/list
+vestauth agent curl https://sfs.vestauth.com/list
 
 # read a file
-vestauth agent curl -X POST https://sfs.vestauth.com/read -d '{"filepath":"/hello.md"}'
+vestauth agent curl https://sfs.vestauth.com/read -d '{"filepath":"/hello.md"}'
 ```
 
 &nbsp;
