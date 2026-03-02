@@ -105,7 +105,7 @@ app.get('/.well-known/http-message-signatures-directory', async (req, res) => {
   return res.json({ keys })
 })
 
-app.get('/whoami', async (req, res) => {
+app.post('/whoami', async (req, res) => {
   try {
     const url = `${req.protocol}://${req.get('host')}${req.originalUrl}`
     const attrs = {
