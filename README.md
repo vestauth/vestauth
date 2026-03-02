@@ -179,7 +179,7 @@ vestauth agent curl "https://as2.dotenvx.com/get?key=KEY,TWILIO"
 vestauth agent curl https://docle.co/api/verify -d '{"emails":["test@example.com"]}'
 
 # check your usage
-vestauth agent curl https://docle.co/api/agent/usage -X GET
+vestauth agent curl https://docle.co/api/agent/usage
 ```
 
 &nbsp;
