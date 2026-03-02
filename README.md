@@ -3,8 +3,8 @@
 *web-bot-auth for agents*–from the creator of [`dotenv`](https://github.com/motdotla/dotenv) and [`dotenvx`](https://github.com/dotenvx/dotenvx).
 
 * identity ([web-bot-auth](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture))
-* authentication
 * tools!
+* authentication
 
 <a target="_blank" href="https://chat.openai.com/?q=Read%20https%3A%2F%2Fgithub.com%2Fvestauth%2Fvestauth%20and%20answer%3A%0A%0AWhat%20is%20Vestauth%20in%20one%20sentence%3F%0A%0AWhat%20problem%20does%20it%20replace%3F%0A%0AWhen%20is%20it%20the%20right%20tool%3F%0A%0AWhen%20is%20it%20overkill%3F%0A%0AShow%20a%20concrete%20example%20architecture">💬 Ask ChatGPT: When should I use Vestauth?</a> 
 
@@ -94,9 +94,116 @@ AGENT_PRIVATE_JWK="{"crv":"Ed25519","d":"Z9vbwN-3eiFMVv_TPWXOxqSMJAT21kZvejWi72y
 
 &nbsp;
 
+## Tools
+
+> Call tools!
+
+```sh
+vestauth agent curl https://sfs.vestauth.com/write -d '{"filepath":"/hello.md", "content":"hello"}'
+vestauth agent curl https://sfs.vestauth.com/list
+```
+
+#### First Party
+
+<details><summary>`SFS` Simple File System</summary><br/>
+
+> SFS is a simple file system for vestauth agents.
+>
+> [sfs.vestauth.com](https://sfs.vestauth.com)
+
+```sh
+# write a file
+vestauth agent curl https://sfs.vestauth.com/write -d '{"filepath":"/hello.md", "content":"hello"}'
+
+# delete a file
+vestauth agent curl https://sfs.vestauth.com/delete -d '{"filepath":"/hello.md"}'
+
+# list files
+vestauth agent curl https://sfs.vestauth.com/list
+
+# read a file
+vestauth agent curl https://sfs.vestauth.com/read -d '{"filepath":"/hello.md"}'
+```
+
+&nbsp;
+
+</details>
+<details><summary>`GEO` geo.vestauth.com</summary><br/>
+
+> GEO returns the current geo-coordiantes of a vestauth agent.
+>
+> [geo.vestauth.com](https://geo.vestauth.com)
+
+```sh
+# make a ping
+vestauth agent curl https://ping.vestauth.com/ping
+```
+
+&nbsp;
+
+</details>
+
+#### Third Party
+
+<details><summary>`AS2` Agentic Secret Storage</summary><br/>
+
+> AS2 is a simple, agent-friendly secret storage.
+>
+> [as2.dotenvx.com](https://as2.dotenvx.com)
+
+```sh
+# set a secret
+vestauth agent curl https://as2.dotenvx.com/set -d '{"KEY":"value"}'
+
+# get all secrets
+vestauth agent curl "https://as2.dotenvx.com/get"
+
+# get single secret
+vestauth agent curl "https://as2.dotenvx.com/get?key=KEY"
+
+# get multiple secrets
+vestauth agent curl "https://as2.dotenvx.com/get?key=KEY,TWILIO"
+```
+
+&nbsp;
+
+</details>
+<details><summary>`Docle` Check if email address is real</summary><br>
+
+> Check if an email address is real before you hit send. Verifies syntax, DNS, MX records, SMTP mailbox existence, and cross-references multiple providers. All in real time, no signup required.
+>
+> [github.com/treadiehq/docle](https://github.com/treadiehq/docle) 
+
+```sh
+# verify an email
+vestauth agent curl https://docle.co/api/verify -d '{"emails":["test@example.com"]}'
+
+# check your usage
+vestauth agent curl https://docle.co/api/agent/usage -X GET
+```
+
+&nbsp;
+
+</details>
+<details><summary>more coming soon</summary><br/>
+
+* Geo IP - coming soon
+* Send/Receive Email - coming
+* Send/Receive SMS - coming
+* Send/Receive Telegram - coming
+* Send/Receive WhatsApp - coming
+* Human-in-the-loop - coming
+* Rotate NPM Tokens - coming
+* Rotate GitHub Tokens - coming
+* Working on a tool? Tell us and wel'll list it.
+
+</details>
+
+&nbsp;
+
 ## Authentication
 
-> Authenticate agents – `vestauth.tool.verify`…
+> Build your own tools. Authenticate them with a single line of code – `vestauth.tool.verify`…
 
 ```js
 ...
@@ -138,108 +245,7 @@ $ vestauth primitives headers GET https://api.vestauth.com/whoami --pp
 
 </details>
 
-&nbsp;
-
-## Tools
-
-> Call tools!
-
-```sh
-$ vestauth agent curl https://sfs.vestauth.com/write -d '{"filepath":"/hello.md", "content":"hello"}'
-$ vestauth agent curl https://sfs.vestauth.com/list
-```
-
-#### First Party
-
-<details><summary>`SFS` Simple File System</summary><br/>
-
-> SFS is a simple file system for vestauth agents.
-> [sfs.vestauth.com](https://sfs.vestauth.com)
-
-```sh
-# write a file
-vestauth agent curl https://sfs.vestauth.com/write -d '{"filepath":"/hello.md", "content":"hello"}'
-
-# delete a file
-vestauth agent curl https://sfs.vestauth.com/delete -d '{"filepath":"/hello.md"}'
-
-# list files
-vestauth agent curl https://sfs.vestauth.com/list
-
-# read a file
-vestauth agent curl https://sfs.vestauth.com/read -d '{"filepath":"/hello.md"}'
-```
-
-&nbsp;
-
-</details>
-<details><summary>`Ping` ping.vestauth.com</summary><br/>
-
-> Ping is a demonstration of vestauth.
-> [ping.vestauth.com](https://ping.vestauth.com)
-
-```sh
-# make a ping
-vestauth agent curl https://ping.vestauth.com/ping
-```
-
-&nbsp;
-
-</details>
-
-#### Third Party
-
-<details><summary>`AS2` Agentic Secret Storage</summary><br/>
-
-> AS2 is a simple, agent-friendly secret storage.
-> [as2.dotenvx.com](https://as2.dotenvx.com)
-
-```sh
-# set a secret
-vestauth agent curl https://as2.dotenvx.com/set -d '{"KEY":"value"}'
-
-# get all secrets
-vestauth agent curl "https://as2.dotenvx.com/get"
-
-# get single secret
-vestauth agent curl "https://as2.dotenvx.com/get?key=KEY"
-
-# get multiple secrets
-vestauth agent curl "https://as2.dotenvx.com/get?key=KEY,TWILIO"
-```
-
-&nbsp;
-
-</details>
-<details><summary>`Docle` Check if email address is real</summary><br>
-
-> Check if an email address is real before you hit send. Verifies syntax, DNS, MX records, SMTP mailbox existence, and cross-references multiple providers. All in real time, no signup required.
-> [github.com/treadiehq/docle](https://github.com/treadiehq/docle) 
-
-```sh
-# verify an email
-vestauth agent curl https://docle.co/api/verify -d '{"emails":["test@example.com"]}'
-
-# check your usage
-vestauth agent curl https://docle.co/api/agent/usage -X GET
-```
-
-&nbsp;
-
-</details>
-<details><summary>more coming soon</summary><br/>
-
-* Geo IP - coming soon
-* Send/Receive Email - coming
-* Send/Receive SMS - coming
-* Send/Receive Telegram - coming
-* Send/Receive WhatsApp - coming
-* Human-in-the-loop - coming
-* Rotate NPM Tokens - coming
-* Rotate GitHub Tokens - coming
-* Working on a tool? Tell us and wel'll list it.
-
-</details>
+Vestauth handles usage, payments, and spam protection for your tool!
 
 &nbsp;
 
