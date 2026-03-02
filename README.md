@@ -197,7 +197,7 @@ vestauth agent curl https://ping.vestauth.com/ping
 
 ```sh
 # set a secret
-vestauth agent curl -X POST https://as2.dotenvx.com/set -d '{"KEY":"value"}'
+vestauth agent curl https://as2.dotenvx.com/set -d '{"KEY":"value"}'
 
 # get all secrets
 vestauth agent curl "https://as2.dotenvx.com/get"
@@ -220,12 +220,10 @@ vestauth agent curl "https://as2.dotenvx.com/get?key=KEY,TWILIO"
 
 ```sh
 # verify an email
-vestauth agent curl -X POST https://docle.co/api/verify \
-  -H "Content-Type: application/json" \
-  -d '{"emails":["test@example.com"]}'
+vestauth agent curl https://docle.co/api/verify -d '{"emails":["test@example.com"]}'
 
 # check your usage
-vestauth agent curl https://docle.co/api/agent/usage
+vestauth agent curl https://docle.co/api/agent/usage -X GET
 ```
 
 &nbsp;
