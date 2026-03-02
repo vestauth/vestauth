@@ -209,7 +209,7 @@ vestauth agent curl https://docle.co/api/agent/usage
 ...
 const vestauth = require('vestauth')
 
-app.get('/whoami', async (req, res) => {
+app.post('/whoami', async (req, res) => {
   try {
     const url = `${req.protocol}://${req.get('host')}${req.originalUrl}`
     const agent = await vestauth.tool.verify(req.method, url, req.headers)
