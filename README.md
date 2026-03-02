@@ -145,8 +145,8 @@ $ vestauth primitives headers GET https://api.vestauth.com/whoami --pp
 > Call tools!
 
 ```sh
-$ vestauth agent curl -X POST https://as2.dotenvx.com/set -d '{"KEY":"value"}'
-$ vestauth agent curl https://as2.dotenvx.com/get
+$ vestauth agent curl https://sfs.vestauth.com/write -d '{"filepath":"/hello.md", "content":"hello"}'
+$ vestauth agent curl https://sfs.vestauth.com/list
 ```
 
 #### First Party Tools
@@ -154,19 +154,20 @@ $ vestauth agent curl https://as2.dotenvx.com/get
 <details><summary>`SFS` Simple File System</summary><br/>
 
 > SFS is a simple file system for vestauth agents.
+> [sfs.vestauth.com](https://sfs.vestauth.com)
 
 ```sh
 # write a file
-vestauth agent curl -X POST https://sfs.vestauth.com/write -d '{"filepath":"/hello.md", "content":"hello"}'
+vestauth agent curl https://sfs.vestauth.com/write -d '{"filepath":"/hello.md", "content":"hello"}'
 
 # delete a file
-vestauth agent curl -X POST https://sfs.vestauth.com/delete -d '{"filepath":"/hello.md"}'
+vestauth agent curl https://sfs.vestauth.com/delete -d '{"filepath":"/hello.md"}'
 
 # list files
-vestauth agent curl -X POST https://sfs.vestauth.com/list
+vestauth agent curl https://sfs.vestauth.com/list
 
 # read a file
-vestauth agent curl -X POST https://sfs.vestauth.com/read -d '{"filepath":"/hello.md"}'
+vestauth agent curl https://sfs.vestauth.com/read -d '{"filepath":"/hello.md"}'
 ```
 
 &nbsp;
@@ -175,8 +176,7 @@ vestauth agent curl -X POST https://sfs.vestauth.com/read -d '{"filepath":"/hell
 <details><summary>`Ping` ping.vestauth.com</summary><br/>
 
 > Ping is a demonstration of vestauth.
->
-> [learn more](https://ping.vestauth.com)
+> [ping.vestauth.com](https://ping.vestauth.com)
 
 ```sh
 # make a ping
@@ -192,12 +192,11 @@ vestauth agent curl https://ping.vestauth.com/ping
 <details><summary>`AS2` Agentic Secret Storage</summary><br/>
 
 > AS2 is a simple, agent-friendly secret storage.
->
-> [learn more](https://as2.dotenvx.com)
+> [as2.dotenvx.com](https://as2.dotenvx.com)
 
 ```sh
 # set a secret
-vestauth agent curl -X POST https://as2.dotenvx.com/set -d '{"KEY":"value"}'
+vestauth agent curl https://as2.dotenvx.com/set -d '{"KEY":"value"}'
 
 # get all secrets
 vestauth agent curl "https://as2.dotenvx.com/get"
@@ -220,12 +219,10 @@ vestauth agent curl "https://as2.dotenvx.com/get?key=KEY,TWILIO"
 
 ```sh
 # verify an email
-vestauth agent curl -X POST https://docle.co/api/verify \
-  -H "Content-Type: application/json" \
-  -d '{"emails":["test@example.com"]}'
+vestauth agent curl https://docle.co/api/verify -d '{"emails":["test@example.com"]}'
 
 # check your usage
-vestauth agent curl https://docle.co/api/agent/usage
+vestauth agent curl https://docle.co/api/agent/usage -X GET
 ```
 
 &nbsp;
@@ -245,8 +242,7 @@ vestauth agent curl https://docle.co/api/agent/usage
 
 </details>
 
-
-
+&nbsp;
 
 ## Self-hosting
 
