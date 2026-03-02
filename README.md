@@ -197,7 +197,19 @@ vestauth agent curl "https://as2.dotenvx.com/get?key=KEY,TWILIO"
 
 > SFS is a simple file system for vestauth agents.
 
-COMING SOON
+```sh
+# write a file
+vestauth agent curl -X POST https://sfs.vestauth.com/write -d '{"filepath":"/hello.md", "content":"hello"}'
+
+# delete a file
+vestauth agent curl -X POST https://sfs.vestauth.com/delete -d '{"filepath":"/hello.md"}'
+
+# list files
+vestauth agent curl -X POST https://sfs.vestauth.com/list
+
+# read a file
+vestauth agent curl -X POST https://sfs.vestauth.com/read -d '{"filepath":"/hello.md"}'
+```
 
 </details>
 <details><summary>`Ping` ping.vestauth.com</summary><br/>
