@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-[Unreleased](https://github.com/vestauth/vestauth/compare/v0.21.1...main)
+[Unreleased](https://github.com/vestauth/vestauth/compare/v0.22.0...main)
+
+## [0.22.0](https://github.com/vestauth/vestauth/compare/v0.21.1...v0.22.0) (2026-03-02)
+
+### Changed
+
+* `agent curl` now by default prepends `-X POST` and `-H "Content-Type: application/json"` ([#45](https://github.com/vestauth/vestauth/pull/45))
 
 ## [0.21.1](https://github.com/vestauth/vestauth/compare/v0.21.0...v0.21.1) (2026-02-25)
 
