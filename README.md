@@ -130,7 +130,7 @@ vestauth agent curl https://sfs.vestauth.com/read -d '{"filepath":"/hello.md"}'
 </details>
 <details><summary>`GEO` geo.vestauth.com</summary><br/>
 
-> GEO returns the current geo-coordiantes of a vestauth agent.
+> GEO returns the current geo-coordinates of a vestauth agent.
 >
 > [geo.vestauth.com](https://geo.vestauth.com)
 
@@ -195,7 +195,7 @@ vestauth agent curl https://docle.co/api/agent/usage -X GET
 * Human-in-the-loop - coming
 * Rotate NPM Tokens - coming
 * Rotate GitHub Tokens - coming
-* Working on a tool? Tell us and wel'll list it.
+* Working on a tool? Tell us and we'll list it.
 
 </details>
 
