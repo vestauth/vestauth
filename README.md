@@ -128,15 +128,15 @@ vestauth agent curl https://sfs.vestauth.com/read -d '{"filepath":"/hello.md"}'
 &nbsp;
 
 </details>
-<details><summary>`GEO` geo.vestauth.com</summary><br/>
+<details><summary>`GEO` Latitude and Longitude</summary><br/>
 
-> GEO returns the current geo-coordinates of a vestauth agent.
+> GEO returns the current latitude and longitude of a vestauth agent.
 >
 > [geo.vestauth.com](https://geo.vestauth.com)
 
 ```sh
-# make a ping
-vestauth agent curl https://ping.vestauth.com/ping
+# return latitude and longitude
+vestauth agent curl https://geo.vestauth.com/geo
 ```
 
 &nbsp;
