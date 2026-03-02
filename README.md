@@ -214,8 +214,7 @@ vestauth agent curl "https://as2.dotenvx.com/get?key=KEY,TWILIO"
 <details><summary>`Docle` Check if email address is real</summary><br>
 
 > Check if an email address is real before you hit send. Verifies syntax, DNS, MX records, SMTP mailbox existence, and cross-references multiple providers. All in real time, no signup required.
-> 
-> [learn more](https://github.com/treadiehq/docle) 
+> [github.com/treadiehq/docle](https://github.com/treadiehq/docle) 
 
 ```sh
 # verify an email
