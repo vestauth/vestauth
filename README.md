@@ -243,8 +243,7 @@ vestauth agent curl https://docle.co/api/agent/usage -X GET
 
 </details>
 
-
-
+&nbsp;
 
 ## Self-hosting
 
