@@ -149,9 +149,7 @@ $ vestauth agent curl -X POST https://as2.dotenvx.com/set -d '{"KEY":"value"}'
 $ vestauth agent curl https://as2.dotenvx.com/get
 ```
 
-#### List of tools
-
-##### First-Party
+#### First Party Tools
 
 <details><summary>`SFS` Simple File System</summary><br/>
 
@@ -187,7 +185,7 @@ vestauth agent curl https://ping.vestauth.com/ping
 
 </details>
 
-##### Third-Party
+#### Third Party Tools
 
 <details><summary>`AS2` Agentic Secret Storage</summary><br/>
 
