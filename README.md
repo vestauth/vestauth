@@ -149,7 +149,7 @@ $ vestauth agent curl https://sfs.vestauth.com/write -d '{"filepath":"/hello.md"
 $ vestauth agent curl https://sfs.vestauth.com/list
 ```
 
-#### First Party Tools
+#### First Party
 
 <details><summary>`SFS` Simple File System</summary><br/>
 
@@ -187,7 +187,7 @@ vestauth agent curl https://ping.vestauth.com/ping
 
 </details>
 
-#### Third Party Tools
+#### Third Party
 
 <details><summary>`AS2` Agentic Secret Storage</summary><br/>
 
