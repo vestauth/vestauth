@@ -5,6 +5,53 @@ const Errors = require('./../../../lib/helpers/errors')
 const findUrl = require('./../../../lib/helpers/findUrl')
 const catchAndLog = require('./../../../lib/helpers/catchAndLog')
 
+function requestMethodFromArgs (args) {
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i]
+
+    if (arg === '-X' || arg === '--request') {
+      const method = args[i + 1]
+      if (method) return method.toUpperCase()
+      continue
+    }
+
+    if (arg.startsWith('--request=')) {
+      return arg.slice('--request='.length).toUpperCase()
+    }
+
+    if (arg.startsWith('-X') && arg.length > 2) {
+      return arg.slice(2).toUpperCase()
+    }
+  }
+
+  return null
+}
+
+function hasContentTypeHeader (args) {
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i]
+
+    if (arg === '-H' || arg === '--header') {
+      const header = args[i + 1] || ''
+      if (header.toLowerCase().startsWith('content-type:')) return true
+      continue
+    }
+
+    if (arg.startsWith('--header=')) {
+      const header = arg.slice('--header='.length)
+      if (header.toLowerCase().startsWith('content-type:')) return true
+      continue
+    }
+
+    if (arg.startsWith('-H') && arg.length > 2) {
+      const header = arg.slice(2)
+      if (header.toLowerCase().startsWith('content-type:')) return true
+    }
+  }
+
+  return false
+}
+
 async function curl () {
   try {
     const commandArgs = this.args
@@ -13,14 +60,18 @@ async function curl () {
     const options = this.opts()
     logger.debug(`options: ${JSON.stringify(options)}`)
 
-    const httpMethod = 'GET'
+    const httpMethod = requestMethodFromArgs(commandArgs) || 'POST'
     const url = findUrl(commandArgs)
     const headers = await agent.headers(httpMethod, url)
+    const includeRequestMethod = requestMethodFromArgs(commandArgs) === null
+    const includeContentType = !hasContentTypeHeader(commandArgs)
     const injected = [
       'curl',
       '-H', `Signature: ${headers.Signature}`,
       '-H', `Signature-Input: ${headers['Signature-Input']}`,
       '-H', `Signature-Agent: ${headers['Signature-Agent']}`,
+      ...(includeRequestMethod ? ['-X', 'POST'] : []),
+      ...(includeContentType ? ['-H', 'Content-Type: application/json'] : []),
       ...commandArgs
     ]
 
