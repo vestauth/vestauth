@@ -151,48 +151,8 @@ $ vestauth agent curl https://as2.dotenvx.com/get
 
 #### List of tools
 
-<details><summary>`Docle.co` Check if an email address is real</summary><br>
+##### First-Party
 
-> Check if an email address is real before you hit send. Verifies syntax, DNS, MX records, SMTP mailbox existence, and cross-references multiple providers. All in real time, no signup required.
-> 
-> [learn more](https://github.com/treadiehq/docle) 
-
-```sh
-# verify an email
-vestauth agent curl -X POST https://docle.co/api/verify \
-  -H "Content-Type: application/json" \
-  -d '{"emails":["test@example.com"]}'
-
-# check your usage
-vestauth agent curl https://docle.co/api/agent/usage
-```
-
-&nbsp;
-
-</details>
-<details><summary>`AS2` Agentic Secret Storage</summary><br/>
-
-> AS2 is a simple, agent-friendly secret storage.
->
-> [learn more](https://as2.dotenvx.com)
-
-```sh
-# set a secret
-vestauth agent curl -X POST https://as2.dotenvx.com/set -d '{"KEY":"value"}'
-
-# get all secrets
-vestauth agent curl "https://as2.dotenvx.com/get"
-
-# get single secret
-vestauth agent curl "https://as2.dotenvx.com/get?key=KEY"
-
-# get multiple secrets
-vestauth agent curl "https://as2.dotenvx.com/get?key=KEY,TWILIO"
-```
-
-&nbsp;
-
-</details>
 <details><summary>`SFS` Simple File System</summary><br/>
 
 > SFS is a simple file system for vestauth agents.
@@ -226,6 +186,51 @@ vestauth agent curl https://ping.vestauth.com/ping
 &nbsp;
 
 </details>
+
+##### Third-Party
+
+<details><summary>`AS2` Agentic Secret Storage</summary><br/>
+
+> AS2 is a simple, agent-friendly secret storage.
+>
+> [learn more](https://as2.dotenvx.com)
+
+```sh
+# set a secret
+vestauth agent curl -X POST https://as2.dotenvx.com/set -d '{"KEY":"value"}'
+
+# get all secrets
+vestauth agent curl "https://as2.dotenvx.com/get"
+
+# get single secret
+vestauth agent curl "https://as2.dotenvx.com/get?key=KEY"
+
+# get multiple secrets
+vestauth agent curl "https://as2.dotenvx.com/get?key=KEY,TWILIO"
+```
+
+&nbsp;
+
+</details>
+<details><summary>`Docle` Check if email address is real</summary><br>
+
+> Check if an email address is real before you hit send. Verifies syntax, DNS, MX records, SMTP mailbox existence, and cross-references multiple providers. All in real time, no signup required.
+> 
+> [learn more](https://github.com/treadiehq/docle) 
+
+```sh
+# verify an email
+vestauth agent curl -X POST https://docle.co/api/verify \
+  -H "Content-Type: application/json" \
+  -d '{"emails":["test@example.com"]}'
+
+# check your usage
+vestauth agent curl https://docle.co/api/agent/usage
+```
+
+&nbsp;
+
+</details>
 <details><summary>more coming soon</summary><br/>
 
 * Geo IP - coming soon
@@ -240,7 +245,8 @@ vestauth agent curl https://ping.vestauth.com/ping
 
 </details>
 
-&nbsp;
+
+
 
 ## Self-hosting
 
