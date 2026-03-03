@@ -128,6 +128,22 @@ vestauth agent curl https://sfs.vestauth.com/read -d '{"filepath":"/hello.md"}'
 &nbsp;
 
 </details>
+<details><summary>`SAM` Simple Agent Mail</summary><br/>
+
+> SAM is a simple way to send email for vestauth agents.
+>
+> [sam.vestauth.com](https://sam.vestauth.com)
+> 
+> COMING SOON!
+
+```sh
+# send an email
+vestauth agent curl https://sam.vestauth.com/send -d '{"to":"you@email.com", "text":"hello"}'
+```
+
+&nbsp;
+
+</details>
 <details><summary>`GEO` Latitude and Longitude</summary><br/>
 
 > GEO returns the current latitude and longitude of a vestauth agent.
