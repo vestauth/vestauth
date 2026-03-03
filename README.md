@@ -139,7 +139,7 @@ vestauth agent curl https://sfs.vestauth.com/read -d '{"filepath":"/hello.md"}'
 
 ```sh
 # send an email
-vestauth agent curl https://sam.vestauth.com/send -d '{"to":"you@email.com", "text":"hello from agent"}'
+vestauth agent curl https://sam.vestauth.com/send -d '{"to":"you@email.com", "text":"i am agent"}'
 ```
 
 &nbsp;
