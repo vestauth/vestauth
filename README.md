@@ -21,6 +21,8 @@ npm i -g vestauth
 ```sh
 vestauth agent init
 vestauth agent curl https://api.vestauth.com/whoami --pp
+vestauth agent curl https://sfs.vestauth.com/write -d '{"filepath":"/hello.md", "content":"hello"}'
+vestauth agent curl https://sfs.vestauth.com/list
 ```
 
 <details><summary>with curl 🌐 </summary><br>
