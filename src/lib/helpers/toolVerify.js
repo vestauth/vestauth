@@ -5,13 +5,6 @@ const trustedFqdn = require('./trustedFqdn')
 const Errors = require('./errors')
 
 async function toolVerify (httpMethod, uri, headers = {}, meter = {}, serverHostname = null) {
-  // Backward compatibility:
-  // toolVerify(method, uri, headers, serverHostname)
-  if (typeof meter === 'string' && serverHostname === null) {
-    serverHostname = meter
-    meter = {}
-  }
-
   if (!httpMethod) {
     throw new Errors().missingHttpMethod()
   }
