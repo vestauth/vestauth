@@ -13,7 +13,7 @@ t.test('#verify - valid signature', async t => {
   const uri = 'https://example.com/resource'
   const signedHeaders = await headers('GET', uri, 'agent-123', JSON.stringify(privateJwk))
 
-  const output = await verify('GET', uri, signedHeaders, publicJwk)
+  const output = await verify('GET', uri, signedHeaders, {}, publicJwk)
 
   t.same(output.public_jwk, publicJwk)
   t.equal(output.kid, publicJwk.kid)
@@ -25,7 +25,7 @@ t.test('#verify - matches web-bot-auth verify (valid signature)', async t => {
   const nonce = Buffer.alloc(64).toString('base64')
   const signedHeaders = await headers('GET', uri, 'agent-123', JSON.stringify(privateJwk), undefined, nonce)
 
-  await verify('GET', uri, signedHeaders, publicJwk)
+  await verify('GET', uri, signedHeaders, {}, publicJwk)
 
   const request = new Request(uri, {
     method: 'GET',
@@ -50,7 +50,7 @@ t.test('#verify - invalid signature', async t => {
     verify('GET', uri, {
       ...signedHeaders,
       Signature: `sig1=:${tampered}:`
-    }, publicJwk),
+    }, {}, publicJwk),
     { code: 'INVALID_SIGNATURE' }
   )
 })
@@ -70,7 +70,7 @@ t.test('#verify - matches web-bot-auth verify (invalid signature)', async t => {
   }
 
   await t.rejects(
-    verify('GET', uri, tamperedHeaders, publicJwk),
+    verify('GET', uri, tamperedHeaders, {}, publicJwk),
     { code: 'INVALID_SIGNATURE' }
   )
 
@@ -96,7 +96,7 @@ t.test('#verify - expired signature', async t => {
     verify('GET', uri, {
       Signature: `sig1=:${signature}:`,
       'Signature-Input': `sig1=${signatureInput}`
-    }, publicJwk),
+    }, {}, publicJwk),
     { code: 'EXPIRED_SIGNATURE' }
   )
 })
@@ -110,7 +110,7 @@ t.test('#verify - missing signature input (whitespace header)', async t => {
     verify('GET', uri, {
       ...signedHeaders,
       'Signature-Input': '   '
-    }, publicJwk),
+    }, {}, publicJwk),
     { code: 'MISSING_SIGNATURE_INPUT' }
   )
 })

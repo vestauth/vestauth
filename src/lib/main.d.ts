@@ -46,6 +46,11 @@ export interface VerifyResult {
   well_known_url?: string
 }
 
+export interface Meter {
+  cost?: string | number
+  [prop: string]: unknown
+}
+
 export interface AgentApi {
   /**
    * Creates (or reuses) an Ed25519 keypair, registers the agent, and writes to `.env`.
@@ -121,6 +126,7 @@ export interface PrimitivesApi {
     httpMethod: HttpMethod,
     uri: string,
     headers?: HeaderBag,
+    meter?: Meter,
     publicJwk?: PublicJwk
   ): Promise<VerifyResult>
 }
