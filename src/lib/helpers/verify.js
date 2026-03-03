@@ -91,7 +91,6 @@ async function verify (httpMethod, uri, headers = {}, meter = {}, publicJwk) {
     publicJwk = meter
     meter = {}
   }
-  void meter
 
   const signature = headers.Signature || headers.signature
   const signatureInput = headers['Signature-Input'] || headers['signature-input']
