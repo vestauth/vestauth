@@ -98,6 +98,23 @@ export interface ProviderApi {
   verify(httpMethod: HttpMethod, uri: string, headers?: HeaderBag): Promise<VerifyResult>
 }
 
+export interface ToolApi {
+  /**
+   * Creates (or reuses) an Ed25519 keypair, registers the tool, and writes to `.env`.
+   */
+  init(): Promise<{
+    TOOL_PUBLIC_JWK: PublicJwk
+    TOOL_UID: string
+    path: string
+    isNew: boolean
+  }>
+
+  /**
+   * Verifies a signed request (fetching the agent's discovery keys when needed).
+   */
+  verify(httpMethod: HttpMethod, uri: string, headers?: HeaderBag): Promise<VerifyResult>
+}
+
 export interface PrimitivesApi {
   /**
    * Creates an Ed25519 keypair. If `existingPrivateJwk` is provided, it is reused.
@@ -132,11 +149,13 @@ export interface PrimitivesApi {
 }
 
 export const agent: AgentApi
+export const tool: ToolApi
 export const provider: ProviderApi
 export const primitives: PrimitivesApi
 
 declare const _default: {
   agent: AgentApi
+  tool: ToolApi
   provider: ProviderApi
   primitives: PrimitivesApi
 }
