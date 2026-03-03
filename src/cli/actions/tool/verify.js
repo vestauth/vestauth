@@ -17,7 +17,11 @@ async function verify (httpMethod, uri) {
       'Signature-Agent': options.signatureAgent
     }
 
-    const output = await tool.verify(httpMethod, uri, headers)
+    const meter = {
+      cost: options.meterCost
+    }
+
+    const output = await tool.verify(httpMethod, uri, headers, meter)
 
     let space = 0
     if (options.prettyPrint) {

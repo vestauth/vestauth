@@ -15,6 +15,7 @@ tool.command('verify')
   .requiredOption('--signature <signature>', '')
   .requiredOption('--signature-input <signatureInput>', '')
   .requiredOption('--signature-agent <signatureAgent>', '')
+  .option('--meter-cost <meterCost>', 'credits per invocation', '0')
   .option('--pp, --pretty-print', 'pretty print output')
   .action(verifyAction)
 

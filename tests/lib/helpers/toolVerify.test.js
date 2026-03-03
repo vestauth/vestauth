@@ -52,7 +52,7 @@ t.test('#toolVerify - returns agent info', async t => {
   t.teardown(httpMock.restore)
 
   const toolVerify = require('../../../src/lib/helpers/toolVerify')
-  const output = await toolVerify('GET', uri, signedHeaders, 'localhost:3000')
+  const output = await toolVerify('GET', uri, signedHeaders, { cost: '1' }, 'localhost:3000')
 
   t.equal(output.uid, 'agent-123')
   t.equal(output.kid, publicJwk.kid)

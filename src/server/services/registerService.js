@@ -1,11 +1,12 @@
 const primitives = require('./../../lib/primitives')
 
 class RegisterService {
-  constructor ({ models, httpMethod, uri, headers, publicJwk }) {
+  constructor ({ models, httpMethod, uri, headers, meter, publicJwk }) {
     this.models = models
     this.httpMethod = httpMethod
     this.uri = uri
     this.headers = headers
+    this.meter = meter
     this.publicJwk = publicJwk
   }
 
@@ -14,6 +15,7 @@ class RegisterService {
       this.httpMethod,
       this.uri,
       this.headers,
+      this.meter,
       this.publicJwk
     )
 

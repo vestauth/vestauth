@@ -77,7 +77,22 @@ async function resolvePublicJwk ({ signatureInput, signatureAgent, publicJwk }) 
   }
 }
 
-async function verify (httpMethod, uri, headers = {}, publicJwk) {
+function isMeterArg (value) {
+  if (value === undefined || value === null) return true
+  if (typeof value !== 'object' || Array.isArray(value)) return false
+  if (Object.keys(value).length === 0) return true
+  return Object.prototype.hasOwnProperty.call(value, 'cost')
+}
+
+async function verify (httpMethod, uri, headers = {}, meter = {}, publicJwk) {
+  // Backward compatibility:
+  // verify(method, uri, headers, publicJwk)
+  if (publicJwk === undefined && !isMeterArg(meter)) {
+    publicJwk = meter
+    meter = {}
+  }
+  void meter
+
   const signature = headers.Signature || headers.signature
   const signatureInput = headers['Signature-Input'] || headers['signature-input']
   const signatureAgent = headers['Signature-Agent'] || headers['signature-agent']

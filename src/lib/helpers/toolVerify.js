@@ -4,7 +4,14 @@ const extractHostAndHostname = require('./extractHostAndHostname')
 const trustedFqdn = require('./trustedFqdn')
 const Errors = require('./errors')
 
-async function toolVerify (httpMethod, uri, headers = {}, serverHostname = null) {
+async function toolVerify (httpMethod, uri, headers = {}, meter = {}, serverHostname = null) {
+  // Backward compatibility:
+  // toolVerify(method, uri, headers, serverHostname)
+  if (typeof meter === 'string' && serverHostname === null) {
+    serverHostname = meter
+    meter = {}
+  }
+
   if (!httpMethod) {
     throw new Errors().missingHttpMethod()
   }
@@ -33,7 +40,7 @@ async function toolVerify (httpMethod, uri, headers = {}, serverHostname = null)
     throw new Errors().untrustedSignatureAgent()
   }
 
-  return verify(httpMethod, uri, headers)
+  return verify(httpMethod, uri, headers, meter)
 }
 
 module.exports = toolVerify
