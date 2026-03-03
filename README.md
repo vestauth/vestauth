@@ -23,6 +23,7 @@ vestauth agent init
 vestauth agent curl https://api.vestauth.com/whoami --pp
 vestauth agent curl https://sfs.vestauth.com/write -d '{"filepath":"/hello.md", "content":"hello"}'
 vestauth agent curl https://sfs.vestauth.com/list
+vestauth agent curl https://sam.vestauth.com/send -d '{"to":"you@email.com", "text":"hello from agent"}'
 ```
 
 <details><summary>with curl 🌐 </summary><br>
@@ -135,12 +136,10 @@ vestauth agent curl https://sfs.vestauth.com/read -d '{"filepath":"/hello.md"}'
 > SAM is a simple way to send email for vestauth agents.
 >
 > [sam.vestauth.com](https://sam.vestauth.com)
-> 
-> COMING SOON!
 
 ```sh
 # send an email
-vestauth agent curl https://sam.vestauth.com/send -d '{"to":"you@email.com", "text":"hello"}'
+vestauth agent curl https://sam.vestauth.com/send -d '{"to":"you@email.com", "text":"hello from agent"}'
 ```
 
 &nbsp;
