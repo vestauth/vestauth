@@ -124,6 +124,7 @@ t.test('rotates keys by verifying current key, creating new key, and revoking cu
     'POST',
     'https://api.example.com/rotate',
     { 'signature-input': 'sig1=("@authority");keyid="kid-current"' },
+    {},
     undefined
   ]])
 

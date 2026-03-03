@@ -9,7 +9,7 @@ class WhoamiService {
   }
 
   async run () {
-    return tool.verify(this.httpMethod, this.uri, this.headers, this.serverHostname)
+    return tool.verify(this.httpMethod, this.uri, this.headers, {}, this.serverHostname)
   }
 }
 
