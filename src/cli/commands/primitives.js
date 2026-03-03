@@ -39,6 +39,7 @@ primitives.command('verify')
   .requiredOption('--signature-input <signatureInput>', '')
   .option('--signature-agent <signatureAgent>', '')
   .option('--public-jwk <publicJwk>', 'public JWK (json string)', env('AGENT_PUBLIC_JWK'))
+  .option('--meter-cost <meterCost>', 'credits per invocation', '0')
   .option('--pp, --pretty-print', 'pretty print output')
   .action(verifyAction)
 

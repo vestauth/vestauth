@@ -25,9 +25,13 @@ async function verify (httpMethod, uri) {
       'Signature-Agent': options.signatureAgent
     }
 
+    const meter = {
+      cost: options.meterCost
+    }
+
     const publicJwk = options.publicJwk ? JSON.parse(options.publicJwk) : undefined
 
-    const output = await primitives.verify(httpMethod, uri, headers, publicJwk)
+    const output = await primitives.verify(httpMethod, uri, headers, meter, publicJwk)
 
     let space = 0
     if (options.prettyPrint) {

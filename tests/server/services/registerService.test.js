@@ -67,6 +67,7 @@ t.test('creates a new agent and public_jwk when kid is not already registered', 
     httpMethod: 'POST',
     uri: 'https://api.example.com/register',
     headers: { host: 'api.example.com' },
+    meter: { cost: '5' },
     publicJwk: { kty: 'OKP', kid: 'kid-new', x: 'abc' }
   }).run()
 
@@ -75,6 +76,7 @@ t.test('creates a new agent and public_jwk when kid is not already registered', 
     'POST',
     'https://api.example.com/register',
     { host: 'api.example.com' },
+    { cost: '5' },
     { kty: 'OKP', kid: 'kid-new', x: 'abc' }
   ])
 
