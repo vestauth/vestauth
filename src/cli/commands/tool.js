@@ -1,10 +1,18 @@
 const { Command } = require('commander')
+const env = require('./../../lib/helpers/env')
 
 const tool = new Command('tool')
 
 tool
   .description('🔨 tool')
   .allowUnknownOption()
+
+// vestauth tool init
+const initAction = require('./../actions/tool/init')
+tool.command('init')
+  .description('create tool')
+  .option('--hostname <hostname>', 'tool API hostname', env('TOOL_HOSTNAME'))
+  .action(initAction)
 
 // vestauth tool verify
 const verifyAction = require('./../actions/tool/verify')
