@@ -449,6 +449,16 @@ $ vestauth agent rotate
 ```
 
 </details>
+<details><summary>`tool init`</summary><br>
+
+Create tool.
+
+```sh
+$ vestauth tool init
+✔ tool created (.env/TOOL_UID=tool-1b639d81e2485e83de3ae686)
+```
+
+</details>
 <details><summary>`tool verify`</summary><br>
 
 Verify agent.
