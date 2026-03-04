@@ -44,8 +44,8 @@ function mockToolInitDeps (registerResponse = { uid: 'tool-test', is_new: true }
     exports: (existingPrivateJwk) => {
       keypairArgs.push(existingPrivateJwk)
       return ({
-      publicJwk: { kty: 'OKP', x: 'abc', kid: 'kid-1', crv: 'Ed25519' },
-      privateJwk: { kty: 'OKP', d: 'def', x: 'abc', kid: 'kid-1', crv: 'Ed25519' }
+        publicJwk: { kty: 'OKP', x: 'abc', kid: 'kid-1', crv: 'Ed25519' },
+        privateJwk: { kty: 'OKP', d: 'def', x: 'abc', kid: 'kid-1', crv: 'Ed25519' }
       })
     }
   }
