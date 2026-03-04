@@ -43,4 +43,11 @@ primitives.command('verify')
   .option('--pp, --pretty-print', 'pretty print output')
   .action(verifyAction)
 
+// vestauth primitives chat
+const chatAction = require('./../actions/primitives/chat')
+primitives.command('chat')
+  .description('chat with your llm')
+  .argument('<message>')
+  .action(chatAction)
+
 module.exports = primitives
