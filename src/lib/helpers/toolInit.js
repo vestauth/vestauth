@@ -1,4 +1,5 @@
 const dotenvx = require('@dotenvx/dotenvx')
+const toolIdentity = require('./toolIdentity')
 const keypair = require('./keypair')
 const touch = require('./touch')
 const normalizeToolHostname = require('./normalizeToolHostname')
@@ -9,10 +10,13 @@ async function toolInit (hostname = null) {
   const normalizedHostname = normalizeToolHostname(hostname)
   const shouldPersistHostname = normalizedHostname !== 'https://api.vestauth.com'
 
-  const kp = keypair(null, 'tool')
+  // keypair
+  const currentPrivateJwk = toolIdentity(false).privateJwk
+  const kp = keypair(currentPrivateJwk, 'tool')
 
   touch(envPath)
 
+  // register tool
   const tool = await new PostToolRegister(normalizedHostname, kp.publicJwk, kp.privateJwk).run()
   dotenvx.set('TOOL_UID', tool.uid, { path: envPath, plain: true, quiet: true })
   dotenvx.set('TOOL_PUBLIC_JWK', JSON.stringify(kp.publicJwk), { path: envPath, plain: true, quiet: true })
