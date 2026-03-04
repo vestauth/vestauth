@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-[Unreleased](https://github.com/vestauth/vestauth/compare/v0.22.1...main)
+[Unreleased](https://github.com/vestauth/vestauth/compare/v0.23.0...main)
+
+## [0.23.0](https://github.com/vestauth/vestauth/compare/v0.22.1...v0.23.0) (2026-03-03)
+
+### Added
+
+* `vestauth tool init` preparing the way for 402 payments ([#46](https://github.com/vestauth/vestauth/pull/46))
 
 ## [0.22.1](https://github.com/vestauth/vestauth/compare/v0.22.0...v0.22.1) (2026-03-02)
 
