@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-[Unreleased](https://github.com/vestauth/vestauth/compare/v0.23.0...main)
+[Unreleased](https://github.com/vestauth/vestauth/compare/v0.23.1...main)
+
+## [0.23.1](https://github.com/vestauth/vestauth/compare/v0.23.0...v0.23.1) (2026-03-03)
+
+### Changed
+
+* Check for existing tool ([#47](https://github.com/vestauth/vestauth/pull/47))
 
 ## [0.23.0](https://github.com/vestauth/vestauth/compare/v0.22.1...v0.23.0) (2026-03-03)
 
