@@ -77,7 +77,7 @@ async function resolvePublicJwk ({ signatureInput, signatureAgent, publicJwk }) 
   }
 }
 
-async function verify (httpMethod, uri, headers = {}, publicJwk) {
+async function verify (httpMethod, uri, headers = {}, meter = {}, publicJwk) {
   const signature = headers.Signature || headers.signature
   const signatureInput = headers['Signature-Input'] || headers['signature-input']
   const signatureAgent = headers['Signature-Agent'] || headers['signature-agent']

@@ -11,7 +11,7 @@ class RotateService {
   }
 
   async run () {
-    const remoteAgent = await tool.verify(this.httpMethod, this.uri, this.headers, this.serverHostname)
+    const remoteAgent = await tool.verify(this.httpMethod, this.uri, this.headers, {}, this.serverHostname)
     // uid: 'agent-6d2140af72bcefcedd4b44ab',
     // kid: 'Tx3W50MU5wMQ5I77z5DUGtbcs3ZPLlxfWx14pzpo5Fo',
     // public_jwk: {
