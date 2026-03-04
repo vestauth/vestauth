@@ -3,20 +3,24 @@ t.jobs = 1
 
 const toolInitPath = require.resolve('../../../src/lib/helpers/toolInit')
 const dotenvxPath = require.resolve('@dotenvx/dotenvx')
+const toolIdentityPath = require.resolve('../../../src/lib/helpers/toolIdentity')
 const keypairPath = require.resolve('../../../src/lib/helpers/keypair')
 const touchPath = require.resolve('../../../src/lib/helpers/touch')
 const postToolRegisterPath = require.resolve('../../../src/lib/api/postToolRegister')
 let originalToolHostname
 let originalDotenvxModule
+let originalToolIdentityModule
 let originalKeypairModule
 let originalTouchModule
 let originalPostToolRegisterModule
 let constructorArgs
 let dotenvSetCalls
+let keypairArgs
 
-function mockToolInitDeps (registerResponse = { uid: 'tool-test', is_new: true }) {
+function mockToolInitDeps (registerResponse = { uid: 'tool-test', is_new: true }, toolIdentityResponse = { privateJwk: null }) {
   constructorArgs = []
   dotenvSetCalls = []
+  keypairArgs = []
 
   require.cache[dotenvxPath] = {
     exports: {
@@ -32,11 +36,18 @@ function mockToolInitDeps (registerResponse = { uid: 'tool-test', is_new: true }
     }
   }
 
+  require.cache[toolIdentityPath] = {
+    exports: () => toolIdentityResponse
+  }
+
   require.cache[keypairPath] = {
-    exports: () => ({
+    exports: (existingPrivateJwk) => {
+      keypairArgs.push(existingPrivateJwk)
+      return ({
       publicJwk: { kty: 'OKP', x: 'abc', kid: 'kid-1', crv: 'Ed25519' },
       privateJwk: { kty: 'OKP', d: 'def', x: 'abc', kid: 'kid-1', crv: 'Ed25519' }
-    })
+      })
+    }
   }
 
   require.cache[touchPath] = {
@@ -61,18 +72,23 @@ function mockToolInitDeps (registerResponse = { uid: 'tool-test', is_new: true }
 t.beforeEach(() => {
   originalToolHostname = process.env.TOOL_HOSTNAME
   originalDotenvxModule = require.cache[dotenvxPath]
+  originalToolIdentityModule = require.cache[toolIdentityPath]
   originalKeypairModule = require.cache[keypairPath]
   originalTouchModule = require.cache[touchPath]
   originalPostToolRegisterModule = require.cache[postToolRegisterPath]
 
   constructorArgs = []
   dotenvSetCalls = []
+  keypairArgs = []
   delete require.cache[toolInitPath]
 })
 
 t.afterEach(() => {
   if (originalDotenvxModule) require.cache[dotenvxPath] = originalDotenvxModule
   else delete require.cache[dotenvxPath]
+
+  if (originalToolIdentityModule) require.cache[toolIdentityPath] = originalToolIdentityModule
+  else delete require.cache[toolIdentityPath]
 
   if (originalKeypairModule) require.cache[keypairPath] = originalKeypairModule
   else delete require.cache[keypairPath]
@@ -156,4 +172,17 @@ t.test('toolInit rejects hostname values with path', async t => {
   await t.rejects(() => toolInit('https://api.example.com/path'))
 
   t.equal(constructorArgs.length, 0)
+})
+
+t.test('toolInit reuses TOOL_PRIVATE_JWK when local identity already exists', async t => {
+  const localPrivateJwk = JSON.stringify({ kty: 'OKP', d: 'def', x: 'abc', kid: 'kid-1', crv: 'Ed25519' })
+  delete process.env.TOOL_HOSTNAME
+
+  mockToolInitDeps({ uid: 'tool-test', is_new: true }, { privateJwk: localPrivateJwk })
+
+  const toolInit = require('../../../src/lib/helpers/toolInit')
+  await toolInit()
+
+  t.equal(constructorArgs.length, 1)
+  t.equal(keypairArgs[0], localPrivateJwk)
 })
